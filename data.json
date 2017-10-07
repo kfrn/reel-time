@@ -1,0 +1,137 @@
+{
+  "5-inch": {
+    "diameterMetric": "12.5cm",
+    "tapeThicknesses": {
+      "1.5 mil": {
+        "totalFootageFeet": 600,
+        "recordingSpeed": {
+          "1.875": 60,
+          "3.75": 30,
+          "7.5": 15,
+          "15": 7.5,
+          "30": 3.75
+        }
+      },
+      "1.0 mil": {
+        "totalFootageFeet": 900,
+        "recordingSpeed": {
+          "1.875": 90,
+          "3.75": 45,
+          "7.5": 22.5,
+          "15": 11.25,
+          "30": 5.625
+        }
+      },
+      "0.5 mil double": {
+        "totalFootageFeet": 1200,
+        "recordingSpeed": {
+          "1.875": 120,
+          "3.75": 60,
+          "7.5": 30,
+          "15": 15,
+          "30": 7.5
+        }
+      },
+      "0.5 mil triple": {
+        "totalFootageFeet": 1800,
+        "recordingSpeed": {
+          "1.875": 180,
+          "3.75": 90,
+          "7.5": 45,
+          "15": 22.5,
+          "30": 11.25
+        }
+      }
+    }
+  },
+  "7-inch": {
+    "diameterMetric": "18cm",
+    "tapeThicknesses": {
+      "1.5 mil": {
+        "totalFootageFeet": 1200,
+        "recordingSpeed": {
+          "1.875": 120,
+          "3.75": 60,
+          "7.5": 30,
+          "15": 15,
+          "30": 7.5
+        }
+      },
+      "1.0 mil": {
+        "totalFootageFeet": 1800,
+        "recordingSpeed": {
+          "1.875": 180,
+          "3.75": 90,
+          "7.5": 45,
+          "15": 22.5,
+          "30": 11.25
+        }
+      },
+      "0.5 mil double": {
+        "totalFootageFeet": 2400,
+        "recordingSpeed": {
+          "1.875": 240,
+          "3.75": 120,
+          "7.5": 60,
+          "15": 30,
+          "30": 15
+        }
+      },
+      "0.5 mil triple": {
+        "totalFootageFeet": 3600,
+        "recordingSpeed": {
+          "1.875": 360,
+          "3.75": 180,
+          "7.5": 90,
+          "15": 45,
+          "30": 22.5
+        }
+      }
+    }
+  },
+  "10.5-inch": {
+    "diameterMetric": "26.5cm",
+    "tapeThicknesses": {
+      "1.5 mil": {
+        "totalFootageFeet": 2400,
+        "recordingSpeed": {
+          "1.875": 240,
+          "3.75": 120,
+          "7.5": 60,
+          "15": 30,
+          "30": 15
+        }
+      },
+      "1.0 mil": {
+        "totalFootageFeet": 3600,
+        "recordingSpeed": {
+          "1.875": 360,
+          "3.75": 180,
+          "7.5": 90,
+          "15": 45,
+          "30": 22.5
+        }
+      },
+      "0.5 mil double": {
+        "totalFootageFeet": 4800,
+        "recordingSpeed": {
+          "1.875": 480,
+          "3.75": 240,
+          "7.5": 120,
+          "15": 60,
+          "30": 30
+        }
+      },
+      "0.5 mil triple": {
+        "totalFootageFeet": 7200,
+        "recordingSpeed": {
+          "1.875": 720,
+          "3.75": 360,
+          "7.5": 180,
+          "15": 90,
+          "30": 45
+        }
+      }
+    }
+  }
+}
