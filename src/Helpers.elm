@@ -4,12 +4,12 @@ import Types exposing (..)
 import Uuid exposing (Uuid)
 
 
-newReel : Uuid.Uuid -> SelectorValues -> ReelEntry
+newReel : Uuid.Uuid -> SelectorValues -> Reel
 newReel uuid selectorValues =
     { id = uuid
     , audioConfig = selectorValues.audioConfig
     , diameter = selectorValues.diameter
-    , thickness = selectorValues.thickness
+    , tapeThickness = selectorValues.tapeThickness
     , recordingSpeed = selectorValues.recordingSpeed
     , quantity = 1
     }
@@ -56,7 +56,7 @@ audioConfigFromString name =
             Nothing
 
 
-diameterFromString : String -> Maybe Diameter
+diameterFromString : String -> Maybe DiameterInInches
 diameterFromString name =
     case name of
         "Five" ->
@@ -132,7 +132,7 @@ audioConfigDisplayName audioConfig =
             "quarter-track mono"
 
 
-diameterDisplayName : Diameter -> String
+diameterDisplayName : DiameterInInches -> String
 diameterDisplayName diameter =
     case diameter of
         Five ->
@@ -227,7 +227,7 @@ footageToInt footage =
             7200
 
 
-formatTime : TimeInMinutes -> String
+formatTime : DurationInMinutes -> String
 formatTime minutes =
     let
         padNumber num =

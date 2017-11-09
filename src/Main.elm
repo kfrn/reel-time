@@ -30,7 +30,7 @@ main =
 
 type alias Model =
     { currentSeed : Seed
-    , reels : List ReelEntry
+    , reels : List Reel
     , selectorValues : SelectorValues
     , testing : String
     }
@@ -50,7 +50,7 @@ initialModel =
         initialSelectorValues =
             { audioConfig = FullTrackMono
             , diameter = Seven
-            , thickness = Mil1p5
+            , tapeThickness = Mil1p5
             , recordingSpeed = IPS_7p5
             }
     in
@@ -63,9 +63,9 @@ initialModel =
 
 type Msg
     = AddNewRow
-    | DeleteRow ReelEntry
+    | DeleteRow Reel
     | ChangeAudioConfig String
-    | ChangeDiameter String
+    | ChangeDiameterInInches String
     | ChangeTapeThickness String
     | ChangeRecordingSpeed String
     | NoOp
@@ -101,11 +101,11 @@ update msg model =
             case audioConfigFromString str of
                 Just config ->
                     let
-                        update sValues newConfig =
+                        updateSValues sValues newConfig =
                             { sValues | audioConfig = newConfig }
 
                         newSelectorValues =
-                            update model.selectorValues config
+                            updateSValues model.selectorValues config
 
                         newModel =
                             { model | selectorValues = newSelectorValues }
@@ -115,15 +115,15 @@ update msg model =
                 Nothing ->
                     ( model, Cmd.none )
 
-        ChangeDiameter str ->
+        ChangeDiameterInInches str ->
             case diameterFromString str of
                 Just diameter ->
                     let
-                        update sValues newDiameter =
-                            { sValues | diameter = newDiameter }
+                        updateSValues sValues newDiameterInInches =
+                            { sValues | diameter = newDiameterInInches }
 
                         newSelectorValues =
-                            update model.selectorValues diameter
+                            updateSValues model.selectorValues diameter
 
                         newModel =
                             { model | selectorValues = newSelectorValues }
@@ -137,11 +137,11 @@ update msg model =
             case tapeThicknessFromString str of
                 Just thickness ->
                     let
-                        update sValues newThickness =
-                            { sValues | thickness = newThickness }
+                        updateSValues sValues newThickness =
+                            { sValues | tapeThickness = newThickness }
 
                         newSelectorValues =
-                            update model.selectorValues thickness
+                            updateSValues model.selectorValues thickness
 
                         newModel =
                             { model | selectorValues = newSelectorValues }
@@ -155,11 +155,11 @@ update msg model =
             case recordingSpeedFromString str of
                 Just speed ->
                     let
-                        update sValues newSpeed =
+                        updateSValues sValues newSpeed =
                             { sValues | recordingSpeed = newSpeed }
 
                         newSelectorValues =
-                            update model.selectorValues speed
+                            updateSValues model.selectorValues speed
 
                         newModel =
                             { model | selectorValues = newSelectorValues }
@@ -201,13 +201,13 @@ headingRow =
         ]
 
 
-reelData : ReelEntry -> Footage -> List (Html Msg)
+reelData : Reel -> Footage -> List (Html Msg)
 reelData reel footage =
     let
         ( direction, passes ) =
             reelInfo reel.audioConfig
 
-        passInfo =
+        passesInfo =
             if passes == 1 then
                 "1 pass"
             else
@@ -223,7 +223,7 @@ reelData reel footage =
             toString ft ++ "ft / " ++ toString metricFootage ++ "m per reel"
     in
     [ div [] [ text direction ]
-    , div [] [ text passInfo ]
+    , div [] [ text passesInfo ]
     , div [] [ text footageInfo ]
     ]
 
@@ -233,7 +233,7 @@ speedDisplayName speed =
     ipsDisplayName speed ++ " / " ++ ipsToCmps speed
 
 
-reelOptionsRow : ReelEntry -> Html Msg
+reelOptionsRow : Reel -> Html Msg
 reelOptionsRow reel =
     let
         deleteRowButton r =
@@ -258,7 +258,7 @@ reelOptionsRow reel =
             [ text (diameterDisplayName reel.diameter) ]
         , div
             [ class "column has-text-centered" ]
-            [ text (tapeThicknessDisplayName reel.thickness) ]
+            [ text (tapeThicknessDisplayName reel.tapeThickness) ]
         , div
             [ class "column has-text-centered" ]
             [ text (speedDisplayName reel.recordingSpeed) ]
@@ -287,34 +287,37 @@ selectorRow model =
     let
         createOption selectorMatcher displayer opt =
             option [ value (toString opt), selected (opt == selectorMatcher) ] [ text (displayer opt) ]
+
+        sValues =
+            model.selectorValues
     in
     div [ class "columns" ]
         [ div [ class "column has-text-centered" ]
             [ select [ name "audio-config", class "select is-small", onChange ChangeAudioConfig ]
                 (List.map
-                    (createOption model.selectorValues.audioConfig audioConfigDisplayName)
+                    (createOption sValues.audioConfig audioConfigDisplayName)
                     allAudioConfigs
                 )
             ]
         , div [ class "column has-text-centered" ]
             [ select
-                [ name "diameter", class "select is-small", onChange ChangeDiameter ]
+                [ name "diameter", class "select is-small", onChange ChangeDiameterInInches ]
                 (List.map
-                    (createOption model.selectorValues.diameter diameterDisplayName)
+                    (createOption sValues.diameter diameterDisplayName)
                     allDiameters
                 )
             ]
         , div [ class "column has-text-centered" ]
             [ select [ name "tape-thickness", class "select is-small", onChange ChangeTapeThickness ]
                 (List.map
-                    (createOption model.selectorValues.thickness tapeThicknessDisplayName)
+                    (createOption sValues.tapeThickness tapeThicknessDisplayName)
                     allThicknesses
                 )
             ]
         , div [ class "column has-text-centered" ]
             [ select [ name "recording-speed", class "select is-small", onChange ChangeRecordingSpeed ]
                 (List.map
-                    (createOption model.selectorValues.recordingSpeed speedDisplayName)
+                    (createOption sValues.recordingSpeed speedDisplayName)
                     allRecordingSpeeds
                 )
             ]

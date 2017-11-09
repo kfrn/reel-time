@@ -15,15 +15,15 @@ type alias LengthInFeet =
     Int
 
 
-type alias TimeInMinutes =
+type alias DurationInMinutes =
     Float
 
 
-type alias ReelEntry =
+type alias Reel =
     { id : Uuid.Uuid
     , audioConfig : AudioConfig
-    , diameter : Diameter
-    , thickness : TapeThickness
+    , diameter : DiameterInInches
+    , tapeThickness : TapeThickness
     , recordingSpeed : RecordingSpeed
     , quantity : Int
     }
@@ -31,8 +31,8 @@ type alias ReelEntry =
 
 type alias SelectorValues =
     { audioConfig : AudioConfig
-    , diameter : Diameter
-    , thickness : TapeThickness
+    , diameter : DiameterInInches
+    , tapeThickness : TapeThickness
     , recordingSpeed : RecordingSpeed
     }
 
@@ -50,13 +50,13 @@ allAudioConfigs =
     [ FullTrackMono, HalfTrackStereo, HalfTrackMono, QuarterTrackStereo, QuarterTrackMono ]
 
 
-type Diameter
+type DiameterInInches
     = Five
     | Seven
     | TenPtFive
 
 
-allDiameters : List Diameter
+allDiameters : List DiameterInInches
 allDiameters =
     [ Five, Seven, TenPtFive ]
 

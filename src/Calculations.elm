@@ -3,9 +3,9 @@ module Calculations exposing (..)
 import Types exposing (..)
 
 
-reelLengthInFeet : ReelEntry -> Footage
+reelLengthInFeet : Reel -> Footage
 reelLengthInFeet reel =
-    case ( reel.diameter, reel.thickness ) of
+    case ( reel.diameter, reel.tapeThickness ) of
         ( Five, Mil1p5 ) ->
             Ft600
 
@@ -43,7 +43,7 @@ reelLengthInFeet reel =
             Ft7200
 
 
-baseDuration : ReelEntry -> Float
+baseDuration : Reel -> Float
 baseDuration reel =
     let
         footage =
@@ -75,7 +75,7 @@ baseDuration reel =
             45
 
 
-durationInMinutes : ReelEntry -> TimeInMinutes
+durationInMinutes : Reel -> DurationInMinutes
 durationInMinutes reel =
     let
         multiplier =
