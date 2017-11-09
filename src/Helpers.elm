@@ -161,20 +161,97 @@ tapeThicknessDisplayName thickness =
             "0.5 mil triple"
 
 
-speedDisplayName : RecordingSpeed -> String
-speedDisplayName speed =
+ipsDisplayName : RecordingSpeed -> String
+ipsDisplayName speed =
     case speed of
         IPS_1p875 ->
-            "1.875 ips"
+            "1.875ips"
 
         IPS_3p75 ->
-            "3.75 ips"
+            "3.75ips"
 
         IPS_7p5 ->
-            "7.5 ips"
+            "7.5ips"
 
         IPS_15 ->
-            "15 ips"
+            "15ips"
 
         IPS_30 ->
-            "30 ips"
+            "30ips"
+
+
+ipsToCmps : RecordingSpeed -> String
+ipsToCmps speed =
+    case speed of
+        IPS_1p875 ->
+            "4.75cm/s"
+
+        IPS_3p75 ->
+            "9.5cm/s"
+
+        IPS_7p5 ->
+            "19cm/s"
+
+        IPS_15 ->
+            "38cm/s"
+
+        IPS_30 ->
+            "76cm/s"
+
+
+footageToInt : Footage -> LengthInFeet
+footageToInt footage =
+    case footage of
+        Ft600 ->
+            600
+
+        Ft900 ->
+            900
+
+        Ft1200 ->
+            1200
+
+        Ft1800 ->
+            1800
+
+        Ft2400 ->
+            2400
+
+        Ft3600 ->
+            3600
+
+        Ft4800 ->
+            4800
+
+        Ft7200 ->
+            7200
+
+
+formatTime : TimeInMinutes -> String
+formatTime minutes =
+    let
+        padNumber num =
+            if num < 10 then
+                "0" ++ toString num
+            else
+                toString num
+
+        allMinutes =
+            floor minutes
+
+        hour =
+            padNumber <| allMinutes // 60
+
+        baseMins =
+            allMinutes % 60
+
+        mins =
+            padNumber baseMins
+
+        decimal =
+            minutes - toFloat allMinutes
+
+        seconds =
+            padNumber <| decimal * 60
+    in
+    hour ++ ":" ++ mins ++ ":" ++ seconds

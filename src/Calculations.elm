@@ -3,41 +3,96 @@ module Calculations exposing (..)
 import Types exposing (..)
 
 
-reelLengthInFeet : ReelEntry -> LengthInFeet
+reelLengthInFeet : ReelEntry -> Footage
 reelLengthInFeet reel =
     case ( reel.diameter, reel.thickness ) of
         ( Five, Mil1p5 ) ->
-            600
+            Ft600
 
         ( Five, Mil1p0 ) ->
-            900
+            Ft900
 
         ( Five, Mil0p5Double ) ->
-            1200
+            Ft1200
 
         ( Five, Mil0p5Triple ) ->
-            1800
+            Ft1800
 
         ( Seven, Mil1p5 ) ->
-            1200
+            Ft1200
 
         ( Seven, Mil1p0 ) ->
-            1800
+            Ft1800
 
         ( Seven, Mil0p5Double ) ->
-            2400
+            Ft2400
 
         ( Seven, Mil0p5Triple ) ->
-            3600
+            Ft3600
 
         ( TenPtFive, Mil1p5 ) ->
-            2400
+            Ft2400
 
         ( TenPtFive, Mil1p0 ) ->
-            3600
+            Ft3600
 
         ( TenPtFive, Mil0p5Double ) ->
-            4800
+            Ft4800
 
         ( TenPtFive, Mil0p5Triple ) ->
-            7200
+            Ft7200
+
+
+baseDuration : ReelEntry -> Float
+baseDuration reel =
+    let
+        footage =
+            reelLengthInFeet reel
+    in
+    case footage of
+        Ft600 ->
+            3.75
+
+        Ft900 ->
+            5.625
+
+        Ft1200 ->
+            7.5
+
+        Ft1800 ->
+            11.25
+
+        Ft2400 ->
+            15
+
+        Ft3600 ->
+            22.5
+
+        Ft4800 ->
+            30
+
+        Ft7200 ->
+            45
+
+
+durationInMinutes : ReelEntry -> TimeInMinutes
+durationInMinutes reel =
+    let
+        multiplier =
+            baseDuration reel
+    in
+    case reel.recordingSpeed of
+        IPS_1p875 ->
+            multiplier * 16
+
+        IPS_3p75 ->
+            multiplier * 8
+
+        IPS_7p5 ->
+            multiplier * 4
+
+        IPS_15 ->
+            multiplier * 2
+
+        IPS_30 ->
+            multiplier

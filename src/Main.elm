@@ -201,7 +201,7 @@ headingRow =
         ]
 
 
-reelData : ReelEntry -> LengthInFeet -> List (Html Msg)
+reelData : ReelEntry -> Footage -> List (Html Msg)
 reelData reel footage =
     let
         ( direction, passes ) =
@@ -213,16 +213,24 @@ reelData reel footage =
             else
                 toString passes ++ " passes"
 
+        ft =
+            footageToInt footage
+
         metricFootage =
-            toFloat footage * 0.3048
+            toFloat ft * 0.3048
 
         footageInfo =
-            toString footage ++ "ft / " ++ toString metricFootage ++ "m per reel"
+            toString ft ++ "ft / " ++ toString metricFootage ++ "m per reel"
     in
     [ div [] [ text direction ]
     , div [] [ text passInfo ]
     , div [] [ text footageInfo ]
     ]
+
+
+speedDisplayName : RecordingSpeed -> String
+speedDisplayName speed =
+    ipsDisplayName speed ++ " / " ++ ipsToCmps speed
 
 
 reelOptionsRow : ReelEntry -> Html Msg
@@ -233,6 +241,12 @@ reelOptionsRow reel =
 
         footage =
             reelLengthInFeet reel
+
+        mins =
+            durationInMinutes reel
+
+        durationInfo =
+            toString mins ++ " min per reel, " ++ formatTime mins ++ " total"
     in
     div
         [ id (Uuid.toString reel.id), class "columns has-text-centered" ]
@@ -256,7 +270,7 @@ reelOptionsRow reel =
             (reelData reel footage)
         , div
             [ class "column has-text-centered" ]
-            [ text "X min per reel; Y min total" ]
+            [ text durationInfo ]
         , div
             [ class "column has-text-centered" ]
             [ deleteRowButton reel ]

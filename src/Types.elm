@@ -15,6 +15,10 @@ type alias LengthInFeet =
     Int
 
 
+type alias TimeInMinutes =
+    Float
+
+
 type alias ReelEntry =
     { id : Uuid.Uuid
     , audioConfig : AudioConfig
@@ -80,3 +84,14 @@ type RecordingSpeed
 allRecordingSpeeds : List RecordingSpeed
 allRecordingSpeeds =
     [ IPS_1p875, IPS_3p75, IPS_7p5, IPS_15, IPS_30 ]
+
+
+type Footage
+    = Ft600
+    | Ft900
+    | Ft1200
+    | Ft1800
+    | Ft2400
+    | Ft3600
+    | Ft4800
+    | Ft7200
