@@ -2,7 +2,7 @@ module Main exposing (..)
 
 import Calculations exposing (..)
 import Helpers exposing (..)
-import Html exposing (Html, button, div, h1, img, input, option, p, select, span, text)
+import Html exposing (Html, button, div, h1, i, img, input, option, p, select, span, text)
 import Html.Attributes exposing (class, id, name, placeholder, selected, src, value)
 import Html.Events exposing (on, onClick)
 import Json.Decode as Json
@@ -194,10 +194,10 @@ headingRow =
         , div [ class "column has-text-centered" ] [ text "diameter" ]
         , div [ class "column has-text-centered" ] [ text "thickness" ]
         , div [ class "column has-text-centered" ] [ text "speed" ]
-        , div [ class "column has-text-centered" ] [ text "quantity" ]
-        , div [ class "column has-text-centered" ] [ text "info" ]
-        , div [ class "column has-text-centered" ] [ text "length" ]
-        , div [ class "column has-text-centered" ] [ text "delete button" ]
+        , div [ class "column is-1 has-text-centered" ] [ text "quantity" ]
+        , div [ class "column is-2 has-text-centered" ] [ text "info" ]
+        , div [ class "column is-2 has-text-centered" ] [ text "length" ]
+        , div [ class "column is-1 has-text-centered" ] [ text "add/del" ]
         ]
 
 
@@ -228,6 +228,13 @@ reelData reel footage =
     ]
 
 
+durationData : DurationInMinutes -> List (Html Msg)
+durationData mins =
+    [ div [] [ text (toString mins ++ " min per reel") ]
+    , div [] [ text (formatTime mins ++ " total") ]
+    ]
+
+
 speedDisplayName : RecordingSpeed -> String
 speedDisplayName speed =
     ipsDisplayName speed ++ " / " ++ ipsToCmps speed
@@ -237,16 +244,17 @@ reelOptionsRow : Reel -> Html Msg
 reelOptionsRow reel =
     let
         deleteRowButton r =
-            button [ class "button", onClick (DeleteRow r) ] [ text "delete" ]
+            button [ class "button", onClick (DeleteRow r) ]
+                [ span [ class "icon" ]
+                    [ i [ class "fa fa-trash" ] []
+                    ]
+                ]
 
         footage =
             reelLengthInFeet reel
 
         mins =
             durationInMinutes reel
-
-        durationInfo =
-            toString mins ++ " min per reel, " ++ formatTime mins ++ " total"
     in
     div
         [ id (Uuid.toString reel.id), class "columns has-text-centered" ]
@@ -263,16 +271,16 @@ reelOptionsRow reel =
             [ class "column has-text-centered" ]
             [ text (speedDisplayName reel.recordingSpeed) ]
         , div
-            [ class "column has-text-centered" ]
+            [ class "column is-1 has-text-centered" ]
             [ text (toString reel.quantity) ]
         , div
-            [ class "column has-text-centered" ]
+            [ class "column is-2 has-text-centered" ]
             (reelData reel footage)
         , div
-            [ class "column has-text-centered" ]
-            [ text durationInfo ]
+            [ class "column is-2 has-text-centered" ]
+            (durationData mins)
         , div
-            [ class "column has-text-centered" ]
+            [ class "column is-1 has-text-centered" ]
             [ deleteRowButton reel ]
         ]
 
@@ -321,15 +329,18 @@ selectorRow model =
                     allRecordingSpeeds
                 )
             ]
-        , div [ class "column has-text-centered" ]
-            [ text "quantity" ]
-        , div [ class "column has-text-centered" ]
+        , div [ class "column is-1 has-text-centered" ]
+            [ text "1" ]
+        , div [ class "column is-2 has-text-centered" ]
             [ text "• • •" ]
-        , div [ class "column has-text-centered" ]
+        , div [ class "column is-2 has-text-centered" ]
             [ text "• • •" ]
-        , div [ class "column has-text-centered" ]
+        , div [ class "column is-1 has-text-centered" ]
             [ button
                 [ class "button", onClick AddNewRow ]
-                [ text "Add" ]
+                [ span [ class "icon" ]
+                    [ i [ class "fa fa-plus" ] []
+                    ]
+                ]
             ]
         ]
