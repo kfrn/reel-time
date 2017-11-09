@@ -15,6 +15,25 @@ newReel uuid selectorValues =
     }
 
 
+reelInfo : AudioConfig -> ( Direction, Passes )
+reelInfo config =
+    case config of
+        FullTrackMono ->
+            ( "unidirectional", 1 )
+
+        HalfTrackStereo ->
+            ( "unidirectional", 1 )
+
+        HalfTrackMono ->
+            ( "bidirectional", 2 )
+
+        QuarterTrackStereo ->
+            ( "bidirectional", 2 )
+
+        QuarterTrackMono ->
+            ( "bidirectional", 4 )
+
+
 audioConfigFromString : String -> Maybe AudioConfig
 audioConfigFromString name =
     case name of

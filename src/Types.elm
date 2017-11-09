@@ -3,6 +3,18 @@ module Types exposing (..)
 import Uuid exposing (Uuid)
 
 
+type alias Direction =
+    String
+
+
+type alias Passes =
+    Int
+
+
+type alias LengthInFeet =
+    Int
+
+
 type alias ReelEntry =
     { id : Uuid.Uuid
     , audioConfig : AudioConfig
