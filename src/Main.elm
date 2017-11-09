@@ -1,9 +1,13 @@
 module Main exposing (..)
 
-import Data exposing (..)
+import Helpers exposing (..)
 import Html exposing (Html, button, div, h1, img, input, option, p, select, span, text)
-import Html.Attributes exposing (class, name, placeholder, src, value)
+import Html.Attributes exposing (class, id, name, placeholder, selected, src, value)
+import Html.Events exposing (on, onClick)
+import Json.Decode as Json
+import Random.Pcg exposing (Seed, initialSeed, step)
 import Types exposing (..)
+import Uuid exposing (Uuid, uuidGenerator)
 
 
 ---- Main ----
@@ -24,16 +28,32 @@ main =
 
 
 type alias Model =
-    { reelTypes : List AudioReel
-    , recordingTypes : List RecordingType
-    , tapeThicknesses : List String
-    , recordingSpeeds : List String
+    { currentSeed : Seed
+    , reels : List ReelEntry
+    , selectorValues : SelectorValues
+    , testing : String
     }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model baseData recordingTypes tapeThicknesses speedsInIPS, Cmd.none )
+    ( initialModel, Cmd.none )
+
+
+initialModel : Model
+initialModel =
+    let
+        ( uuid, seed ) =
+            step Uuid.uuidGenerator (initialSeed 19580607)
+
+        initialSelectorValues =
+            { audioConfig = FullTrackMono
+            , diameter = Seven
+            , thickness = Mil1p5
+            , recordingSpeed = IPS_7p5
+            }
+    in
+    Model seed [] initialSelectorValues "nothing"
 
 
 
@@ -41,12 +61,115 @@ init =
 
 
 type Msg
-    = NoOp
+    = AddNewRow
+    | DeleteRow ReelEntry
+    | ChangeAudioConfig String
+    | ChangeDiameter String
+    | ChangeTapeThickness String
+    | ChangeRecordingSpeed String
+    | NoOp
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        AddNewRow ->
+            let
+                ( uuid, newSeed ) =
+                    step Uuid.uuidGenerator model.currentSeed
+
+                newReels =
+                    model.reels ++ [ newReel uuid model.selectorValues ]
+
+                newModel =
+                    { model | currentSeed = newSeed, reels = newReels }
+            in
+            ( newModel, Cmd.none )
+
+        DeleteRow reel ->
+            let
+                newReels =
+                    List.filter (\r -> r.id /= reel.id) model.reels
+
+                newModel =
+                    { model | reels = newReels }
+            in
+            ( newModel, Cmd.none )
+
+        ChangeAudioConfig str ->
+            case audioConfigFromString str of
+                Just config ->
+                    let
+                        update sValues newConfig =
+                            { sValues | audioConfig = newConfig }
+
+                        newSelectorValues =
+                            update model.selectorValues config
+
+                        newModel =
+                            { model | selectorValues = newSelectorValues }
+                    in
+                    ( newModel, Cmd.none )
+
+                Nothing ->
+                    ( model, Cmd.none )
+
+        ChangeDiameter str ->
+            case diameterFromString str of
+                Just diameter ->
+                    let
+                        update sValues newDiameter =
+                            { sValues | diameter = newDiameter }
+
+                        newSelectorValues =
+                            update model.selectorValues diameter
+
+                        newModel =
+                            { model | selectorValues = newSelectorValues }
+                    in
+                    ( newModel, Cmd.none )
+
+                Nothing ->
+                    ( model, Cmd.none )
+
+        ChangeTapeThickness str ->
+            case tapeThicknessFromString str of
+                Just thickness ->
+                    let
+                        update sValues newThickness =
+                            { sValues | thickness = newThickness }
+
+                        newSelectorValues =
+                            update model.selectorValues thickness
+
+                        newModel =
+                            { model | selectorValues = newSelectorValues }
+                    in
+                    ( newModel, Cmd.none )
+
+                Nothing ->
+                    ( model, Cmd.none )
+
+        ChangeRecordingSpeed str ->
+            case recordingSpeedFromString str of
+                Just speed ->
+                    let
+                        update sValues newSpeed =
+                            { sValues | recordingSpeed = newSpeed }
+
+                        newSelectorValues =
+                            update model.selectorValues speed
+
+                        newModel =
+                            { model | selectorValues = newSelectorValues }
+                    in
+                    ( newModel, Cmd.none )
+
+                Nothing ->
+                    ( model, Cmd.none )
+
+        NoOp ->
+            ( model, Cmd.none )
 
 
 
@@ -55,43 +178,113 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div [ class "container" ]
-        [ h1 [] [ text "reel-to-reel" ]
-        , div [] [ reelOptions model ]
+    div [ id "container", class "box container" ]
+        [ h1 [ class "title" ] [ text "reel-to-reel" ]
+        , headingRow
+        , div [] (List.map reelOptionsRow model.reels)
+        , selectorRow model
         ]
 
 
-reelOptions : Model -> Html Msg
-reelOptions model =
-    div [ class "reel-options" ]
-        [ div [ class "recording-type select is-medium" ]
-            [ select [ name "recording-type" ]
-                ([ option [] [ text "type" ] ]
-                    ++ List.map (\recordingType -> option [ value recordingType.audioConfig ] [ text recordingType.audioConfig ]) model.recordingTypes
-                )
-            ]
-        , div [ class "reel-diameter select is-medium" ]
-            [ select [ name "reel-diameter" ]
-                ([ option [] [ text "diameter" ] ]
-                    ++ List.map (\reelType -> option [ value (toString reelType.diameterInches ++ "in") ] [ text (toString reelType.diameterInches ++ "\" / " ++ toString reelType.diameterMetric ++ "cm") ]) model.reelTypes
-                )
-            ]
-        , div [ class "thickness select is-medium" ]
-            [ select [ name "thickness" ]
-                ([ option [] [ text "thickness" ] ]
-                    ++ List.map (\thickness -> option [ value thickness ] [ text thickness ]) model.tapeThicknesses
-                )
-            ]
-        , div [ class "speed select is-medium" ]
-            [ select [ name "speed" ]
-                ([ option [] [ text "speed" ] ]
-                    ++ List.map (\speed -> option [ value speed ] [ text (speed ++ " ips") ]) model.recordingSpeeds
-                )
-            ]
-        , input [ class "quantity input is-medium", placeholder "quantity" ] []
-        , button [ class "submit button is-medium" ] [ text "calculate!" ]
-        , div [ class "result" ] [ text "..." ]
+headingRow : Html Msg
+headingRow =
+    div [ class "columns has-text-centered" ]
+        [ div [ class "column has-text-centered" ] [ text "type" ]
+        , div [ class "column has-text-centered" ] [ text "diameter" ]
+        , div [ class "column has-text-centered" ] [ text "thickness" ]
+        , div [ class "column has-text-centered" ] [ text "speed" ]
+        , div [ class "column has-text-centered" ] [ text "quantity" ]
+        , div [ class "column has-text-centered" ] [ text "info" ]
+        , div [ class "column has-text-centered" ] [ text "length" ]
+        , div [ class "column has-text-centered" ] [ text "delete button" ]
         ]
 
-emojiSpan : String -> Html Msg
-emojiSpan emoji = span [ class "emoji" ] [ text emoji ]
+
+reelOptionsRow : ReelEntry -> Html Msg
+reelOptionsRow reel =
+    let
+        deleteRowButton r =
+            button [ class "button", onClick (DeleteRow r) ] [ text "delete this row" ]
+    in
+    div
+        [ id (Uuid.toString reel.id), class "columns has-text-centered" ]
+        [ div
+            [ class "column has-text-centered" ]
+            [ text (audioConfigDisplayName reel.audioConfig) ]
+        , div
+            [ class "column has-text-centered" ]
+            [ text (diameterDisplayName reel.diameter) ]
+        , div
+            [ class "column has-text-centered" ]
+            [ text (tapeThicknessDisplayName reel.thickness) ]
+        , div
+            [ class "column has-text-centered" ]
+            [ text (speedDisplayName reel.recordingSpeed) ]
+        , div
+            [ class "column has-text-centered" ]
+            [ text (toString reel.quantity) ]
+        , div
+            [ class "column has-text-centered" ]
+            [ text (Uuid.toString reel.id) ]
+        , div
+            [ class "column has-text-centered" ]
+            [ text "length" ]
+        , div
+            [ class "column has-text-centered" ]
+            [ deleteRowButton reel ]
+        ]
+
+
+onChange : (String -> msg) -> Html.Attribute msg
+onChange makeMessage =
+    on "change" (Json.map makeMessage Html.Events.targetValue)
+
+
+selectorRow : Model -> Html Msg
+selectorRow model =
+    let
+        createOption selectorMatcher displayer opt =
+            option [ value (toString opt), selected (opt == selectorMatcher) ] [ text (displayer opt) ]
+    in
+    div [ class "columns" ]
+        [ div [ class "column has-text-centered" ]
+            [ select [ name "audio-config", class "select is-small", onChange ChangeAudioConfig ]
+                (List.map
+                    (createOption model.selectorValues.audioConfig audioConfigDisplayName)
+                    allAudioConfigs
+                )
+            ]
+        , div [ class "column has-text-centered" ]
+            [ select
+                [ name "diameter", class "select is-small", onChange ChangeDiameter ]
+                (List.map
+                    (createOption model.selectorValues.diameter diameterDisplayName)
+                    allDiameters
+                )
+            ]
+        , div [ class "column has-text-centered" ]
+            [ select [ name "tape-thickness", class "select is-small", onChange ChangeTapeThickness ]
+                (List.map
+                    (createOption model.selectorValues.thickness tapeThicknessDisplayName)
+                    allThicknesses
+                )
+            ]
+        , div [ class "column has-text-centered" ]
+            [ select [ name "recording-speed", class "select is-small", onChange ChangeRecordingSpeed ]
+                (List.map
+                    (createOption model.selectorValues.recordingSpeed speedDisplayName)
+                    allRecordingSpeeds
+                )
+            ]
+        , div [ class "column has-text-centered" ]
+            [ text "quantity" ]
+        , div [ class "column has-text-centered" ]
+            [ text "• • •" ]
+        , div [ class "column has-text-centered" ]
+            [ text "• • •" ]
+        , div [ class "column has-text-centered" ]
+            [ button
+                [ class "button", onClick AddNewRow ]
+                [ text "Add new row" ]
+            ]
+        ]
