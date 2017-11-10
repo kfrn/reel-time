@@ -19,6 +19,10 @@ type alias DurationInMinutes =
     Float
 
 
+type alias Quantity =
+    Int
+
+
 type alias Reel =
     { id : Uuid.Uuid
     , audioConfig : AudioConfig

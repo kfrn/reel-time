@@ -3,9 +3,10 @@ module Main exposing (..)
 import Calculations exposing (..)
 import Helpers exposing (..)
 import Html exposing (Html, button, div, h1, i, img, input, option, p, select, span, text)
-import Html.Attributes exposing (class, id, name, placeholder, selected, src, value)
-import Html.Events exposing (on, onClick)
+import Html.Attributes exposing (class, classList, disabled, id, name, placeholder, selected, src, value)
+import Html.Events exposing (on, onClick, onInput)
 import Json.Decode as Json
+import Maybe.Extra exposing (isNothing)
 import Random.Pcg exposing (Seed, initialSeed, step)
 import Types exposing (..)
 import Uuid exposing (Uuid, uuidGenerator)
@@ -32,7 +33,7 @@ type alias Model =
     { currentSeed : Seed
     , reels : List Reel
     , selectorValues : SelectorValues
-    , testing : String
+    , quantity : Maybe Int
     }
 
 
@@ -54,7 +55,7 @@ initialModel =
             , recordingSpeed = IPS_7p5
             }
     in
-    Model seed [] initialSelectorValues "nothing"
+    Model seed [] initialSelectorValues Nothing
 
 
 
@@ -62,30 +63,36 @@ initialModel =
 
 
 type Msg
-    = AddNewRow
+    = AddReel
     | DeleteRow Reel
     | ChangeAudioConfig String
     | ChangeDiameterInInches String
     | ChangeTapeThickness String
     | ChangeRecordingSpeed String
+    | UpdateQuantity String
     | NoOp
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        AddNewRow ->
-            let
-                ( uuid, newSeed ) =
-                    step Uuid.uuidGenerator model.currentSeed
+        AddReel ->
+            case model.quantity of
+                Just q ->
+                    let
+                        ( uuid, newSeed ) =
+                            step Uuid.uuidGenerator model.currentSeed
 
-                newReels =
-                    model.reels ++ [ newReel uuid model.selectorValues ]
+                        newReels =
+                            model.reels ++ [ newReel uuid model.selectorValues q ]
 
-                newModel =
-                    { model | currentSeed = newSeed, reels = newReels }
-            in
-            ( newModel, Cmd.none )
+                        newModel =
+                            { model | currentSeed = newSeed, reels = newReels }
+                    in
+                    ( newModel, Cmd.none )
+
+                Nothing ->
+                    ( model, Cmd.none )
 
         DeleteRow reel ->
             let
@@ -169,6 +176,14 @@ update msg model =
                 Nothing ->
                     ( model, Cmd.none )
 
+        UpdateQuantity quantity ->
+            case String.toInt quantity of
+                Ok q ->
+                    ( { model | quantity = Just q }, Cmd.none )
+
+                Err e ->
+                    ( { model | quantity = Nothing }, Cmd.none )
+
         NoOp ->
             ( model, Cmd.none )
 
@@ -201,12 +216,9 @@ headingRow =
         ]
 
 
-reelData : Reel -> Footage -> List (Html Msg)
-reelData reel footage =
+reelData : Footage -> Int -> Direction -> List (Html Msg)
+reelData footage passes direction =
     let
-        ( direction, passes ) =
-            reelInfo reel.audioConfig
-
         passesInfo =
             if passes == 1 then
                 "1 pass"
@@ -228,10 +240,17 @@ reelData reel footage =
     ]
 
 
-durationData : DurationInMinutes -> List (Html Msg)
-durationData mins =
-    [ div [] [ text (toString mins ++ " min per reel") ]
-    , div [] [ text (formatTime mins ++ " total") ]
+durationData : DurationInMinutes -> Quantity -> Passes -> List (Html Msg)
+durationData mins quantity passes =
+    let
+        reelTime =
+            mins * toFloat passes
+
+        totalTime =
+            reelTime * toFloat quantity
+    in
+    [ div [] [ text (toString reelTime ++ " min per reel") ]
+    , div [] [ text (formatTime totalTime ++ " total") ]
     ]
 
 
@@ -249,6 +268,9 @@ reelOptionsRow reel =
                     [ i [ class "fa fa-trash" ] []
                     ]
                 ]
+
+        ( direction, passes ) =
+            reelInfo reel.audioConfig
 
         footage =
             reelLengthInFeet reel
@@ -275,10 +297,10 @@ reelOptionsRow reel =
             [ text (toString reel.quantity) ]
         , div
             [ class "column is-2 has-text-centered" ]
-            (reelData reel footage)
+            (reelData footage passes direction)
         , div
             [ class "column is-2 has-text-centered" ]
-            (durationData mins)
+            (durationData mins reel.quantity passes)
         , div
             [ class "column is-1 has-text-centered" ]
             [ deleteRowButton reel ]
@@ -298,6 +320,9 @@ selectorRow model =
 
         sValues =
             model.selectorValues
+
+        invalidQuantity =
+            isNothing model.quantity
     in
     div [ class "columns" ]
         [ div [ class "column has-text-centered" ]
@@ -329,15 +354,21 @@ selectorRow model =
                     allRecordingSpeeds
                 )
             ]
-        , div [ class "column is-1 has-text-centered" ]
-            [ text "1" ]
         , div [ class "column is-2 has-text-centered" ]
+            [ input
+                [ classList [ ( "input", True ), ( "is-danger", invalidQuantity ) ]
+                , placeholder "Enter a number"
+                , onInput UpdateQuantity
+                ]
+                []
+            ]
+        , div [ class "column is-1 has-text-centered" ]
             [ text "• • •" ]
         , div [ class "column is-2 has-text-centered" ]
             [ text "• • •" ]
         , div [ class "column is-1 has-text-centered" ]
             [ button
-                [ class "button", onClick AddNewRow ]
+                [ class "button", onClick AddReel, disabled invalidQuantity ]
                 [ span [ class "icon" ]
                     [ i [ class "fa fa-plus" ] []
                     ]

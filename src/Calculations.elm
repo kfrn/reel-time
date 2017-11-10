@@ -3,6 +3,9 @@ module Calculations exposing (..)
 import Types exposing (..)
 
 
+-- TODO: use the # of passes!
+
+
 reelLengthInFeet : Reel -> Footage
 reelLengthInFeet reel =
     case ( reel.diameter, reel.tapeThickness ) of

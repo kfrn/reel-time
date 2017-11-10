@@ -4,14 +4,14 @@ import Types exposing (..)
 import Uuid exposing (Uuid)
 
 
-newReel : Uuid.Uuid -> SelectorValues -> Reel
-newReel uuid selectorValues =
+newReel : Uuid.Uuid -> SelectorValues -> Int -> Reel
+newReel uuid selectorValues quantity =
     { id = uuid
     , audioConfig = selectorValues.audioConfig
     , diameter = selectorValues.diameter
     , tapeThickness = selectorValues.tapeThickness
     , recordingSpeed = selectorValues.recordingSpeed
-    , quantity = 1
+    , quantity = quantity
     }
 
 
@@ -228,7 +228,7 @@ footageToInt footage =
 
 
 formatTime : DurationInMinutes -> String
-formatTime minutes =
+formatTime mins =
     let
         padNumber num =
             if num < 10 then
@@ -236,22 +236,16 @@ formatTime minutes =
             else
                 toString num
 
-        allMinutes =
-            floor minutes
+        totalSeconds =
+            round <| mins * 60
 
-        hour =
-            padNumber <| allMinutes // 60
+        hours =
+            totalSeconds // 3600
 
-        baseMins =
-            allMinutes % 60
-
-        mins =
-            padNumber baseMins
-
-        decimal =
-            minutes - toFloat allMinutes
+        minutes =
+            (totalSeconds - (hours * 3600)) // 60
 
         seconds =
-            padNumber <| decimal * 60
+            totalSeconds - (hours * 3600) - (minutes * 60)
     in
-    hour ++ ":" ++ mins ++ ":" ++ seconds
+    padNumber hours ++ ":" ++ padNumber minutes ++ ":" ++ padNumber seconds
