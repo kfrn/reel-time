@@ -4,14 +4,20 @@ import Types exposing (..)
 import Uuid exposing (Uuid)
 
 
-newReel : Uuid.Uuid -> SelectorValues -> Int -> Reel
+newReel : Uuid.Uuid -> SelectorValues -> Quantity -> Reel
 newReel uuid selectorValues quantity =
+    let
+        ( direction, passes ) =
+            reelInfo selectorValues.audioConfig
+    in
     { id = uuid
     , audioConfig = selectorValues.audioConfig
     , diameter = selectorValues.diameter
     , tapeThickness = selectorValues.tapeThickness
     , recordingSpeed = selectorValues.recordingSpeed
     , quantity = quantity
+    , passes = passes
+    , directionality = direction
     }
 
 

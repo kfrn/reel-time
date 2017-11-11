@@ -33,7 +33,7 @@ type alias Model =
     { currentSeed : Seed
     , reels : List Reel
     , selectorValues : SelectorValues
-    , quantity : Maybe Int
+    , quantity : Maybe Quantity
     }
 
 
@@ -194,12 +194,21 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
+    let
+        total =
+            if List.length model.reels > 0 then
+                [ totalRow model ]
+            else
+                []
+    in
     div [ id "container", class "box container" ]
-        [ h1 [ class "title" ] [ text "reel-to-reel" ]
-        , headingRow
-        , div [] (List.map reelOptionsRow model.reels)
-        , selectorRow model
-        ]
+        ([ h1 [ class "title" ] [ text "reel-to-reel" ]
+         , headingRow
+         , div [] (List.map reelOptionsRow model.reels)
+         , selectorRow model
+         ]
+            ++ total
+        )
 
 
 headingRow : Html Msg
@@ -216,7 +225,7 @@ headingRow =
         ]
 
 
-reelData : Footage -> Int -> Direction -> List (Html Msg)
+reelData : Footage -> Passes -> Direction -> List (Html Msg)
 reelData footage passes direction =
     let
         passesInfo =
@@ -234,8 +243,7 @@ reelData footage passes direction =
         footageInfo =
             toString ft ++ "ft / " ++ toString metricFootage ++ "m per reel"
     in
-    [ div [] [ text direction ]
-    , div [] [ text passesInfo ]
+    [ div [] [ text (direction ++ ": " ++ passesInfo) ]
     , div [] [ text footageInfo ]
     ]
 
@@ -269,9 +277,6 @@ reelOptionsRow reel =
                     ]
                 ]
 
-        ( direction, passes ) =
-            reelInfo reel.audioConfig
-
         footage =
             reelLengthInFeet reel
 
@@ -297,10 +302,10 @@ reelOptionsRow reel =
             [ text (toString reel.quantity) ]
         , div
             [ class "column is-2 has-text-centered" ]
-            (reelData footage passes direction)
+            (reelData footage reel.passes reel.directionality)
         , div
             [ class "column is-2 has-text-centered" ]
-            (durationData mins reel.quantity passes)
+            (durationData mins reel.quantity reel.passes)
         , div
             [ class "column is-1 has-text-centered" ]
             [ deleteRowButton reel ]
@@ -362,10 +367,8 @@ selectorRow model =
                 ]
                 []
             ]
-        , div [ class "column is-1 has-text-centered" ]
-            [ text "• • •" ]
-        , div [ class "column is-2 has-text-centered" ]
-            [ text "• • •" ]
+        , div [ class "column is-1 has-text-centered" ] []
+        , div [ class "column is-2 has-text-centered" ] []
         , div [ class "column is-1 has-text-centered" ]
             [ button
                 [ class "button", onClick AddReel, disabled invalidQuantity ]
@@ -373,5 +376,20 @@ selectorRow model =
                     [ i [ class "fa fa-plus" ] []
                     ]
                 ]
+            ]
+        ]
+
+
+totalRow : Model -> Html Msg
+totalRow model =
+    let
+        totalMins =
+            totalLength model.reels
+    in
+    div [ class "columns" ]
+        [ div [ class "column is-1 is-offset-8" ] [ text "total" ]
+        , div [ class "column is-2" ]
+            [ div [] [ text (toString totalMins ++ " mins, or") ]
+            , div [] [ text (formatTime totalMins) ]
             ]
         ]

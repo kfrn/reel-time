@@ -3,9 +3,6 @@ module Calculations exposing (..)
 import Types exposing (..)
 
 
--- TODO: use the # of passes!
-
-
 reelLengthInFeet : Reel -> Footage
 reelLengthInFeet reel =
     case ( reel.diameter, reel.tapeThickness ) of
@@ -99,3 +96,8 @@ durationInMinutes reel =
 
         IPS_30 ->
             multiplier
+
+
+totalLength : List Reel -> DurationInMinutes
+totalLength reels =
+    List.sum <| List.map (\r -> durationInMinutes r * toFloat r.passes * toFloat r.quantity) reels

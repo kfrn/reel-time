@@ -29,7 +29,9 @@ type alias Reel =
     , diameter : DiameterInInches
     , tapeThickness : TapeThickness
     , recordingSpeed : RecordingSpeed
-    , quantity : Int
+    , quantity : Quantity
+    , passes : Passes
+    , directionality : Direction
     }
 
 
