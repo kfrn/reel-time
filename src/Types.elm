@@ -23,6 +23,16 @@ type alias Quantity =
     Int
 
 
+type SystemOfMeasurement
+    = Metric
+    | Imperial
+
+
+allSystemsOfMeasurement : List SystemOfMeasurement
+allSystemsOfMeasurement =
+    [ Metric, Imperial ]
+
+
 type alias Reel =
     { id : Uuid.Uuid
     , audioConfig : AudioConfig

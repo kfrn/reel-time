@@ -34,6 +34,7 @@ type alias Model =
     , reels : List Reel
     , selectorValues : SelectorValues
     , quantity : Maybe Quantity
+    , system : SystemOfMeasurement
     }
 
 
@@ -55,7 +56,7 @@ initialModel =
             , recordingSpeed = IPS_7p5
             }
     in
-    Model seed [] initialSelectorValues Nothing
+    Model seed [] initialSelectorValues Nothing Imperial
 
 
 
@@ -70,6 +71,7 @@ type Msg
     | ChangeTapeThickness String
     | ChangeRecordingSpeed String
     | UpdateQuantity String
+    | ChangeSystemOfMeasurement SystemOfMeasurement
     | NoOp
 
 
@@ -184,6 +186,14 @@ update msg model =
                 Err e ->
                     ( { model | quantity = Nothing }, Cmd.none )
 
+        ChangeSystemOfMeasurement system ->
+            case system of
+                Metric ->
+                    ( { model | system = Metric }, Cmd.none )
+
+                Imperial ->
+                    ( { model | system = Imperial }, Cmd.none )
+
         NoOp ->
             ( model, Cmd.none )
 
@@ -202,13 +212,30 @@ view model =
                 []
     in
     div [ id "container", class "box container" ]
-        ([ h1 [ class "title" ] [ text "reel-to-reel" ]
+        ([ systemControls model.system
+         , h1 [ class "title" ] [ text "reel-to-reel" ]
          , headingRow
-         , div [] (List.map reelOptionsRow model.reels)
+         , div [] (List.map (reelRow model.system) model.reels)
          , selectorRow model
          ]
             ++ total
         )
+
+
+systemControls : SystemOfMeasurement -> Html Msg
+systemControls system =
+    let
+        makeButton sys =
+            button
+                [ classList
+                    [ ( "button", True )
+                    , ( "is-primary", sys == system )
+                    ]
+                , onClick (ChangeSystemOfMeasurement sys)
+                ]
+                [ text (toString sys) ]
+    in
+    div [] (List.map makeButton allSystemsOfMeasurement)
 
 
 headingRow : Html Msg
@@ -225,27 +252,36 @@ headingRow =
         ]
 
 
-reelData : Footage -> Passes -> Direction -> List (Html Msg)
-reelData footage passes direction =
+lengthInfo : SystemOfMeasurement -> Footage -> Html Msg
+lengthInfo system footage =
     let
-        passesInfo =
+        ft =
+            footageToInt footage
+
+        metricLength =
+            toFloat ft * 0.3048
+
+        lengthText =
+            case system of
+                Imperial ->
+                    toString ft ++ "ft"
+
+                Metric ->
+                    toString metricLength ++ "m"
+    in
+    div [] [ text (lengthText ++ " per reel") ]
+
+
+directionAndPassCount : Direction -> Passes -> Html Msg
+directionAndPassCount direction passes =
+    let
+        passText =
             if passes == 1 then
                 "1 pass"
             else
                 toString passes ++ " passes"
-
-        ft =
-            footageToInt footage
-
-        metricFootage =
-            toFloat ft * 0.3048
-
-        footageInfo =
-            toString ft ++ "ft / " ++ toString metricFootage ++ "m per reel"
     in
-    [ div [] [ text (direction ++ ": " ++ passesInfo) ]
-    , div [] [ text footageInfo ]
-    ]
+    div [] [ text (direction ++ ": " ++ passText) ]
 
 
 durationData : DurationInMinutes -> Quantity -> Passes -> List (Html Msg)
@@ -262,13 +298,8 @@ durationData mins quantity passes =
     ]
 
 
-speedDisplayName : RecordingSpeed -> String
-speedDisplayName speed =
-    ipsDisplayName speed ++ " / " ++ ipsToCmps speed
-
-
-reelOptionsRow : Reel -> Html Msg
-reelOptionsRow reel =
+reelRow : SystemOfMeasurement -> Reel -> Html Msg
+reelRow system reel =
     let
         deleteRowButton r =
             button [ class "button", onClick (DeleteRow r) ]
@@ -290,19 +321,21 @@ reelOptionsRow reel =
             [ text (audioConfigDisplayName reel.audioConfig) ]
         , div
             [ class "column has-text-centered" ]
-            [ text (diameterDisplayName reel.diameter) ]
+            [ text (diameterDisplayName system <| reel.diameter) ]
         , div
             [ class "column has-text-centered" ]
             [ text (tapeThicknessDisplayName reel.tapeThickness) ]
         , div
             [ class "column has-text-centered" ]
-            [ text (speedDisplayName reel.recordingSpeed) ]
+            [ text (speedDisplayName system <| reel.recordingSpeed) ]
         , div
             [ class "column is-1 has-text-centered" ]
             [ text (toString reel.quantity) ]
         , div
             [ class "column is-2 has-text-centered" ]
-            (reelData footage reel.passes reel.directionality)
+            [ directionAndPassCount reel.directionality reel.passes
+            , lengthInfo system footage
+            ]
         , div
             [ class "column is-2 has-text-centered" ]
             (durationData mins reel.quantity reel.passes)
@@ -315,6 +348,26 @@ reelOptionsRow reel =
 onChange : (String -> msg) -> Html.Attribute msg
 onChange makeMessage =
     on "change" (Json.map makeMessage Html.Events.targetValue)
+
+
+diameterDisplayName : SystemOfMeasurement -> (DiameterInInches -> String)
+diameterDisplayName system =
+    case system of
+        Imperial ->
+            diameterImperialName
+
+        Metric ->
+            diameterMetricName
+
+
+speedDisplayName : SystemOfMeasurement -> (RecordingSpeed -> String)
+speedDisplayName system =
+    case system of
+        Imperial ->
+            speedImperialName
+
+        Metric ->
+            speedMetricName
 
 
 selectorRow : Model -> Html Msg
@@ -341,7 +394,7 @@ selectorRow model =
             [ select
                 [ name "diameter", class "select is-small", onChange ChangeDiameterInInches ]
                 (List.map
-                    (createOption sValues.diameter diameterDisplayName)
+                    (createOption sValues.diameter <| diameterDisplayName model.system)
                     allDiameters
                 )
             ]
@@ -355,14 +408,14 @@ selectorRow model =
         , div [ class "column has-text-centered" ]
             [ select [ name "recording-speed", class "select is-small", onChange ChangeRecordingSpeed ]
                 (List.map
-                    (createOption sValues.recordingSpeed speedDisplayName)
+                    (createOption sValues.recordingSpeed <| speedDisplayName model.system)
                     allRecordingSpeeds
                 )
             ]
         , div [ class "column is-2 has-text-centered" ]
             [ input
                 [ classList [ ( "input", True ), ( "is-danger", invalidQuantity ) ]
-                , placeholder "Enter a number"
+                , placeholder "#"
                 , onInput UpdateQuantity
                 ]
                 []

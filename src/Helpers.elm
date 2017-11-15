@@ -138,17 +138,30 @@ audioConfigDisplayName audioConfig =
             "quarter-track mono"
 
 
-diameterDisplayName : DiameterInInches -> String
-diameterDisplayName diameter =
+diameterImperialName : DiameterInInches -> String
+diameterImperialName diameter =
     case diameter of
         Five ->
-            "5\" / 12.7cm"
+            "5\""
 
         Seven ->
-            "7\" / 17.8cm"
+            "7\""
 
         TenPtFive ->
-            "10.5\" / 26.7cm"
+            "10.5\""
+
+
+diameterMetricName : DiameterInInches -> String
+diameterMetricName diameter =
+    case diameter of
+        Five ->
+            "12.7cm"
+
+        Seven ->
+            "17.8cm"
+
+        TenPtFive ->
+            "26.7cm"
 
 
 tapeThicknessDisplayName : TapeThickness -> String
@@ -167,8 +180,8 @@ tapeThicknessDisplayName thickness =
             "0.5 mil triple"
 
 
-ipsDisplayName : RecordingSpeed -> String
-ipsDisplayName speed =
+speedImperialName : RecordingSpeed -> String
+speedImperialName speed =
     case speed of
         IPS_1p875 ->
             "1.875ips"
@@ -186,8 +199,8 @@ ipsDisplayName speed =
             "30ips"
 
 
-ipsToCmps : RecordingSpeed -> String
-ipsToCmps speed =
+speedMetricName : RecordingSpeed -> String
+speedMetricName speed =
     case speed of
         IPS_1p875 ->
             "4.75cm/s"
