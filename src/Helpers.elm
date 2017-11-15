@@ -25,19 +25,19 @@ reelInfo : AudioConfig -> ( Direction, Passes )
 reelInfo config =
     case config of
         FullTrackMono ->
-            ( "unidirectional", 1 )
+            ( Unidirectional, 1 )
 
         HalfTrackStereo ->
-            ( "unidirectional", 1 )
+            ( Unidirectional, 1 )
 
         HalfTrackMono ->
-            ( "bidirectional", 2 )
+            ( Bidirectional, 2 )
 
         QuarterTrackStereo ->
-            ( "bidirectional", 2 )
+            ( Bidirectional, 2 )
 
         QuarterTrackMono ->
-            ( "bidirectional", 4 )
+            ( Bidirectional, 4 )
 
 
 audioConfigFromString : String -> Maybe AudioConfig
@@ -117,25 +117,6 @@ recordingSpeedFromString name =
 
         _ ->
             Nothing
-
-
-audioConfigDisplayName : AudioConfig -> String
-audioConfigDisplayName audioConfig =
-    case audioConfig of
-        FullTrackMono ->
-            "full-track mono"
-
-        HalfTrackStereo ->
-            "half-track stereo"
-
-        HalfTrackMono ->
-            "half-track mono"
-
-        QuarterTrackStereo ->
-            "quarter-track stereo"
-
-        QuarterTrackMono ->
-            "quarter-track mono"
 
 
 diameterImperialName : DiameterInInches -> String

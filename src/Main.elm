@@ -2,12 +2,13 @@ module Main exposing (..)
 
 import Calculations exposing (..)
 import Helpers exposing (..)
-import Html exposing (Html, button, div, h1, i, img, input, option, p, select, span, text)
+import Html exposing (Html, button, div, h1, h2, hr, i, img, input, option, p, select, span, text)
 import Html.Attributes exposing (class, classList, disabled, id, name, placeholder, selected, src, value)
 import Html.Events exposing (on, onClick, onInput)
 import Json.Decode as Json
 import Maybe.Extra exposing (isNothing)
 import Random.Pcg exposing (Seed, initialSeed, step)
+import Translate exposing (AppString(..), Language(..), allLanguages, translate)
 import Types exposing (..)
 import Uuid exposing (Uuid, uuidGenerator)
 
@@ -35,6 +36,7 @@ type alias Model =
     , selectorValues : SelectorValues
     , quantity : Maybe Quantity
     , system : SystemOfMeasurement
+    , language : Language
     }
 
 
@@ -56,7 +58,7 @@ initialModel =
             , recordingSpeed = IPS_7p5
             }
     in
-    Model seed [] initialSelectorValues Nothing Imperial
+    Model seed [] initialSelectorValues Nothing Imperial EN
 
 
 
@@ -72,6 +74,7 @@ type Msg
     | ChangeRecordingSpeed String
     | UpdateQuantity String
     | ChangeSystemOfMeasurement SystemOfMeasurement
+    | ChangeLanguage Language
     | NoOp
 
 
@@ -194,6 +197,9 @@ update msg model =
                 Imperial ->
                     ( { model | system = Imperial }, Cmd.none )
 
+        ChangeLanguage l ->
+            ( { model | language = l }, Cmd.none )
+
         NoOp ->
             ( model, Cmd.none )
 
@@ -213,9 +219,14 @@ view model =
     in
     div [ id "container", class "box container" ]
         ([ systemControls model.system
+         , hr [] []
+         , languageControls model.language
+         , hr [] []
          , h1 [ class "title" ] [ text "reel-to-reel" ]
-         , headingRow
-         , div [] (List.map (reelRow model.system) model.reels)
+         , h2 [ class "subtitle" ] [ text <| translate model.language CalculateStr ]
+         , hr [] []
+         , headingRow model.language
+         , div [] (List.map (reelRow model.system model.language) model.reels)
          , selectorRow model
          ]
             ++ total
@@ -238,22 +249,38 @@ systemControls system =
     div [] (List.map makeButton allSystemsOfMeasurement)
 
 
-headingRow : Html Msg
-headingRow =
+languageControls : Language -> Html Msg
+languageControls language =
+    let
+        makeButton l =
+            button
+                [ classList
+                    [ ( "button", True )
+                    , ( "is-primary", l == language )
+                    ]
+                , onClick (ChangeLanguage l)
+                ]
+                [ text (toString l) ]
+    in
+    div [] (List.map makeButton allLanguages)
+
+
+headingRow : Language -> Html Msg
+headingRow language =
     div [ class "columns has-text-centered" ]
-        [ div [ class "column has-text-centered" ] [ text "type" ]
-        , div [ class "column has-text-centered" ] [ text "diameter" ]
-        , div [ class "column has-text-centered" ] [ text "thickness" ]
-        , div [ class "column has-text-centered" ] [ text "speed" ]
-        , div [ class "column is-1 has-text-centered" ] [ text "quantity" ]
-        , div [ class "column is-2 has-text-centered" ] [ text "info" ]
-        , div [ class "column is-2 has-text-centered" ] [ text "length" ]
-        , div [ class "column is-1 has-text-centered" ] [ text "add/del" ]
+        [ div [ class "column has-text-centered" ] [ text <| translate language TypeStr ]
+        , div [ class "column has-text-centered" ] [ text <| translate language DiameterStr ]
+        , div [ class "column has-text-centered" ] [ text <| translate language ThicknessStr ]
+        , div [ class "column has-text-centered" ] [ text <| translate language SpeedStr ]
+        , div [ class "column is-1 has-text-centered" ] [ text <| translate language QuantityStr ]
+        , div [ class "column is-2 has-text-centered" ] [ text <| translate language InfoHeaderStr ]
+        , div [ class "column is-2 has-text-centered" ] [ text <| translate language DurationStr ]
+        , div [ class "column is-1 has-text-centered" ] []
         ]
 
 
-lengthInfo : SystemOfMeasurement -> Footage -> Html Msg
-lengthInfo system footage =
+lengthInfo : SystemOfMeasurement -> Language -> Footage -> Html Msg
+lengthInfo system language footage =
     let
         ft =
             footageToInt footage
@@ -268,24 +295,35 @@ lengthInfo system footage =
 
                 Metric ->
                     toString metricLength ++ "m"
+
+        perReel =
+            translate language PerReelStr
     in
-    div [] [ text (lengthText ++ " per reel") ]
+    div [] [ text (lengthText ++ " " ++ perReel) ]
 
 
-directionAndPassCount : Direction -> Passes -> Html Msg
-directionAndPassCount direction passes =
+directionAndPassCount : Language -> Direction -> Passes -> Html Msg
+directionAndPassCount language direction passes =
     let
         passText =
             if passes == 1 then
-                "1 pass"
+                translate language SinglePassStr
             else
-                toString passes ++ " passes"
+                toString passes ++ " " ++ translate language PassesStr
+
+        directionString =
+            case direction of
+                Unidirectional ->
+                    UnidirectionalStr
+
+                Bidirectional ->
+                    BidirectionalStr
     in
-    div [] [ text (direction ++ ": " ++ passText) ]
+    div [] [ text (translate language directionString ++ ": " ++ passText) ]
 
 
-durationData : DurationInMinutes -> Quantity -> Passes -> List (Html Msg)
-durationData mins quantity passes =
+durationData : Language -> DurationInMinutes -> Quantity -> Passes -> List (Html Msg)
+durationData language mins quantity passes =
     let
         reelTime =
             mins * toFloat passes
@@ -293,13 +331,13 @@ durationData mins quantity passes =
         totalTime =
             reelTime * toFloat quantity
     in
-    [ div [] [ text (toString reelTime ++ " min per reel") ]
-    , div [] [ text (formatTime totalTime ++ " total") ]
+    [ div [] [ text (toString reelTime ++ " min " ++ translate language PerReelStr) ]
+    , div [] [ text (formatTime totalTime ++ " " ++ translate language TotalStr) ]
     ]
 
 
-reelRow : SystemOfMeasurement -> Reel -> Html Msg
-reelRow system reel =
+reelRow : SystemOfMeasurement -> Language -> Reel -> Html Msg
+reelRow system language reel =
     let
         deleteRowButton r =
             button [ class "button", onClick (DeleteRow r) ]
@@ -318,7 +356,7 @@ reelRow system reel =
         [ id (Uuid.toString reel.id), class "columns has-text-centered" ]
         [ div
             [ class "column has-text-centered" ]
-            [ text (audioConfigDisplayName reel.audioConfig) ]
+            [ text <| translate language <| audioConfigDisplayName reel.audioConfig ]
         , div
             [ class "column has-text-centered" ]
             [ text (diameterDisplayName system <| reel.diameter) ]
@@ -333,12 +371,12 @@ reelRow system reel =
             [ text (toString reel.quantity) ]
         , div
             [ class "column is-2 has-text-centered" ]
-            [ directionAndPassCount reel.directionality reel.passes
-            , lengthInfo system footage
+            [ directionAndPassCount language reel.directionality reel.passes
+            , lengthInfo system language footage
             ]
         , div
             [ class "column is-2 has-text-centered" ]
-            (durationData mins reel.quantity reel.passes)
+            (durationData language mins reel.quantity reel.passes)
         , div
             [ class "column is-1 has-text-centered" ]
             [ deleteRowButton reel ]
@@ -358,6 +396,25 @@ diameterDisplayName system =
 
         Metric ->
             diameterMetricName
+
+
+audioConfigDisplayName : AudioConfig -> AppString
+audioConfigDisplayName audioConfig =
+    case audioConfig of
+        FullTrackMono ->
+            FullTrackMonoStr
+
+        HalfTrackStereo ->
+            HalfTrackStereoStr
+
+        HalfTrackMono ->
+            HalfTrackMonoStr
+
+        QuarterTrackStereo ->
+            QuarterTrackStereoStr
+
+        QuarterTrackMono ->
+            QuarterTrackMonoStr
 
 
 speedDisplayName : SystemOfMeasurement -> (RecordingSpeed -> String)
@@ -386,7 +443,7 @@ selectorRow model =
         [ div [ class "column has-text-centered" ]
             [ select [ name "audio-config", class "select is-small", onChange ChangeAudioConfig ]
                 (List.map
-                    (createOption sValues.audioConfig audioConfigDisplayName)
+                    (\config -> option [ value (toString config), selected (config == sValues.audioConfig) ] [ text <| translate model.language <| audioConfigDisplayName config ])
                     allAudioConfigs
                 )
             ]
@@ -440,9 +497,9 @@ totalRow model =
             totalLength model.reels
     in
     div [ class "columns" ]
-        [ div [ class "column is-1 is-offset-8" ] [ text "total" ]
+        [ div [ class "column is-1 is-offset-8" ] [ text <| translate model.language TotalStr ]
         , div [ class "column is-2" ]
-            [ div [] [ text (toString totalMins ++ " mins, or") ]
+            [ div [] [ text (toString totalMins ++ " mins, " ++ translate model.language OrStr) ]
             , div [] [ text (formatTime totalMins) ]
             ]
         ]

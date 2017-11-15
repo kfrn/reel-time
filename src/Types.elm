@@ -3,10 +3,6 @@ module Types exposing (..)
 import Uuid exposing (Uuid)
 
 
-type alias Direction =
-    String
-
-
 type alias Passes =
     Int
 
@@ -26,6 +22,11 @@ type alias Quantity =
 type SystemOfMeasurement
     = Metric
     | Imperial
+
+
+type Direction
+    = Unidirectional
+    | Bidirectional
 
 
 allSystemsOfMeasurement : List SystemOfMeasurement
