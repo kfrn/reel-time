@@ -218,19 +218,36 @@ view model =
                 []
     in
     div [ id "container", class "box container" ]
-        ([ systemControls model.system
-         , hr [] []
-         , languageControls model.language
-         , hr [] []
-         , h1 [ class "title" ] [ text "reel-to-reel" ]
-         , h2 [ class "subtitle" ] [ text <| translate model.language CalculateStr ]
-         , hr [] []
-         , headingRow model.language
-         , div [] (List.map (reelRow model.system model.language) model.reels)
-         , selectorRow model
-         ]
-            ++ total
-        )
+        [ div [ id "content" ]
+            ([ systemControls model.system
+             , hr [] []
+             , languageControls model.language
+             , hr [] []
+             , h1 [ class "title" ] [ text "reel-to-reel" ]
+             , h2 [ class "subtitle" ] [ text <| translate model.language CalculateStr ]
+             , hr [] []
+             , headingRow model.language
+             , div [] (List.map (reelRow model.system model.language) model.reels)
+             , selectorRow model
+             ]
+                ++ total
+            )
+        , responsiveWarning model.language
+        ]
+
+
+responsiveWarning : Language -> Html Msg
+responsiveWarning language =
+    div [ class "responsive-warning-container whiteout" ]
+        [ div [ class "responsive-warning" ]
+            [ p [ class "is-size-2" ]
+                [ span [ class "icon" ]
+                    [ i [ class "fa fa-exclamation-triangle" ] []
+                    ]
+                ]
+            , p [] [ text <| translate language ResponsiveStr ]
+            ]
+        ]
 
 
 systemControls : SystemOfMeasurement -> Html Msg
