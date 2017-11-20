@@ -36,7 +36,7 @@ body {
   }
 }
 
-@media screen and (min-width: 800px) {
+/*@media screen and (min-width: 800px) {
   .responsive-warning {
     display: none !important;
   }
@@ -44,10 +44,14 @@ body {
   .responsive-warning-container.whiteout {
     background-color: rgba(0, 0, 0, 0);
   }
-}
+}*/
 /*
 @media screen and (max-width: 801px) {
   #content {
     display: none !important;
   }
 }*/
+
+.logo {
+  max-width: 200px;
+}

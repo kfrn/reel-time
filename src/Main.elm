@@ -2,8 +2,8 @@ module Main exposing (..)
 
 import Calculations exposing (..)
 import Helpers exposing (..)
-import Html exposing (Html, button, div, h1, h2, hr, i, img, input, option, p, select, span, text)
-import Html.Attributes exposing (class, classList, disabled, id, name, placeholder, selected, src, value)
+import Html exposing (Html, a, button, div, h1, h2, hr, i, img, input, option, p, select, span, sup, text)
+import Html.Attributes exposing (class, classList, disabled, href, id, name, placeholder, selected, src, value)
 import Html.Events exposing (on, onClick, onInput)
 import Json.Decode as Json
 import Maybe.Extra exposing (isNothing)
@@ -37,6 +37,7 @@ type alias Model =
     , quantity : Maybe Quantity
     , system : SystemOfMeasurement
     , language : Language
+    , page : PageView
     }
 
 
@@ -58,7 +59,7 @@ initialModel =
             , recordingSpeed = IPS_7p5
             }
     in
-    Model seed [] initialSelectorValues Nothing Imperial EN
+    Model seed [] initialSelectorValues Nothing Imperial EN Calculator
 
 
 
@@ -75,6 +76,7 @@ type Msg
     | UpdateQuantity String
     | ChangeSystemOfMeasurement SystemOfMeasurement
     | ChangeLanguage Language
+    | TogglePageView PageView
     | NoOp
 
 
@@ -200,6 +202,14 @@ update msg model =
         ChangeLanguage l ->
             ( { model | language = l }, Cmd.none )
 
+        TogglePageView page ->
+            case page of
+                Calculator ->
+                    ( { model | page = Info }, Cmd.none )
+
+                Info ->
+                    ( { model | page = Calculator }, Cmd.none )
+
         NoOp ->
             ( model, Cmd.none )
 
@@ -220,19 +230,16 @@ view model =
     div [ id "container", class "box container" ]
         [ div [ id "content" ]
             ([ systemControls model.system
-             , hr [] []
              , languageControls model.language
+             , navigationButton model.page
              , hr [] []
              , h1 [ class "title" ] [ text "reel-to-reel" ]
-             , h2 [ class "subtitle" ] [ text <| translate model.language CalculateStr ]
-             , hr [] []
-             , headingRow model.language
-             , div [] (List.map (reelRow model.system model.language) model.reels)
-             , selectorRow model
+             , img [ src "/reel-time-logo-sketch_sml.jpg", class "logo" ] []
              ]
-                ++ total
+                ++ pageContent model
             )
-        , responsiveWarning model.language
+
+        -- , responsiveWarning model.language
         ]
 
 
@@ -280,6 +287,43 @@ languageControls language =
                 [ text (toString l) ]
     in
     div [] (List.map makeButton allLanguages)
+
+
+navigationButton : PageView -> Html Msg
+navigationButton page =
+    let
+        navButton iconName =
+            div [ class "button", onClick (TogglePageView page) ] [ span [ class "icon" ] [ i [ class <| "fa " ++ iconName ] [] ] ]
+    in
+    case page of
+        Calculator ->
+            navButton "fa-info-circle"
+
+        Info ->
+            navButton "fa-home"
+
+
+pageContent : Model -> List (Html Msg)
+pageContent model =
+    let
+        total =
+            if List.length model.reels > 0 then
+                [ totalRow model ]
+            else
+                []
+    in
+    case model.page of
+        Info ->
+            [ div [] [ text "info will go here" ] ]
+
+        Calculator ->
+            [ h2 [ class "subtitle" ] [ text <| translate model.language CalculateStr ]
+            , hr [] []
+            , headingRow model.language
+            , div [] (List.map (reelRow model.system model.language) model.reels)
+            , selectorRow model
+            ]
+                ++ total
 
 
 headingRow : Language -> Html Msg

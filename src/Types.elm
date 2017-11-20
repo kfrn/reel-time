@@ -29,6 +29,11 @@ type Direction
     | Bidirectional
 
 
+type PageView
+    = Calculator
+    | Info
+
+
 allSystemsOfMeasurement : List SystemOfMeasurement
 allSystemsOfMeasurement =
     [ Metric, Imperial ]
