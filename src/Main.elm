@@ -2,7 +2,7 @@ module Main exposing (..)
 
 import Calculations exposing (..)
 import Helpers exposing (..)
-import Html exposing (Html, a, button, div, h1, h2, hr, i, img, input, option, p, select, span, sup, text)
+import Html exposing (Html, a, button, div, h1, h2, hr, i, img, input, li, option, p, select, span, strong, sup, text, ul)
 import Html.Attributes exposing (class, classList, disabled, href, id, name, placeholder, selected, src, value)
 import Html.Events exposing (on, onClick, onInput)
 import Json.Decode as Json
@@ -303,6 +303,57 @@ navigationButton page =
             navButton "fa-home"
 
 
+link : LinkName -> Html Msg
+link name =
+    case name of
+        CableBible ->
+            a [ href "https://amiaopensource.github.io/cable-bible/" ] [ text "Cable Bible" ]
+
+        Estimating ->
+            a [ href "https://www.avpreserve.com/estimating-duration-of-open-reel-audio/" ] [ text "Estimating the duration of open-reel audio" ]
+
+        Facet ->
+            a [ href "http://www.dlib.indiana.edu/projects/sounddirections/facet/facet_formats.pdf" ] [ text "FACET: The Field Audio Collection Evaluation Tool. Format Characteristics and Preservation Problems" ]
+
+        Ffmprovisr ->
+            a [ href "https://amiaopensource.github.io/ffmprovisr/" ] [ text "ffmprovisr" ]
+
+        IASAGuidelinesEN ->
+            a [ href "https://www.iasa-web.org/tc04/audio-preservation" ] [ text "IASA TC-04: Guidelines on the Production and Preservation of Digital Audio Objects" ]
+
+        IASAGuidelinesFR ->
+            a [ href "https://www.iasa-web.org/tc04-fr/la-production-et-la-conservation-des-objets-audionumeriques" ] [ text "IASA TC-04: Recommandations pour la production et la conservation des objets audionumériques" ]
+
+        IASAGuidelinesIT ->
+            a [ href "http://www.aib.it/aib/editoria/2007/pub172.htm" ] [ text "IASA TC-04: Linee guida per la produzione e la preservazione di oggetti audio digitali" ]
+
+        IASAMagLinkEN ->
+            a [ href "https://www.iasa-web.org/tc05/2211-magnetic-tapes" ] [ text "Magnetic tapes, IASA TC-05: Handling and Storage of Audio and Video Carriers" ]
+
+        IASAMagLinkIT ->
+            a [ href "https://www.iasa-web.org/tc05-it/2211-nastri-magnetici" ] [ text "Nastri magnetici, IASA TC-05: Gestione e archiviazione dei supporti audio e video" ]
+
+        SourceCaster ->
+            a [ href "https://datapraxis.github.io/sourcecaster/" ] [ text "SourceCaster" ]
+
+        ORADCalc ->
+            a [ href "https://www.avpreserve.com/open-reel-audio-duration-calculator/" ] [ text "Open Reel Audio Duration Calculator" ]
+
+
+type LinkName
+    = CableBible
+    | Estimating
+    | Facet
+    | Ffmprovisr
+    | IASAGuidelinesEN
+    | IASAGuidelinesFR
+    | IASAGuidelinesIT
+    | IASAMagLinkEN
+    | IASAMagLinkIT
+    | SourceCaster
+    | ORADCalc
+
+
 pageContent : Model -> List (Html Msg)
 pageContent model =
     let
@@ -314,7 +365,9 @@ pageContent model =
     in
     case model.page of
         Info ->
-            [ div [] [ text "info will go here" ] ]
+            infoParagraph model.language
+                ++ questionSection model.language
+                ++ linksSection model.language
 
         Calculator ->
             [ h2 [ class "subtitle" ] [ text <| translate model.language CalculateStr ]
@@ -324,6 +377,73 @@ pageContent model =
             , selectorRow model
             ]
                 ++ total
+
+
+infoParagraph : Language -> List (Html Msg)
+infoParagraph language =
+    [ h2 [ class "subtitle" ] [ text <| translate language AboutStr ]
+    , p []
+        [ text "Reel Time"
+        , text <| translate language DevelopedByStr
+        , text <| translate language InspiredByStr
+        , link Ffmprovisr
+        , text ", "
+        , link CableBible
+        , text ","
+        , text <| translate language AndStr
+        , link SourceCaster
+        , text <| translate language AndOfCourseStr
+        , link ORADCalc
+        , text <| translate language SpreadsheetStr
+        , text " Joshua Ranger (AVPreserve)."
+        ]
+    ]
+
+
+questionSection : Language -> List (Html Msg)
+questionSection language =
+    [ h2 [ class "subtitle" ] [ text <| translate language QAndAStr ]
+    , p [] [ strong [] [ text <| translate language UnknownVariablesQStr ] ]
+    , p [] [ text <| translate language UnknownVariablesAStr ]
+    , p [] [ strong [] [ text <| translate language ReelDurationQStr ] ]
+    , p [] [ text <| translate language ReelDurationAStr ]
+    ]
+
+
+linksSection : Language -> List (Html Msg)
+linksSection language =
+    let
+        iasaTC04Link =
+            case language of
+                EN ->
+                    [ li [] [ link IASAGuidelinesEN, text " (2nd ed.), IASA Technical Committee, 2009" ] ]
+
+                FR ->
+                    [ li [] [ link IASAGuidelinesFR, text " (2ème ed.), IASA Comité Technique, 2009, tr. 2015" ] ]
+
+                IT ->
+                    [ li [] [ link IASAGuidelinesIT, text ", IASA Comitato Technico, 2004, tr. 2007" ] ]
+
+        iasaTC05Link =
+            case language of
+                EN ->
+                    [ li [] [ link IASAMagLinkEN, text ", IASA Technical Committee, 2014" ] ]
+
+                FR ->
+                    []
+
+                IT ->
+                    [ li [] [ link IASAMagLinkIT, text ", IASA Comitato Technico, 2014, tr. 2016" ] ]
+    in
+    [ h2 [ class "subtitle" ] [ text <| translate language UsefulLinksStr ]
+    , ul []
+        (iasaTC05Link
+            ++ iasaTC04Link
+            ++ [ li [] [ link Estimating, text ", Joshua Ranger, AVPreserve, 12/2014" ]
+               , li [] [ link Facet, text " (PDF), Mike Casey, Indiana University, 2007" ]
+               ]
+        )
+    ]
 
 
 headingRow : Language -> Html Msg
