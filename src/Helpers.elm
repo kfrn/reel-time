@@ -1,5 +1,6 @@
 module Helpers exposing (..)
 
+import Translate exposing (AppString(..))
 import Types exposing (..)
 import Uuid exposing (Uuid)
 
@@ -62,6 +63,25 @@ audioConfigFromString name =
             Nothing
 
 
+audioConfigDisplayName : AudioConfig -> AppString
+audioConfigDisplayName audioConfig =
+    case audioConfig of
+        FullTrackMono ->
+            FullTrackMonoStr
+
+        HalfTrackStereo ->
+            HalfTrackStereoStr
+
+        HalfTrackMono ->
+            HalfTrackMonoStr
+
+        QuarterTrackStereo ->
+            QuarterTrackStereoStr
+
+        QuarterTrackMono ->
+            QuarterTrackMonoStr
+
+
 diameterFromString : String -> Maybe DiameterInInches
 diameterFromString name =
     case name of
@@ -119,6 +139,16 @@ recordingSpeedFromString name =
             Nothing
 
 
+diameterDisplayName : SystemOfMeasurement -> (DiameterInInches -> String)
+diameterDisplayName system =
+    case system of
+        Imperial ->
+            diameterImperialName
+
+        Metric ->
+            diameterMetricName
+
+
 diameterImperialName : DiameterInInches -> String
 diameterImperialName diameter =
     case diameter of
@@ -159,6 +189,16 @@ tapeThicknessDisplayName thickness =
 
         Mil0p5Triple ->
             "0.5 mil triple"
+
+
+speedDisplayName : SystemOfMeasurement -> (RecordingSpeed -> String)
+speedDisplayName system =
+    case system of
+        Imperial ->
+            speedImperialName
+
+        Metric ->
+            speedMetricName
 
 
 speedImperialName : RecordingSpeed -> String

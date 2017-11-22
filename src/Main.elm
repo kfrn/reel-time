@@ -6,6 +6,7 @@ import Html exposing (Html, a, button, div, h1, h2, hr, i, img, input, li, optio
 import Html.Attributes exposing (class, classList, disabled, href, id, name, placeholder, selected, src, value)
 import Html.Events exposing (on, onClick, onInput)
 import Json.Decode as Json
+import Links exposing (LinkName(..), link)
 import Maybe.Extra exposing (isNothing)
 import Random.Pcg exposing (Seed, initialSeed, step)
 import Translate exposing (AppString(..), Language(..), allLanguages, translate)
@@ -220,20 +221,13 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    let
-        total =
-            if List.length model.reels > 0 then
-                [ totalRow model ]
-            else
-                []
-    in
     div [ id "container", class "box container" ]
         [ div [ id "content" ]
             ([ systemControls model.system
              , languageControls model.language
              , navigationButton model.page
              , hr [] []
-             , h1 [ class "title" ] [ text "reel-to-reel" ]
+             , h1 [ class "title" ] [ text "reel time" ]
              , img [ src "/reel-time-logo-sketch_sml.jpg", class "logo" ] []
              ]
                 ++ pageContent model
@@ -301,57 +295,6 @@ navigationButton page =
 
         Info ->
             navButton "fa-home"
-
-
-link : LinkName -> Html Msg
-link name =
-    case name of
-        CableBible ->
-            a [ href "https://amiaopensource.github.io/cable-bible/" ] [ text "Cable Bible" ]
-
-        Estimating ->
-            a [ href "https://www.avpreserve.com/estimating-duration-of-open-reel-audio/" ] [ text "Estimating the duration of open-reel audio" ]
-
-        Facet ->
-            a [ href "http://www.dlib.indiana.edu/projects/sounddirections/facet/facet_formats.pdf" ] [ text "FACET: The Field Audio Collection Evaluation Tool. Format Characteristics and Preservation Problems" ]
-
-        Ffmprovisr ->
-            a [ href "https://amiaopensource.github.io/ffmprovisr/" ] [ text "ffmprovisr" ]
-
-        IASAGuidelinesEN ->
-            a [ href "https://www.iasa-web.org/tc04/audio-preservation" ] [ text "IASA TC-04: Guidelines on the Production and Preservation of Digital Audio Objects" ]
-
-        IASAGuidelinesFR ->
-            a [ href "https://www.iasa-web.org/tc04-fr/la-production-et-la-conservation-des-objets-audionumeriques" ] [ text "IASA TC-04: Recommandations pour la production et la conservation des objets audionumériques" ]
-
-        IASAGuidelinesIT ->
-            a [ href "http://www.aib.it/aib/editoria/2007/pub172.htm" ] [ text "IASA TC-04: Linee guida per la produzione e la preservazione di oggetti audio digitali" ]
-
-        IASAMagLinkEN ->
-            a [ href "https://www.iasa-web.org/tc05/2211-magnetic-tapes" ] [ text "Magnetic tapes, IASA TC-05: Handling and Storage of Audio and Video Carriers" ]
-
-        IASAMagLinkIT ->
-            a [ href "https://www.iasa-web.org/tc05-it/2211-nastri-magnetici" ] [ text "Nastri magnetici, IASA TC-05: Gestione e archiviazione dei supporti audio e video" ]
-
-        SourceCaster ->
-            a [ href "https://datapraxis.github.io/sourcecaster/" ] [ text "SourceCaster" ]
-
-        ORADCalc ->
-            a [ href "https://www.avpreserve.com/open-reel-audio-duration-calculator/" ] [ text "Open Reel Audio Duration Calculator" ]
-
-
-type LinkName
-    = CableBible
-    | Estimating
-    | Facet
-    | Ffmprovisr
-    | IASAGuidelinesEN
-    | IASAGuidelinesFR
-    | IASAGuidelinesIT
-    | IASAMagLinkEN
-    | IASAMagLinkIT
-    | SourceCaster
-    | ORADCalc
 
 
 pageContent : Model -> List (Html Msg)
@@ -567,45 +510,6 @@ reelRow system language reel =
 onChange : (String -> msg) -> Html.Attribute msg
 onChange makeMessage =
     on "change" (Json.map makeMessage Html.Events.targetValue)
-
-
-diameterDisplayName : SystemOfMeasurement -> (DiameterInInches -> String)
-diameterDisplayName system =
-    case system of
-        Imperial ->
-            diameterImperialName
-
-        Metric ->
-            diameterMetricName
-
-
-audioConfigDisplayName : AudioConfig -> AppString
-audioConfigDisplayName audioConfig =
-    case audioConfig of
-        FullTrackMono ->
-            FullTrackMonoStr
-
-        HalfTrackStereo ->
-            HalfTrackStereoStr
-
-        HalfTrackMono ->
-            HalfTrackMonoStr
-
-        QuarterTrackStereo ->
-            QuarterTrackStereoStr
-
-        QuarterTrackMono ->
-            QuarterTrackMonoStr
-
-
-speedDisplayName : SystemOfMeasurement -> (RecordingSpeed -> String)
-speedDisplayName system =
-    case system of
-        Imperial ->
-            speedImperialName
-
-        Metric ->
-            speedMetricName
 
 
 selectorRow : Model -> Html Msg
