@@ -9,7 +9,7 @@ import Json.Decode as Json
 import Links exposing (LinkName(..), link)
 import Maybe.Extra exposing (isNothing)
 import Random.Pcg exposing (Seed, initialSeed, step)
-import Translate exposing (AppString(..), Language(..), allLanguages, translate)
+import Translate exposing (AppString(..), Language(..), allLanguages, infoPara, translate)
 import Types exposing (..)
 import Uuid exposing (Uuid, uuidGenerator)
 
@@ -325,21 +325,7 @@ pageContent model =
 infoParagraph : Language -> List (Html Msg)
 infoParagraph language =
     [ h2 [ class "subtitle" ] [ text <| translate language AboutStr ]
-    , p []
-        [ text "Reel Time"
-        , text <| translate language DevelopedByStr
-        , text <| translate language InspiredByStr
-        , link Ffmprovisr
-        , text ", "
-        , link CableBible
-        , text ","
-        , text <| translate language AndStr
-        , link SourceCaster
-        , text <| translate language AndOfCourseStr
-        , link ORADCalc
-        , text <| translate language SpreadsheetStr
-        , text " Joshua Ranger (AVPreserve)."
-        ]
+    , p [] (infoPara language)
     ]
 
 
@@ -421,9 +407,9 @@ lengthInfo system language footage =
                     toString metricLength ++ "m"
 
         perReel =
-            translate language PerReelStr
+            translate language (PerReelStr lengthText)
     in
-    div [] [ text (lengthText ++ " " ++ perReel) ]
+    div [] [ text perReel ]
 
 
 directionAndPassCount : Language -> Direction -> Passes -> Html Msg
@@ -433,7 +419,7 @@ directionAndPassCount language direction passes =
             if passes == 1 then
                 translate language SinglePassStr
             else
-                toString passes ++ " " ++ translate language PassesStr
+                translate language (PassesStr passes)
 
         directionString =
             case direction of
@@ -442,8 +428,11 @@ directionAndPassCount language direction passes =
 
                 Bidirectional ->
                     BidirectionalStr
+
+        fullDirectionString =
+            translate language directionString
     in
-    div [] [ text (translate language directionString ++ ": " ++ passText) ]
+    div [] [ text (fullDirectionString ++ ": " ++ passText) ]
 
 
 durationData : Language -> DurationInMinutes -> Quantity -> Passes -> List (Html Msg)
@@ -452,10 +441,13 @@ durationData language mins quantity passes =
         reelTime =
             mins * toFloat passes
 
+        reelTimeString =
+            translate language <| MinutesStr reelTime
+
         totalTime =
             reelTime * toFloat quantity
     in
-    [ div [] [ text (toString reelTime ++ " min " ++ translate language PerReelStr) ]
+    [ div [] [ text (translate language <| PerReelStr reelTimeString) ]
     , div [] [ text (formatTime totalTime ++ " " ++ translate language TotalStr) ]
     ]
 
@@ -580,11 +572,13 @@ totalRow model =
     let
         totalMins =
             totalLength model.reels
+
+        formattedTime =
+            formatTime totalMins
     in
     div [ class "columns" ]
         [ div [ class "column is-1 is-offset-8" ] [ text <| translate model.language TotalStr ]
         , div [ class "column is-2" ]
-            [ div [] [ text (toString totalMins ++ " mins, " ++ translate model.language OrStr) ]
-            , div [] [ text (formatTime totalMins) ]
+            [ div [] [ text <| translate model.language (DurationSummaryStr totalMins formattedTime) ]
             ]
         ]
