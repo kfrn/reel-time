@@ -2,8 +2,8 @@ module Main exposing (..)
 
 import Calculations exposing (..)
 import Helpers exposing (..)
-import Html exposing (Html, a, button, div, h1, h2, hr, i, img, input, li, option, p, select, span, strong, sup, text, ul)
-import Html.Attributes exposing (class, classList, disabled, href, id, name, placeholder, selected, src, value)
+import Html exposing (Html, a, button, div, em, h1, h2, hr, i, img, input, li, nav, option, p, select, span, strong, sup, text, ul)
+import Html.Attributes exposing (attribute, class, classList, disabled, href, id, name, placeholder, selected, src, value)
 import Html.Events exposing (on, onClick, onInput)
 import Json.Decode as Json
 import Links exposing (LinkData(..), LinkName(..), link, linkData)
@@ -223,12 +223,10 @@ view : Model -> Html Msg
 view model =
     div [ id "container", class "box container" ]
         [ div [ id "content" ]
-            ([ systemControls model.system
-             , languageControls model.language
-             , navigationButton model.page
-             , hr [] []
-             , h1 [ class "title" ] [ text "reel time" ]
-             , img [ src "/reel-time-logo-sketch_sml.jpg", class "logo" ] []
+            ([ navbar model
+            , hr [] []
+
+             --  , img [ src "/reel-time-logo-sketch_sml.jpg", class "logo" ] []
              ]
                 ++ pageContent model
             )
@@ -251,6 +249,31 @@ responsiveWarning language =
         ]
 
 
+navbar : Model -> Html Msg
+navbar model =
+    nav [ class "navbar", attribute "role" "navigation" ]
+        [ div [ class "navbar-brand" ]
+            [ div [ class "navbar-item" ]
+                [ p [ class "title" ]
+                    [ text "⏰ reel time"
+                    ]
+                ]
+            ]
+        , div [ class "navbar-menu" ]
+            [ div [ class "navbar-start" ]
+                [ div [ class "navbar-item" ]
+                    [ p [ class "subtitle" ] [ em [] [ text <| translate model.language CalculateStr ] ]
+                    ]
+                ]
+            , div [ class "navbar-end" ]
+                [ systemControls model.system
+                , languageControls model.language
+                , navigationButton model.page
+                ]
+            ]
+        ]
+
+
 systemControls : SystemOfMeasurement -> Html Msg
 systemControls system =
     let
@@ -264,7 +287,7 @@ systemControls system =
                 ]
                 [ text (toString sys) ]
     in
-    div [] (List.map makeButton allSystemsOfMeasurement)
+    div [ class "navbar-item" ] (List.map makeButton allSystemsOfMeasurement)
 
 
 languageControls : Language -> Html Msg
@@ -280,14 +303,16 @@ languageControls language =
                 ]
                 [ text (toString l) ]
     in
-    div [] (List.map makeButton allLanguages)
+    div [ class "navbar-item" ] (List.map makeButton allLanguages)
 
 
 navigationButton : PageView -> Html Msg
 navigationButton page =
     let
         navButton iconName =
-            div [ class "button", onClick (TogglePageView page) ] [ span [ class "icon" ] [ i [ class <| "fa " ++ iconName ] [] ] ]
+            div [ class "navbar-item" ]
+                [ div [ class "button", onClick (TogglePageView page) ] [ span [ class "icon" ] [ i [ class <| "fa " ++ iconName ] [] ] ]
+                ]
     in
     case page of
         Calculator ->
@@ -313,9 +338,7 @@ pageContent model =
                 ++ linksSection model.language
 
         Calculator ->
-            [ h2 [ class "subtitle" ] [ text <| translate model.language CalculateStr ]
-            , hr [] []
-            , headingRow model.language
+            [ headingRow model.language
             , div [] (List.map (reelRow model.system model.language) model.reels)
             , selectorRow model
             ]
