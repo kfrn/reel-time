@@ -4,6 +4,41 @@ import Html exposing (Html, a, text)
 import Html.Attributes exposing (href)
 
 
+linkData : LinkData -> String
+linkData data =
+    case data of
+        IASAGuidelinesENData ->
+            " (2nd ed.), IASA Technical Committee, 2009"
+
+        IASAGuidelinesFRData ->
+            " (2ème ed.), IASA Comité Technique, 2009, tr. 2015"
+
+        IASAGuidelinesITData ->
+            ", IASA Comitato Technico, 2004, tr. 2007"
+
+        IASAMagLinkENData ->
+            ", IASA Technical Committee, 2014"
+
+        IASAMagLinkITData ->
+            ", IASA Comitato Technico, 2014, tr. 2016"
+
+        RangerData ->
+            ", Joshua Ranger, AVPreserve, 12/2014"
+
+        CaseyData ->
+            " (PDF), Mike Casey, Indiana University, 2007"
+
+
+type LinkData
+    = IASAGuidelinesENData
+    | IASAGuidelinesFRData
+    | IASAGuidelinesITData
+    | IASAMagLinkENData
+    | IASAMagLinkITData
+    | RangerData
+    | CaseyData
+
+
 link : LinkName -> Html msg
 link name =
     case name of

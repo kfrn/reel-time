@@ -6,7 +6,7 @@ import Html exposing (Html, a, button, div, h1, h2, hr, i, img, input, li, optio
 import Html.Attributes exposing (class, classList, disabled, href, id, name, placeholder, selected, src, value)
 import Html.Events exposing (on, onClick, onInput)
 import Json.Decode as Json
-import Links exposing (LinkName(..), link)
+import Links exposing (LinkData(..), LinkName(..), link, linkData)
 import Maybe.Extra exposing (isNothing)
 import Random.Pcg exposing (Seed, initialSeed, step)
 import Translate exposing (AppString(..), Language(..), allLanguages, infoPara, translate)
@@ -345,31 +345,31 @@ linksSection language =
         iasaTC04Link =
             case language of
                 EN ->
-                    [ li [] [ link IASAGuidelinesEN, text " (2nd ed.), IASA Technical Committee, 2009" ] ]
+                    [ li [] [ link IASAGuidelinesEN, text <| linkData IASAGuidelinesENData ] ]
 
                 FR ->
-                    [ li [] [ link IASAGuidelinesFR, text " (2ème ed.), IASA Comité Technique, 2009, tr. 2015" ] ]
+                    [ li [] [ link IASAGuidelinesFR, text <| linkData IASAGuidelinesFRData ] ]
 
                 IT ->
-                    [ li [] [ link IASAGuidelinesIT, text ", IASA Comitato Technico, 2004, tr. 2007" ] ]
+                    [ li [] [ link IASAGuidelinesIT, text <| linkData IASAGuidelinesITData ] ]
 
         iasaTC05Link =
             case language of
                 EN ->
-                    [ li [] [ link IASAMagLinkEN, text ", IASA Technical Committee, 2014" ] ]
+                    [ li [] [ link IASAMagLinkEN, text <| linkData IASAMagLinkENData ] ]
 
                 FR ->
                     []
 
                 IT ->
-                    [ li [] [ link IASAMagLinkIT, text ", IASA Comitato Technico, 2014, tr. 2016" ] ]
+                    [ li [] [ link IASAMagLinkIT, text <| linkData IASAMagLinkITData ] ]
     in
     [ h2 [ class "subtitle" ] [ text <| translate language UsefulLinksStr ]
     , ul []
         (iasaTC05Link
             ++ iasaTC04Link
-            ++ [ li [] [ link Estimating, text ", Joshua Ranger, AVPreserve, 12/2014" ]
-               , li [] [ link Facet, text " (PDF), Mike Casey, Indiana University, 2007" ]
+            ++ [ li [] [ link Estimating, text <| linkData RangerData ]
+               , li [] [ link Facet, text <| linkData CaseyData ]
                ]
         )
     ]
