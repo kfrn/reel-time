@@ -1,7 +1,7 @@
 module Links exposing (..)
 
-import Html exposing (Html, a, text)
-import Html.Attributes exposing (href)
+import Html exposing (Html, a, i, span, text)
+import Html.Attributes exposing (class, href)
 
 
 linkData : LinkData -> String
@@ -45,6 +45,13 @@ link name =
         CableBible ->
             a [ href "https://amiaopensource.github.io/cable-bible/" ] [ text "Cable Bible" ]
 
+        Email ->
+            a [ href "mailto:kfnagels@gmail.com" ]
+                [ span [ class "icon is-medium" ]
+                    [ i [ class "fa fa-envelope" ] []
+                    ]
+                ]
+
         Estimating ->
             a [ href "https://www.avpreserve.com/estimating-duration-of-open-reel-audio/" ] [ text "Estimating the duration of open-reel audio" ]
 
@@ -69,15 +76,23 @@ link name =
         IASAMagLinkIT ->
             a [ href "https://www.iasa-web.org/tc05-it/2211-nastri-magnetici" ] [ text "Nastri magnetici, IASA TC-05: Gestione e archiviazione dei supporti audio e video" ]
 
+        ORADCalc ->
+            a [ href "https://www.avpreserve.com/open-reel-audio-duration-calculator/" ] [ text "Open Reel Audio Duration Calculator" ]
+
         SourceCaster ->
             a [ href "https://datapraxis.github.io/sourcecaster/" ] [ text "SourceCaster" ]
 
-        ORADCalc ->
-            a [ href "https://www.avpreserve.com/open-reel-audio-duration-calculator/" ] [ text "Open Reel Audio Duration Calculator" ]
+        SourceCode ->
+            a [ href "https://github.com/kfrn/reel-time" ]
+                [ span [ class "icon" ]
+                    [ i [ class "fa fa-github" ] []
+                    ]
+                ]
 
 
 type LinkName
     = CableBible
+    | Email
     | Estimating
     | Facet
     | Ffmprovisr
@@ -86,5 +101,6 @@ type LinkName
     | IASAGuidelinesIT
     | IASAMagLinkEN
     | IASAMagLinkIT
-    | SourceCaster
     | ORADCalc
+    | SourceCaster
+    | SourceCode

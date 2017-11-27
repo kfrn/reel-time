@@ -92,7 +92,7 @@ update msg model =
                             step Uuid.uuidGenerator model.currentSeed
 
                         newReels =
-                            model.reels ++ [ newReel uuid model.selectorValues q ]
+                            [ newReel uuid model.selectorValues q ] ++ model.reels
 
                         newModel =
                             { model | currentSeed = newSeed, reels = newReels }
@@ -223,13 +223,12 @@ view : Model -> Html Msg
 view model =
     div [ id "container", class "box container" ]
         [ div [ id "content" ]
-            ([ navbar model
+            [ navbar model.page model.system model.language
             , hr [] []
-
-             --  , img [ src "/reel-time-logo-sketch_sml.jpg", class "logo" ] []
-             ]
-                ++ pageContent model
-            )
+            , pageContent model
+            , hr [] []
+            , footer model.language
+            ]
 
         -- , responsiveWarning model.language
         ]
@@ -249,8 +248,25 @@ responsiveWarning language =
         ]
 
 
-navbar : Model -> Html Msg
-navbar model =
+footer : Language -> Html Msg
+footer language =
+    div [ class "level" ]
+        [ div [ class "level-left" ] [ text <| translate language DevelopedByStr ]
+        , div [ class "is-size-6 level-right" ] [ link Email, link SourceCode ]
+        ]
+
+
+navbar : PageView -> SystemOfMeasurement -> Language -> Html Msg
+navbar page system language =
+    let
+        measurementControls =
+            case page of
+                Calculator ->
+                    [ systemControls system ]
+
+                _ ->
+                    []
+    in
     nav [ class "navbar", attribute "role" "navigation" ]
         [ div [ class "navbar-brand" ]
             [ div [ class "navbar-item" ]
@@ -262,14 +278,15 @@ navbar model =
         , div [ class "navbar-menu" ]
             [ div [ class "navbar-start" ]
                 [ div [ class "navbar-item" ]
-                    [ p [ class "subtitle" ] [ em [] [ text <| translate model.language CalculateStr ] ]
+                    [ p [] [ em [] [ text <| translate language CalculateStr ] ]
                     ]
                 ]
             , div [ class "navbar-end" ]
-                [ systemControls model.system
-                , languageControls model.language
-                , navigationButton model.page
-                ]
+                (measurementControls
+                    ++ [ languageControls language
+                       , navigationButton page
+                       ]
+                )
             ]
         ]
 
@@ -280,7 +297,7 @@ systemControls system =
         makeButton sys =
             button
                 [ classList
-                    [ ( "button", True )
+                    [ ( "button is-small", True )
                     , ( "is-primary", sys == system )
                     ]
                 , onClick (ChangeSystemOfMeasurement sys)
@@ -296,7 +313,7 @@ languageControls language =
         makeButton l =
             button
                 [ classList
-                    [ ( "button", True )
+                    [ ( "button is-small", True )
                     , ( "is-primary", l == language )
                     ]
                 , onClick (ChangeLanguage l)
@@ -311,7 +328,7 @@ navigationButton page =
     let
         navButton iconName =
             div [ class "navbar-item" ]
-                [ div [ class "button", onClick (TogglePageView page) ] [ span [ class "icon" ] [ i [ class <| "fa " ++ iconName ] [] ] ]
+                [ div [ class "button is-small", onClick (TogglePageView page) ] [ span [ class "icon" ] [ i [ class <| "fa " ++ iconName ] [] ] ]
                 ]
     in
     case page of
@@ -322,7 +339,12 @@ navigationButton page =
             navButton "fa-home"
 
 
-pageContent : Model -> List (Html Msg)
+wrapSectionInLevelDiv : Html Msg -> Html Msg
+wrapSectionInLevelDiv section =
+    div [ class "level" ] [ section ]
+
+
+pageContent : Model -> Html Msg
 pageContent model =
     let
         total =
@@ -330,39 +352,55 @@ pageContent model =
                 [ totalRow model ]
             else
                 []
+
+        infoPageSections =
+            [ infoParagraph model.language, questionSection model.language, linksSection model.language ]
     in
     case model.page of
         Info ->
-            infoParagraph model.language
-                ++ questionSection model.language
-                ++ linksSection model.language
+            div [ class "columns" ]
+                [ div [ class "column is-one-third" ] [ img [ src "/reel-time-logo-sketch_sml.jpg" ] [] ]
+                , div [ class "column is-two-thirds has-text-left" ]
+                    (List.map wrapSectionInLevelDiv infoPageSections)
+                ]
 
         Calculator ->
-            [ headingRow model.language
-            , div [] (List.map (reelRow model.system model.language) model.reels)
-            , selectorRow model
-            ]
-                ++ total
+            div []
+                ([ selectorRow model ]
+                    ++ [ div [] (List.map (reelRow model.system model.language) model.reels) ]
+                    ++ total
+                )
 
 
-infoParagraph : Language -> List (Html Msg)
+infoParagraph : Language -> Html Msg
 infoParagraph language =
-    [ h2 [ class "subtitle" ] [ text <| translate language AboutStr ]
-    , p [] (infoPara language)
-    ]
+    div []
+        [ h2 [ class "subtitle" ] [ text <| translate language AboutStr ]
+        , p [] (infoPara language)
+        , p [] [ text <| translate language ContributeStr ]
+        ]
 
 
-questionSection : Language -> List (Html Msg)
+questionSection : Language -> Html Msg
 questionSection language =
-    [ h2 [ class "subtitle" ] [ text <| translate language QAndAStr ]
-    , p [] [ strong [] [ text <| translate language UnknownVariablesQStr ] ]
-    , p [] [ text <| translate language UnknownVariablesAStr ]
-    , p [] [ strong [] [ text <| translate language ReelDurationQStr ] ]
-    , p [] [ text <| translate language ReelDurationAStr ]
-    ]
+    div []
+        [ h2 [ class "subtitle" ] [ text <| translate language QAndAStr ]
+        , wrapSectionInLevelDiv
+            (div []
+                [ p [] [ strong [] [ text <| translate language UnknownVariablesQStr ] ]
+                , p [] [ text <| translate language UnknownVariablesAStr ]
+                ]
+            )
+        , wrapSectionInLevelDiv
+            (div []
+                [ p [] [ strong [] [ text <| translate language ReelDurationQStr ] ]
+                , p [] [ text <| translate language ReelDurationAStr ]
+                ]
+            )
+        ]
 
 
-linksSection : Language -> List (Html Msg)
+linksSection : Language -> Html Msg
 linksSection language =
     let
         iasaTC04Link =
@@ -387,28 +425,15 @@ linksSection language =
                 IT ->
                     [ li [] [ link IASAMagLinkIT, text <| linkData IASAMagLinkITData ] ]
     in
-    [ h2 [ class "subtitle" ] [ text <| translate language UsefulLinksStr ]
-    , ul []
-        (iasaTC05Link
-            ++ iasaTC04Link
-            ++ [ li [] [ link Estimating, text <| linkData RangerData ]
-               , li [] [ link Facet, text <| linkData CaseyData ]
-               ]
-        )
-    ]
-
-
-headingRow : Language -> Html Msg
-headingRow language =
-    div [ class "columns has-text-centered" ]
-        [ div [ class "column has-text-centered" ] [ text <| translate language TypeStr ]
-        , div [ class "column has-text-centered" ] [ text <| translate language DiameterStr ]
-        , div [ class "column has-text-centered" ] [ text <| translate language ThicknessStr ]
-        , div [ class "column has-text-centered" ] [ text <| translate language SpeedStr ]
-        , div [ class "column is-1 has-text-centered" ] [ text <| translate language QuantityStr ]
-        , div [ class "column is-2 has-text-centered" ] [ text <| translate language InfoHeaderStr ]
-        , div [ class "column is-2 has-text-centered" ] [ text <| translate language DurationStr ]
-        , div [ class "column is-1 has-text-centered" ] []
+    div []
+        [ h2 [ class "subtitle" ] [ text <| translate language UsefulLinksStr ]
+        , ul []
+            (iasaTC05Link
+                ++ iasaTC04Link
+                ++ [ li [] [ link Estimating, text <| linkData RangerData ]
+                   , li [] [ link Facet, text <| linkData CaseyData ]
+                   ]
+            )
         ]
 
 
@@ -479,7 +504,7 @@ reelRow : SystemOfMeasurement -> Language -> Reel -> Html Msg
 reelRow system language reel =
     let
         deleteRowButton r =
-            button [ class "button", onClick (DeleteRow r) ]
+            button [ class "button is-small", onClick (DeleteRow r) ]
                 [ span [ class "icon" ]
                     [ i [ class "fa fa-trash" ] []
                     ]
@@ -522,6 +547,21 @@ reelRow system language reel =
         ]
 
 
+
+-- headingRow : Language -> Html Msg
+-- headingRow language =
+--     div [ class "columns has-text-centered" ]
+--         [ div [ class "column has-text-centered" ] [ text <| translate language TypeStr ]
+--         , div [ class "column has-text-centered" ] [ text <| translate language DiameterStr ]
+--         , div [ class "column has-text-centered" ] [ text <| translate language ThicknessStr ]
+--         , div [ class "column has-text-centered" ] [ text <| translate language SpeedStr ]
+--         , div [ class "column is-1 has-text-centered" ] [ text <| translate language QuantityStr ]
+--         , div [ class "column is-2 has-text-centered" ] [ text <| translate language InfoHeaderStr ]
+--         , div [ class "column is-2 has-text-centered" ] [ text <| translate language DurationStr ]
+--         , div [ class "column is-1 has-text-centered" ] []
+--         ]
+
+
 onChange : (String -> msg) -> Html.Attribute msg
 onChange makeMessage =
     on "change" (Json.map makeMessage Html.Events.targetValue)
@@ -541,47 +581,66 @@ selectorRow model =
     in
     div [ class "columns" ]
         [ div [ class "column has-text-centered" ]
-            [ select [ name "audio-config", class "select is-small", onChange ChangeAudioConfig ]
-                (List.map
-                    (\config -> option [ value (toString config), selected (config == sValues.audioConfig) ] [ text <| translate model.language <| audioConfigDisplayName config ])
-                    allAudioConfigs
-                )
+            [ div [] [ text <| translate model.language TypeStr ]
+            , div [ class "select is-small" ]
+                [ select [ name "audio-config", class "select is-small", onChange ChangeAudioConfig ]
+                    (List.map
+                        (\config -> option [ value (toString config), selected (config == sValues.audioConfig) ] [ text <| translate model.language <| audioConfigDisplayName config ])
+                        allAudioConfigs
+                    )
+                ]
             ]
         , div [ class "column has-text-centered" ]
-            [ select
-                [ name "diameter", class "select is-small", onChange ChangeDiameterInInches ]
-                (List.map
-                    (createOption sValues.diameter <| diameterDisplayName model.system)
-                    allDiameters
-                )
+            [ div [] [ text <| translate model.language DiameterStr ]
+            , div [ class "select is-small" ]
+                [ select
+                    [ name "diameter", class "select is-small", onChange ChangeDiameterInInches ]
+                    (List.map
+                        (createOption sValues.diameter <| diameterDisplayName model.system)
+                        allDiameters
+                    )
+                ]
             ]
         , div [ class "column has-text-centered" ]
-            [ select [ name "tape-thickness", class "select is-small", onChange ChangeTapeThickness ]
-                (List.map
-                    (createOption sValues.tapeThickness tapeThicknessDisplayName)
-                    allThicknesses
-                )
+            [ div [] [ text <| translate model.language ThicknessStr ]
+            , div [ class "select is-small" ]
+                [ select [ name "tape-thickness", class "select is-small", onChange ChangeTapeThickness ]
+                    (List.map
+                        (createOption sValues.tapeThickness tapeThicknessDisplayName)
+                        allThicknesses
+                    )
+                ]
             ]
         , div [ class "column has-text-centered" ]
-            [ select [ name "recording-speed", class "select is-small", onChange ChangeRecordingSpeed ]
-                (List.map
-                    (createOption sValues.recordingSpeed <| speedDisplayName model.system)
-                    allRecordingSpeeds
-                )
+            [ div [] [ text <| translate model.language SpeedStr ]
+            , div [ class "select is-small" ]
+                [ select [ name "recording-speed", class "select is-small", onChange ChangeRecordingSpeed ]
+                    (List.map
+                        (createOption sValues.recordingSpeed <| speedDisplayName model.system)
+                        allRecordingSpeeds
+                    )
+                ]
             ]
-        , div [ class "column is-2 has-text-centered" ]
-            [ input
-                [ classList [ ( "input", True ), ( "is-danger", invalidQuantity ) ]
+        , div [ class "column is-1 has-text-centered" ]
+            [ div [] [ text <| translate model.language QuantityStr ]
+            , input
+                [ classList [ ( "input is-small", True ), ( "is-danger", invalidQuantity ) ]
+                , id "quantity"
                 , placeholder "#"
                 , onInput UpdateQuantity
                 ]
                 []
             ]
-        , div [ class "column is-1 has-text-centered" ] []
-        , div [ class "column is-2 has-text-centered" ] []
+        , div [ class "column is-2 has-text-centered" ]
+            [ div [] [ text <| translate model.language InfoHeaderStr ]
+            ]
+        , div [ class "column is-2 has-text-centered" ]
+            [ div [] [ text <| translate model.language DurationStr ]
+            ]
         , div [ class "column is-1 has-text-centered" ]
-            [ button
-                [ class "button", onClick AddReel, disabled invalidQuantity ]
+            [ div [] [ text "." ]
+            , button
+                [ class "button is-small", onClick AddReel, disabled invalidQuantity ]
                 [ span [ class "icon" ]
                     [ i [ class "fa fa-plus" ] []
                     ]

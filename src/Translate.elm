@@ -28,7 +28,7 @@ infoPara language =
     let
         translationSet =
             { en =
-                [ text "Reel Time is developed by Katherine Nagels. It is inspired by open-source preservation tools like "
+                [ text "Reel Time is inspired by open-source preservation tools like "
                 , link Ffmprovisr
                 , text ", "
                 , link CableBible
@@ -39,7 +39,7 @@ infoPara language =
                 , text " spreadsheet by Joshua Ranger of AVPreserve."
                 ]
             , fr =
-                [ text "Reel Time est créé par Katherine Nagels. Il s'inspire de projets open-source comme "
+                [ text "Reel Time s'inspire de projets open-source comme "
                 , link Ffmprovisr
                 , text ", "
                 , link CableBible
@@ -50,7 +50,7 @@ infoPara language =
                 , text " tableur par Joshua Ranger de AVPreserve."
                 ]
             , it =
-                [ text "Reel Time è stato creato da Katherine Nagels. È ispirato a progetti open-source come "
+                [ text "Reel Time è ispirato a progetti open-source come "
                 , link Ffmprovisr
                 , text ", "
                 , link CableBible
@@ -97,9 +97,15 @@ translate language appString =
                     }
 
                 ContributeStr ->
-                    { en = "Suggestions and contributions are welcome! You can open a pull request or submit an issue on github, or email me at kfnagels@gmail.com."
-                    , fr = "J'accueille les suggestions et les contributions! Vous pouvez ouvrir un «pull request» ou soumettre un «issue» sur github, ou m'envoyer un e-mail à kfnagels@gmail.com."
-                    , it = "Accolgo suggerimenti e contributi! Potete aprire un «pull request» o inviare un «issue» su github, o mi mandare una e-mail all'indirizzo kfnagels@gmail.com."
+                    { en = "Suggestions and contributions are welcome! You can open a pull request or submit an issue on github, or email me; links in page footer."
+                    , fr = "J'accueille les suggestions et les contributions! Vous pouvez ouvrir un «pull request» ou soumettre un «issue» sur github, ou m'envoyer un e-mail; liens au bas de page."
+                    , it = "Accolgo suggerimenti e contributi! Potete aprire un «pull request» o inviare un «issue» su github, o mi mandare una e-mail; link a piè di pagina."
+                    }
+
+                DevelopedByStr ->
+                    { en = "Web app by Katherine Nagels"
+                    , fr = "Application web par Katherine Nagels"
+                    , it = "Applicazione Web di Katherine Nagels"
                     }
 
                 DiameterStr ->
@@ -274,6 +280,7 @@ type AppString
     | BidirectionalStr
     | CalculateStr
     | ContributeStr
+    | DevelopedByStr
     | DiameterStr
     | DurationStr
     | DurationSummaryStr DurationInMinutes String
