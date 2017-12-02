@@ -2,7 +2,7 @@ module View exposing (view)
 
 import Calculations exposing (..)
 import Helpers exposing (..)
-import Html exposing (Html, a, button, div, em, h1, h2, hr, i, img, input, li, nav, option, p, select, span, strong, sup, text, ul)
+import Html exposing (..)
 import Html.Attributes exposing (attribute, class, classList, disabled, href, id, name, placeholder, selected, src, value)
 import Html.Events exposing (on, onClick, onInput)
 import Json.Decode as Json
@@ -143,12 +143,6 @@ wrapSectionInLevelDiv section =
 pageContent : Model -> Html Msg
 pageContent model =
     let
-        total =
-            if List.length model.reels > 0 then
-                [ totalRow model ]
-            else
-                []
-
         infoPageSections =
             [ infoParagraph model.language, questionSection model.language, linksSection model.language ]
     in
@@ -161,11 +155,7 @@ pageContent model =
                 ]
 
         Calculator ->
-            div []
-                ([ selectorRow model ]
-                    ++ [ div [] (List.map (reelRow model.system model.language) model.reels) ]
-                    ++ total
-                )
+            div [] [ reelTable model ]
 
 
 infoParagraph : Language -> Html Msg
@@ -296,66 +286,39 @@ durationData language mins quantity passes =
     ]
 
 
-reelRow : SystemOfMeasurement -> Language -> Reel -> Html Msg
-reelRow system language reel =
+reelTable : Model -> Html Msg
+reelTable model =
     let
-        deleteRowButton r =
-            button [ class "button is-small", onClick (DeleteRow r) ]
-                [ span [ class "icon" ]
-                    [ i [ class "fa fa-trash" ] []
-                    ]
-                ]
+        total =
+            if List.length model.reels > 0 then
+                [ totalRow model.language model.reels ]
+            else
+                []
 
-        footage =
-            reelLengthInFeet reel
-
-        mins =
-            durationInMinutes reel
+        reelRows =
+            List.map (reelRow model.system model.language) model.reels
     in
-    div
-        [ id (Uuid.toString reel.id), class "columns has-text-centered" ]
-        [ div
-            [ class "column has-text-centered" ]
-            [ text <| translate language <| audioConfigDisplayName reel.audioConfig ]
-        , div
-            [ class "column has-text-centered" ]
-            [ text (diameterDisplayName system <| reel.diameter) ]
-        , div
-            [ class "column has-text-centered" ]
-            [ text (tapeThicknessDisplayName reel.tapeThickness) ]
-        , div
-            [ class "column has-text-centered" ]
-            [ text (speedDisplayName system <| reel.recordingSpeed) ]
-        , div
-            [ class "column is-1 has-text-centered" ]
-            [ text (toString reel.quantity) ]
-        , div
-            [ class "column is-2 has-text-centered" ]
-            [ directionAndPassCount language reel.directionality reel.passes
-            , lengthInfo system language footage
-            ]
-        , div
-            [ class "column is-2 has-text-centered" ]
-            (durationData language mins reel.quantity reel.passes)
-        , div
-            [ class "column is-1 has-text-centered" ]
-            [ deleteRowButton reel ]
+    table [ class "table is-fullwidth" ]
+        ([ thead [] [ headerRow model.language ]
+         , tbody [] [ selectorRow model ]
+         , tbody [] reelRows
+         ]
+            ++ total
+        )
+
+
+headerRow : Language -> Html Msg
+headerRow language =
+    tr []
+        [ th [] [ text <| translate language TypeStr ]
+        , th [] [ text <| translate language DiameterStr ]
+        , th [] [ text <| translate language ThicknessStr ]
+        , th [] [ text <| translate language SpeedStr ]
+        , th [] [ text <| translate language QuantityStr ]
+        , th [] [ text <| translate language InfoHeaderStr ]
+        , th [] [ text <| translate language DurationStr ]
+        , th [] []
         ]
-
-
-
--- headingRow : Language -> Html Msg
--- headingRow language =
---     div [ class "columns has-text-centered" ]
---         [ div [ class "column has-text-centered" ] [ text <| translate language TypeStr ]
---         , div [ class "column has-text-centered" ] [ text <| translate language DiameterStr ]
---         , div [ class "column has-text-centered" ] [ text <| translate language ThicknessStr ]
---         , div [ class "column has-text-centered" ] [ text <| translate language SpeedStr ]
---         , div [ class "column is-1 has-text-centered" ] [ text <| translate language QuantityStr ]
---         , div [ class "column is-2 has-text-centered" ] [ text <| translate language InfoHeaderStr ]
---         , div [ class "column is-2 has-text-centered" ] [ text <| translate language DurationStr ]
---         , div [ class "column is-1 has-text-centered" ] []
---         ]
 
 
 onChange : (String -> msg) -> Html.Attribute msg
@@ -375,10 +338,9 @@ selectorRow model =
         invalidQuantity =
             isNothing model.quantity
     in
-    div [ class "columns" ]
-        [ div [ class "column has-text-centered" ]
-            [ div [] [ text <| translate model.language TypeStr ]
-            , div [ class "select is-small" ]
+    tr []
+        [ th []
+            [ div [ class "select is-small" ]
                 [ select [ name "audio-config", class "select is-small", onChange ChangeAudioConfig ]
                     (List.map
                         (\config -> option [ value (toString config), selected (config == sValues.audioConfig) ] [ text <| translate model.language <| audioConfigDisplayName config ])
@@ -386,9 +348,8 @@ selectorRow model =
                     )
                 ]
             ]
-        , div [ class "column has-text-centered" ]
-            [ div [] [ text <| translate model.language DiameterStr ]
-            , div [ class "select is-small" ]
+        , th []
+            [ div [ class "select is-small" ]
                 [ select
                     [ name "diameter", class "select is-small", onChange ChangeDiameterInInches ]
                     (List.map
@@ -397,9 +358,8 @@ selectorRow model =
                     )
                 ]
             ]
-        , div [ class "column has-text-centered" ]
-            [ div [] [ text <| translate model.language ThicknessStr ]
-            , div [ class "select is-small" ]
+        , th []
+            [ div [ class "select is-small" ]
                 [ select [ name "tape-thickness", class "select is-small", onChange ChangeTapeThickness ]
                     (List.map
                         (createOption sValues.tapeThickness tapeThicknessDisplayName)
@@ -407,9 +367,8 @@ selectorRow model =
                     )
                 ]
             ]
-        , div [ class "column has-text-centered" ]
-            [ div [] [ text <| translate model.language SpeedStr ]
-            , div [ class "select is-small" ]
+        , th []
+            [ div [ class "select is-small" ]
                 [ select [ name "recording-speed", class "select is-small", onChange ChangeRecordingSpeed ]
                     (List.map
                         (createOption sValues.recordingSpeed <| speedDisplayName model.system)
@@ -417,9 +376,8 @@ selectorRow model =
                     )
                 ]
             ]
-        , div [ class "column is-1 has-text-centered" ]
-            [ div [] [ text <| translate model.language QuantityStr ]
-            , input
+        , th []
+            [ input
                 [ classList [ ( "input is-small", True ), ( "is-danger", invalidQuantity ) ]
                 , id "quantity"
                 , placeholder "#"
@@ -427,15 +385,10 @@ selectorRow model =
                 ]
                 []
             ]
-        , div [ class "column is-2 has-text-centered" ]
-            [ div [] [ text <| translate model.language InfoHeaderStr ]
-            ]
-        , div [ class "column is-2 has-text-centered" ]
-            [ div [] [ text <| translate model.language DurationStr ]
-            ]
-        , div [ class "column is-1 has-text-centered" ]
-            [ div [] [ text "." ]
-            , button
+        , th [] []
+        , th [] []
+        , th []
+            [ button
                 [ class "button is-small", onClick AddReel, disabled invalidQuantity ]
                 [ span [ class "icon" ]
                     [ i [ class "fa fa-plus" ] []
@@ -445,18 +398,55 @@ selectorRow model =
         ]
 
 
-totalRow : Model -> Html Msg
-totalRow model =
+reelRow : SystemOfMeasurement -> Language -> Reel -> Html Msg
+reelRow system language reel =
+    let
+        deleteRowButton r =
+            button [ class "button is-small", onClick (DeleteRow r) ]
+                [ span [ class "icon" ]
+                    [ i [ class "fa fa-trash" ] []
+                    ]
+                ]
+
+        footage =
+            reelLengthInFeet reel
+
+        mins =
+            durationInMinutes reel
+    in
+    tr [ id (Uuid.toString reel.id) ]
+        [ td [] [ text <| translate language <| audioConfigDisplayName reel.audioConfig ]
+        , td [] [ text <| diameterDisplayName system reel.diameter ]
+        , td [] [ text <| tapeThicknessDisplayName reel.tapeThickness ]
+        , td [] [ text <| speedDisplayName system reel.recordingSpeed ]
+        , td [] [ text <| toString reel.quantity ]
+        , td []
+            [ directionAndPassCount language reel.directionality reel.passes
+            , lengthInfo system language footage
+            ]
+        , td [] (durationData language mins reel.quantity reel.passes)
+        , td [] [ deleteRowButton reel ]
+        ]
+
+
+totalRow : Language -> List Reel -> Html Msg
+totalRow language reels =
     let
         totalMins =
-            totalLength model.reels
+            totalLength reels
 
         formattedTime =
             formatTime totalMins
     in
-    div [ class "columns" ]
-        [ div [ class "column is-1 is-offset-8" ] [ text <| translate model.language TotalStr ]
-        , div [ class "column is-2" ]
-            [ div [] [ text <| translate model.language (DurationSummaryStr totalMins formattedTime) ]
+    tfoot []
+        [ tr []
+            [ td [] []
+            , td [] []
+            , td [] []
+            , td [] []
+            , td [] []
+            , td [] [ text <| translate language TotalStr ]
+            , td [] [ text <| translate language (DurationSummaryStr totalMins formattedTime) ]
+            , td [] []
             ]
         ]
