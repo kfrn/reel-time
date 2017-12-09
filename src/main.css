@@ -12,6 +12,18 @@ body {
   }
 }
 
+.left-offset {
+  padding-left: 5px;
+}
+
+.right-offset {
+  padding-right: 5px;
+}
+
+.invisible {
+  color: white; /* TODO: this is a hack ... */
+}
+
 /*------- PAGE LAYOUT -------*/
 
 #content {
@@ -21,20 +33,26 @@ body {
   padding: 1em;
 }
 
-.navbar {
-  /*background-color: green;*/
-  /*border: 1px solid black;*/
-  border-radius: 20px 20px 0 0;
+nav.navbar {
+  border-bottom: 1px solid black;
+  margin-bottom: 1em;
+  padding-bottom: 1em;
 }
 
 .navbar p {
   margin: 0;
 }
 
+div.app-footer {
+  border-top: 1px solid black;
+  margin-top: 1em;
+  padding-top: 1em;
+}
+
 /*------- INFO PAGE -------*/
 
 #info {
-  margin: 0 auto;
+  margin: 2em auto;
   max-width: 60%;
 }
 
@@ -54,24 +72,33 @@ li {
 
 /*------- TABLE -------*/
 
+table {
+  margin-bottom: 0;
+}
+
 .select-heading {
   margin-bottom: 10px;
 }
 
-.left-offset {
-  padding-left: 5px;
+.table-header > th {
+  padding-bottom: 1em;
 }
 
-tr {
-  width: 100%;
-}
-
-td {
-  padding-left: 35px;
-}
-
-.table td {
+.table td:not(:last-child) {
+  padding-left: 15px;
   vertical-align: middle;
+}
+
+.total-row {
+  background-color: rgb(245, 245, 245);
+}
+
+.total-row > td {
+  padding: 1.5em 0 1.5em 15px;
+}
+
+.total-row > td:nth-last-child(2) {
+  padding-left: 10px;
 }
 
 .pc5 {

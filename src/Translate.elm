@@ -90,6 +90,12 @@ translate language appString =
                     , it = "bidirezionale"
                     }
 
+                CalcPromptStr ->
+                    { en = "Set the options above to calculate!"
+                    , fr = "Définir les options ci-dessus!"
+                    , it = "Impostare le opzioni sopra!"
+                    }
+
                 CalculateStr ->
                     { en = "calculate the length of your open-reel audio"
                     , fr = "calculer la durée de votre bobines"
@@ -212,8 +218,8 @@ translate language appString =
 
                 SinglePassStr ->
                     { en = "1 pass"
-                    , fr = "une passe"
-                    , it = "una passa"
+                    , fr = "1 passe"
+                    , it = "1 passa"
                     }
 
                 SpeedStr ->
@@ -278,6 +284,7 @@ translate language appString =
 type AppString
     = AboutStr
     | BidirectionalStr
+    | CalcPromptStr
     | CalculateStr
     | ContributeStr
     | DevelopedByStr

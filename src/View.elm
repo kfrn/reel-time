@@ -20,9 +20,7 @@ view model =
     div [ id "container" ]
         [ div [ id "content" ]
             [ navbar model.page model.system model.language
-            , hr [] []
             , pageContent model
-            , hr [] []
             , footer model.language
             ]
 
@@ -46,9 +44,9 @@ responsiveWarning language =
 
 footer : Language -> Html Msg
 footer language =
-    div [ class "level" ]
-        [ div [ class "level-left" ] [ text <| translate language DevelopedByStr ]
-        , div [ class "is-size-6 level-right" ] [ link Email, link SourceCode ]
+    div [ class "level app-footer" ]
+        [ div [ class "level-left left-offset" ] [ text <| translate language DevelopedByStr ]
+        , div [ class "is-size-6 level-right right-offset" ] [ link Email, link SourceCode ]
         ]
 
 
@@ -74,7 +72,7 @@ navbar page system language =
         , div [ class "navbar-menu" ]
             [ div [ class "navbar-start" ]
                 [ div [ class "navbar-item" ]
-                    [ p [] [ em [] [ text <| translate language CalculateStr ] ]
+                    [ p [ class "is-size-6" ] [ em [] [ text <| translate language CalculateStr ] ]
                     ]
                 ]
             , div [ class "navbar-end" ]
@@ -145,14 +143,23 @@ pageContent model =
     let
         infoPageSections =
             [ infoParagraph model.language, questionSection model.language, linksSection model.language ]
+
+        addNotice =
+            if List.isEmpty model.reels then
+                [ div [ class "has-text-centered" ] [ text <| translate model.language CalcPromptStr ] ]
+            else
+                []
     in
     case model.page of
         Info ->
             div [ id "info" ]
-                    (List.map wrapSectionInLevelDiv infoPageSections)
+                (List.map wrapSectionInLevelDiv infoPageSections)
 
         Calculator ->
-            div [] [ reelTable model ]
+            div []
+                ([ reelTable model ]
+                    ++ addNotice
+                )
 
 
 infoParagraph : Language -> Html Msg
@@ -317,9 +324,9 @@ selectorRow model =
         invalidQuantity =
             isNothing model.quantity
     in
-    tr []
+    tr [ class "table-header" ]
         [ th [ class "pc10" ]
-            [ div [ class "select-heading left-offset" ] [ text <| translate model.language TypeStr ]
+            [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language TypeStr ]
             , div [ class "select is-small" ]
                 [ select [ name "audio-config", class "select is-small", onChange ChangeAudioConfig ]
                     (List.map
@@ -329,7 +336,7 @@ selectorRow model =
                 ]
             ]
         , th [ class "pc10" ]
-            [ div [ class "select-heading left-offset" ] [ text <| translate model.language DiameterStr ]
+            [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language DiameterStr ]
             , div [ class "select is-small" ]
                 [ select
                     [ name "diameter", class "select is-small", onChange ChangeDiameterInInches ]
@@ -340,7 +347,7 @@ selectorRow model =
                 ]
             ]
         , th [ class "pc10" ]
-            [ div [ class "select-heading left-offset" ] [ text <| translate model.language ThicknessStr ]
+            [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language ThicknessStr ]
             , div [ class "select is-small" ]
                 [ select [ name "tape-thickness", class "select is-small", onChange ChangeTapeThickness ]
                     (List.map
@@ -350,7 +357,7 @@ selectorRow model =
                 ]
             ]
         , th [ class "pc10" ]
-            [ div [ class "select-heading left-offset" ] [ text <| translate model.language SpeedStr ]
+            [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language SpeedStr ]
             , div [ class "select is-small" ]
                 [ select [ name "recording-speed", class "select is-small", onChange ChangeRecordingSpeed ]
                     (List.map
@@ -360,7 +367,7 @@ selectorRow model =
                 ]
             ]
         , th [ class "pc5 has-text-centered" ]
-            [ div [ class "select-heading"] [ text <| translate model.language QuantityStr ]
+            [ div [ class "select-heading is-size-6" ] [ text <| translate model.language QuantityStr ]
             , input
                 [ classList [ ( "input is-small", True ), ( "is-danger", invalidQuantity ) ]
                 , id "quantity"
@@ -369,10 +376,10 @@ selectorRow model =
                 ]
                 []
             ]
-        , th [ class "pc25" ] [ div [ class "select-heading" ] [ text <| translate model.language InfoHeaderStr ] ]
-        , th [ class "pc25" ] [ div [ class "select-heading left-offset" ] [ text <| translate model.language DurationStr ] ]
+        , th [ class "pc25" ] [ div [ class "select-heading is-size-6" ] [ text <| translate model.language InfoHeaderStr ] ]
+        , th [ class "pc25" ] [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language DurationStr ] ]
         , th [ class "pc5" ]
-            [ div [ class "select-heading" ] [ text "." ]
+            [ div [ class "select-heading invisible" ] [ text "." ]
             , button
                 [ class "button is-small", onClick AddReel, disabled invalidQuantity ]
                 [ span [ class "icon" ]
@@ -404,7 +411,7 @@ reelRow system language reel =
         , td [] [ text <| diameterDisplayName system reel.diameter ]
         , td [] [ text <| tapeThicknessDisplayName reel.tapeThickness ]
         , td [] [ text <| speedDisplayName system reel.recordingSpeed ]
-        , td [class "has-text-centered"] [ text <| toString reel.quantity ]
+        , td [ class "has-text-centered" ] [ text <| toString reel.quantity ]
         , td []
             [ directionAndPassCount language reel.directionality reel.passes
             , lengthInfo system language footage
@@ -424,13 +431,13 @@ totalRow language reels =
             formatTime totalMins
     in
     tfoot []
-        [ tr []
-            [ td [] []
+        [ tr [ class "total-row" ]
+            [ td [ class "has-text-weight-bold is-size-6" ] [ text <| translate language TotalStr ]
             , td [] []
             , td [] []
             , td [] []
             , td [] []
-            , td [ class "has-text-weight-bold" ] [ text <| translate language TotalStr ]
+            , td [] []
             , td [] [ text <| translate language (DurationSummaryStr totalMins formattedTime) ]
             , td [] []
             ]
