@@ -72,7 +72,7 @@ navbar page system language =
         , div [ class "navbar-menu" ]
             [ div [ class "navbar-start" ]
                 [ div [ class "navbar-item" ]
-                    [ p [ class "is-size-6" ] [ em [] [ text <| translate language CalculateStr ] ]
+                    [ p [ class "is-size-6 calculate" ] [ em [] [ text <| translate language CalculateStr ] ]
                     ]
                 ]
             , div [ class "navbar-end" ]
@@ -347,7 +347,7 @@ selectorRow model =
                 ]
             ]
         , th [ class "pc10" ]
-            [ div [ class "select-heading is-size-6" ] [ text <| translate model.language ThicknessStr ]
+            [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language ThicknessStr ]
             , div [ class "select is-small" ]
                 [ select [ name "tape-thickness", class "select is-small", onChange ChangeTapeThickness ]
                     (List.map
@@ -357,7 +357,7 @@ selectorRow model =
                 ]
             ]
         , th [ class "pc10" ]
-            [ div [ class "select-heading is-size-6" ] [ text <| translate model.language SpeedStr ]
+            [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language SpeedStr ]
             , div [ class "select is-small" ]
                 [ select [ name "recording-speed", class "select is-small", onChange ChangeRecordingSpeed ]
                     (List.map
@@ -376,8 +376,8 @@ selectorRow model =
                 ]
                 []
             ]
-        , th [ class "pc25" ] [ div [ class "select-heading is-size-6" ] [ text <| translate model.language InfoHeaderStr ] ]
-        , th [ class "pc25" ] [ div [ class "select-heading is-size-6" ] [ text <| translate model.language DurationStr ] ]
+        , th [ class "pc25" ] [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language InfoHeaderStr ] ]
+        , th [ class "pc25" ] [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language DurationStr ] ]
         , th [ class "pc5" ]
             [ div [ class "select-heading invisible" ] [ text "." ]
             , button
