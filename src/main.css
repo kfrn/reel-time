@@ -24,6 +24,35 @@ body {
   color: white; /* TODO: this is a hack ... */
 }
 
+/*------- RESPONSIVE WARNING -------*/
+
+.responsive-warning-container {
+  display: flex;
+  height: 180px;
+  margin: calc(50vh - 90px) auto;
+}
+
+.responsive-warning {
+  margin: auto;
+  max-width: 300px;
+}
+
+@media screen and (min-width: 950px) {
+  .responsive-warning {
+    display: none !important;
+  }
+
+  .responsive-warning-container.whiteout {
+    background-color: rgba(0, 0, 0, 0);
+  }
+}
+
+@media screen and (max-width: 951px) {
+  #content {
+    display: none !important;
+  }
+}
+
 /*------- PAGE LAYOUT -------*/
 
 #content {
@@ -76,21 +105,25 @@ table {
   margin-bottom: 0;
 }
 
-.select-heading {
-  margin-bottom: 10px;
-}
-
 .table-header > th {
   padding-bottom: 1em;
+}
+
+.main-row {
+  background-color: rgb(245, 245, 245);
+}
+
+tr.main-row:hover {
+  background-color: rgb(245, 245, 245); /* removing auto-hover colour */
+}
+
+.select-heading {
+  margin-bottom: 10px;
 }
 
 .table td:not(:last-child) {
   padding-left: 15px;
   vertical-align: middle;
-}
-
-.total-row {
-  background-color: rgb(245, 245, 245);
 }
 
 .total-row > td {

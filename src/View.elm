@@ -23,17 +23,16 @@ view model =
             , pageContent model
             , footer model.language
             ]
-
-        -- , responsiveWarning model.language
+        , responsiveWarning model.language
         ]
 
 
 responsiveWarning : Language -> Html Msg
 responsiveWarning language =
-    div [ class "responsive-warning-container whiteout" ]
+    div [ class "responsive-warning-container whiteout has-text-centered" ]
         [ div [ class "responsive-warning" ]
             [ p [ class "is-size-2" ]
-                [ span [ class "icon" ]
+                [ span [ class "icon has-text-danger" ]
                     [ i [ class "fa fa-exclamation-triangle" ] []
                     ]
                 ]
@@ -65,7 +64,8 @@ navbar page system language =
         [ div [ class "navbar-brand" ]
             [ div [ class "navbar-item" ]
                 [ p [ class "title" ]
-                    [ text "⏰ reel time"
+                    [ span [ class "icon" ] [ i [ class "fa fa-clock-o" ] [] ]
+                    , text " reel time"
                     ]
                 ]
             ]
@@ -324,7 +324,7 @@ selectorRow model =
         invalidQuantity =
             isNothing model.quantity
     in
-    tr [ class "table-header" ]
+    tr [ class "table-header main-row" ]
         [ th [ class "pc10" ]
             [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language TypeStr ]
             , div [ class "select is-small" ]
@@ -336,7 +336,7 @@ selectorRow model =
                 ]
             ]
         , th [ class "pc10" ]
-            [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language DiameterStr ]
+            [ div [ class "select-heading is-size-6" ] [ text <| translate model.language DiameterStr ]
             , div [ class "select is-small" ]
                 [ select
                     [ name "diameter", class "select is-small", onChange ChangeDiameterInInches ]
@@ -347,7 +347,7 @@ selectorRow model =
                 ]
             ]
         , th [ class "pc10" ]
-            [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language ThicknessStr ]
+            [ div [ class "select-heading is-size-6" ] [ text <| translate model.language ThicknessStr ]
             , div [ class "select is-small" ]
                 [ select [ name "tape-thickness", class "select is-small", onChange ChangeTapeThickness ]
                     (List.map
@@ -357,7 +357,7 @@ selectorRow model =
                 ]
             ]
         , th [ class "pc10" ]
-            [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language SpeedStr ]
+            [ div [ class "select-heading is-size-6" ] [ text <| translate model.language SpeedStr ]
             , div [ class "select is-small" ]
                 [ select [ name "recording-speed", class "select is-small", onChange ChangeRecordingSpeed ]
                     (List.map
@@ -377,7 +377,7 @@ selectorRow model =
                 []
             ]
         , th [ class "pc25" ] [ div [ class "select-heading is-size-6" ] [ text <| translate model.language InfoHeaderStr ] ]
-        , th [ class "pc25" ] [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language DurationStr ] ]
+        , th [ class "pc25" ] [ div [ class "select-heading is-size-6" ] [ text <| translate model.language DurationStr ] ]
         , th [ class "pc5" ]
             [ div [ class "select-heading invisible" ] [ text "." ]
             , button
@@ -431,7 +431,7 @@ totalRow language reels =
             formatTime totalMins
     in
     tfoot []
-        [ tr [ class "total-row" ]
+        [ tr [ class "main-row" ]
             [ td [ class "has-text-weight-bold is-size-6" ] [ text <| translate language TotalStr ]
             , td [] []
             , td [] []
