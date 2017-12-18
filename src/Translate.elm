@@ -132,6 +132,12 @@ translate language appString =
                     , it = (translate language <| MinutesStr totalMins) ++ ", o " ++ formattedTime
                     }
 
+                FileSizeStr ->
+                    { en = "total size (24/96 WAV)"
+                    , fr = "tailleur (24/96 WAV)"
+                    , it = "dimensione (24/96 WAV)"
+                    }
+
                 FullTrackMonoStr ->
                     { en = "full-track mono"
                     , fr = "mono pleine piste"
@@ -236,7 +242,7 @@ translate language appString =
 
                 TotalStr ->
                     { en = "total"
-                    , fr = "totale"
+                    , fr = "total"
                     , it = "totale"
                     }
 
@@ -291,6 +297,7 @@ type AppString
     | DiameterStr
     | DurationStr
     | DurationSummaryStr DurationInMinutes String
+    | FileSizeStr
     | FullTrackMonoStr
     | HalfTrackMonoStr
     | HalfTrackStereoStr

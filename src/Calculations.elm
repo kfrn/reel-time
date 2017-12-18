@@ -1,5 +1,6 @@
 module Calculations exposing (..)
 
+import Helpers exposing (reelInfo)
 import Types exposing (..)
 
 
@@ -101,3 +102,29 @@ durationInMinutes reel =
 totalLength : List Reel -> DurationInMinutes
 totalLength reels =
     List.sum <| List.map (\r -> durationInMinutes r * toFloat r.passes * toFloat r.quantity) reels
+
+
+filesize : Reel -> Float
+filesize reel =
+    let
+        multiplier =
+            case reel.audioConfig of
+                HalfTrackStereo ->
+                    2
+
+                QuarterTrackStereo ->
+                    2
+
+                _ ->
+                    1
+
+        ( _, passes ) =
+            reelInfo reel.audioConfig
+
+        duration =
+            durationInMinutes reel
+
+        mbPerMin =
+            16.875
+    in
+    duration * mbPerMin * toFloat passes * multiplier

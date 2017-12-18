@@ -170,3 +170,7 @@ tr.main-row:hover {
 #quantity {
   width: 40px;
 }
+
+.total-top {
+  padding-bottom: 0.4em;
+}
