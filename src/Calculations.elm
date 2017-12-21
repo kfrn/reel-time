@@ -44,6 +44,8 @@ reelLengthInFeet reel =
             Ft7200
 
 
+
+-- The baseDuration is the duration of the reel if recorded at the maximum speed of 30ips.
 baseDuration : Reel -> Float
 baseDuration reel =
     let
@@ -79,29 +81,33 @@ baseDuration reel =
 durationInMinutes : Reel -> DurationInMinutes
 durationInMinutes reel =
     let
-        multiplier =
+        baseDur =
             baseDuration reel
     in
     case reel.recordingSpeed of
         IPS_1p875 ->
-            multiplier * 16
+            baseDur * 16
 
         IPS_3p75 ->
-            multiplier * 8
+            baseDur * 8
 
         IPS_7p5 ->
-            multiplier * 4
+            baseDur * 4
 
         IPS_15 ->
-            multiplier * 2
+            baseDur * 2
 
         IPS_30 ->
-            multiplier
+            baseDur
 
 
 totalLength : List Reel -> DurationInMinutes
 totalLength reels =
-    List.sum <| List.map (\r -> durationInMinutes r * toFloat r.passes * toFloat r.quantity) reels
+    let
+        reelDuration r =
+            durationInMinutes r * toFloat r.passes * toFloat r.quantity
+    in
+    List.sum <| List.map reelDuration reels
 
 
 filesize : Reel -> Float

@@ -23,54 +23,40 @@ type alias TranslationGroup =
     }
 
 
-infoPara : Language -> List (Html msg)
-infoPara language =
-    let
-        translationSet =
-            { en =
-                [ text "Reel Time is inspired by open-source preservation tools like "
-                , link Ffmprovisr
-                , text ", "
-                , link CableBible
-                , text ", "
-                , link SourceCaster
-                , text ", and of course the "
-                , link ORADCalc
-                , text " spreadsheet by Joshua Ranger of AVPreserve."
-                ]
-            , fr =
-                [ text "Reel Time s'inspire de projets open-source comme "
-                , link Ffmprovisr
-                , text ", "
-                , link CableBible
-                , text ", "
-                , link SourceCaster
-                , text ", et et bien sûr le "
-                , link ORADCalc
-                , text " tableur par Joshua Ranger de AVPreserve."
-                ]
-            , it =
-                [ text "Reel Time è ispirato a progetti open-source come "
-                , link Ffmprovisr
-                , text ", "
-                , link CableBible
-                , text ", "
-                , link SourceCaster
-                , text ", e naturalmente il "
-                , link ORADCalc
-                , text " foglio da Joshua Ranger di AVPreserve."
-                ]
-            }
-    in
-    case language of
-        EN ->
-            .en translationSet
-
-        FR ->
-            .fr translationSet
-
-        IT ->
-            .it translationSet
+type AppString
+    = AboutStr
+    | BidirectionalStr
+    | CalcPromptStr
+    | CalculateStr
+    | ContributeStr
+    | DevelopedByStr
+    | DiameterStr
+    | DurationStr
+    | DurationSummaryStr DurationInMinutes String
+    | FileSizeStr
+    | FullTrackMonoStr
+    | HalfTrackMonoStr
+    | HalfTrackStereoStr
+    | InfoHeaderStr
+    | MinutesStr DurationInMinutes
+    | PassesStr Int
+    | ResponsiveStr
+    | PerReelStr String
+    | QAndAStr
+    | QuantityStr
+    | QuarterTrackMonoStr
+    | QuarterTrackStereoStr
+    | ReelDurationAStr
+    | ReelDurationQStr
+    | SinglePassStr
+    | SpeedStr
+    | ThicknessStr
+    | TotalStr
+    | TypeStr
+    | UnidirectionalStr
+    | UnknownVariablesAStr
+    | UnknownVariablesQStr
+    | UsefulLinksStr
 
 
 translate : Language -> AppString -> String
@@ -265,7 +251,7 @@ translate language appString =
                     }
 
                 UnknownVariablesQStr ->
-                    { en = "Help! I don't know the width (or recording speed, etc) of my reel."
+                    { en = "Help! I don't know the thickness (or recording speed, etc) of my reel."
                     , fr = "Au secours! Je ne sais pas l'épaisseur, ou la vitesse d'enregistrement (ou quelque chose d'autre) de ma bobine."
                     , it = "Aiuto! Non conosco lo spessore (o la velocità di registrazione, ecc.) della mia bobina."
                     }
@@ -287,37 +273,51 @@ translate language appString =
             .it translationSet
 
 
-type AppString
-    = AboutStr
-    | BidirectionalStr
-    | CalcPromptStr
-    | CalculateStr
-    | ContributeStr
-    | DevelopedByStr
-    | DiameterStr
-    | DurationStr
-    | DurationSummaryStr DurationInMinutes String
-    | FileSizeStr
-    | FullTrackMonoStr
-    | HalfTrackMonoStr
-    | HalfTrackStereoStr
-    | InfoHeaderStr
-    | MinutesStr DurationInMinutes
-    | PassesStr Int
-    | ResponsiveStr
-    | PerReelStr String
-    | QAndAStr
-    | QuantityStr
-    | QuarterTrackMonoStr
-    | QuarterTrackStereoStr
-    | ReelDurationAStr
-    | ReelDurationQStr
-    | SinglePassStr
-    | SpeedStr
-    | ThicknessStr
-    | TotalStr
-    | TypeStr
-    | UnidirectionalStr
-    | UnknownVariablesAStr
-    | UnknownVariablesQStr
-    | UsefulLinksStr
+infoPara : Language -> List (Html msg)
+infoPara language =
+    let
+        translationSet =
+            { en =
+                [ text "Reel Time is inspired by open-source preservation tools like "
+                , link Ffmprovisr
+                , text ", "
+                , link CableBible
+                , text ", "
+                , link SourceCaster
+                , text ", and of course the "
+                , link ORADCalc
+                , text " spreadsheet by Joshua Ranger of AVPreserve."
+                ]
+            , fr =
+                [ text "Reel Time s'inspire de projets open-source comme "
+                , link Ffmprovisr
+                , text ", "
+                , link CableBible
+                , text ", "
+                , link SourceCaster
+                , text ", et et bien sûr le "
+                , link ORADCalc
+                , text " tableur par Joshua Ranger de AVPreserve."
+                ]
+            , it =
+                [ text "Reel Time è ispirato a progetti open-source come "
+                , link Ffmprovisr
+                , text ", "
+                , link CableBible
+                , text ", "
+                , link SourceCaster
+                , text ", e naturalmente il "
+                , link ORADCalc
+                , text " foglio da Joshua Ranger di AVPreserve."
+                ]
+            }
+    in
+    case language of
+        EN ->
+            .en translationSet
+
+        FR ->
+            .fr translationSet
+
+        IT ->
+            .it translationSet

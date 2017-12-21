@@ -41,14 +41,6 @@ responsiveWarning language =
         ]
 
 
-footer : Language -> Html Msg
-footer language =
-    div [ class "level app-footer" ]
-        [ div [ class "level-left left-offset" ] [ text <| translate language DevelopedByStr ]
-        , div [ class "is-size-6 level-right right-offset" ] [ link Email, link SourceCode ]
-        ]
-
-
 navbar : PageView -> SystemOfMeasurement -> Language -> Html Msg
 navbar page system language =
     let
@@ -82,6 +74,14 @@ navbar page system language =
                        ]
                 )
             ]
+        ]
+
+
+footer : Language -> Html Msg
+footer language =
+    div [ class "level app-footer" ]
+        [ div [ class "level-left left-offset" ] [ text <| translate language DevelopedByStr ]
+        , div [ class "is-size-6 level-right right-offset" ] [ link Email, link SourceCode ]
         ]
 
 
@@ -144,7 +144,7 @@ pageContent model =
         infoPageSections =
             [ infoParagraph model.language, questionSection model.language, linksSection model.language ]
 
-        addNotice =
+        startNotice =
             if List.isEmpty model.reels then
                 [ div [ class "has-text-centered" ] [ text <| translate model.language CalcPromptStr ] ]
             else
@@ -158,7 +158,7 @@ pageContent model =
         Calculator ->
             div []
                 ([ reelTable model ]
-                    ++ addNotice
+                    ++ startNotice
                 )
 
 
@@ -225,66 +225,6 @@ linksSection language =
                    ]
             )
         ]
-
-
-lengthInfo : SystemOfMeasurement -> Language -> Footage -> Html Msg
-lengthInfo system language footage =
-    let
-        ft =
-            footageToInt footage
-
-        metricLength =
-            toFloat ft * 0.3048
-
-        lengthText =
-            case system of
-                Imperial ->
-                    toString ft ++ "ft"
-
-                Metric ->
-                    toString metricLength ++ "m"
-
-        perReel =
-            translate language (PerReelStr lengthText)
-    in
-    div [] [ text perReel ]
-
-
-directionAndPassCount : Language -> Direction -> Passes -> Html Msg
-directionAndPassCount language direction passes =
-    let
-        passText =
-            if passes == 1 then
-                translate language SinglePassStr
-            else
-                translate language (PassesStr passes)
-
-        directionString =
-            case direction of
-                Unidirectional ->
-                    UnidirectionalStr
-
-                Bidirectional ->
-                    BidirectionalStr
-
-        fullDirectionString =
-            translate language directionString
-    in
-    div [] [ text (fullDirectionString ++ ": " ++ passText) ]
-
-
-durationData : Language -> DurationInMinutes -> Quantity -> Passes -> List (Html Msg)
-durationData language mins quantity passes =
-    let
-        reelTime =
-            mins * toFloat passes
-
-        totalTime =
-            reelTime * toFloat quantity
-    in
-    [ div [] [ text (translate language <| PerReelStr <| toString reelTime ++ "min") ]
-    , div [] [ text (formatTime totalTime ++ " " ++ translate language TotalStr) ]
-    ]
 
 
 reelTable : Model -> Html Msg
@@ -419,6 +359,66 @@ reelRow system language reel =
         , td [] (durationData language mins reel.quantity reel.passes)
         , td [] [ deleteRowButton reel ]
         ]
+
+
+directionAndPassCount : Language -> Direction -> Passes -> Html Msg
+directionAndPassCount language direction passes =
+    let
+        passText =
+            if passes == 1 then
+                translate language SinglePassStr
+            else
+                translate language (PassesStr passes)
+
+        directionString =
+            case direction of
+                Unidirectional ->
+                    UnidirectionalStr
+
+                Bidirectional ->
+                    BidirectionalStr
+
+        fullDirectionString =
+            translate language directionString
+    in
+    div [] [ text (fullDirectionString ++ ": " ++ passText) ]
+
+
+lengthInfo : SystemOfMeasurement -> Language -> Footage -> Html Msg
+lengthInfo system language footage =
+    let
+        ft =
+            footageToInt footage
+
+        metricLength =
+            toFloat ft * 0.3048
+
+        lengthText =
+            case system of
+                Imperial ->
+                    toString ft ++ "ft"
+
+                Metric ->
+                    toString metricLength ++ "m"
+
+        perReel =
+            translate language (PerReelStr lengthText)
+    in
+    div [] [ text perReel ]
+
+
+durationData : Language -> DurationInMinutes -> Quantity -> Passes -> List (Html Msg)
+durationData language mins quantity passes =
+    let
+        reelTime =
+            mins * toFloat passes
+
+        totalTime =
+            reelTime * toFloat quantity
+    in
+    [ div [] [ text (translate language <| PerReelStr <| toString reelTime ++ "min") ]
+    , div [] [ text (formatTime totalTime ++ " " ++ translate language TotalStr) ]
+    ]
 
 
 totalRow : Language -> List Reel -> Html Msg
