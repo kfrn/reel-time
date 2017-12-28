@@ -101,11 +101,16 @@ durationInMinutes reel =
             baseDur
 
 
+fullDuration : Reel -> DurationInMinutes
+fullDuration reel =
+    toFloat reel.passes * durationInMinutes reel
+
+
 totalLength : List Reel -> DurationInMinutes
 totalLength reels =
     let
         reelDuration r =
-            durationInMinutes r * toFloat r.passes * toFloat r.quantity
+            fullDuration r * toFloat r.quantity
     in
     List.sum <| List.map reelDuration reels
 
