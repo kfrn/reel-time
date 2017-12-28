@@ -57,6 +57,8 @@ type AppString
     | UnknownVariablesAStr
     | UnknownVariablesQStr
     | UsefulLinksStr
+    | WavAStr
+    | WavQStr
 
 
 translate : Language -> AppString -> String
@@ -260,6 +262,18 @@ translate language appString =
                     { en = "Useful Links"
                     , fr = "Liens utiles"
                     , it = "Link utili"
+                    }
+
+                WavAStr ->
+                    { en = "When digitising analogue audio, the commonly accepted preservation format is linear pulse code modulation (LPCM) encoding inside a WAVE (.WAV) wrapper. A bit-depth of 24 and sample rate of 96kHz is recommended."
+                    , fr = "Quand on numérise l'audio analogique, le format de conservation bien accepté est l'encodage LPCM (Linear Pulse Code Modulation) à l'intérieur du format conteneur WAVE (.WAV). On recommande un profondeur de bits de 24 et un cadence d'échantillonnage de 96kHz."
+                    , it = "Durante la digitalizzazione dell'audio analogico, il formato di conservazione accettato è la codifica LPCM (linear code modulation) all'interno dalle formato contenitore WAVE (.WAV). Si consiglia una profondità di 24 bit e una frequenza di campionamento di 96kHz."
+                    }
+
+                WavQStr ->
+                    { en = "What's this about a '24/96 WAV'?"
+                    , fr = "Qu'est-ce qu'un '24/96 WAV'?"
+                    , it = "Cos'è un '24/96 WAV'?"
                     }
     in
     case language of

@@ -187,6 +187,12 @@ questionSection language =
                 , p [] [ text <| translate language ReelDurationAStr ]
                 ]
             )
+        , wrapSectionInLevelDiv
+            (div []
+                [ p [] [ strong [] [ text <| translate language WavQStr ] ]
+                , p [] [ text <| translate language WavAStr ]
+                ]
+            )
         ]
 
 
