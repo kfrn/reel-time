@@ -1,6 +1,6 @@
 module Tests exposing (..)
 
-import Calculations exposing (baseDuration, fullDuration, reelLengthInFeet)
+import Calculations exposing (baseDuration, filesize, fullDuration, reelLengthInFeet)
 import Expect
 import Helpers exposing (newReel)
 import Random.Pcg exposing (initialSeed, step)
@@ -32,6 +32,12 @@ all =
                         fullDuration reel
                 in
                 \_ -> Expect.equal duration 90
+            , test "should be 1518.75 MB in size" <|
+                let
+                    size =
+                        filesize reel
+                in
+                \_ -> Expect.equal size 1518.75
             ]
         , describe "half-track stereo, 10.5\" 0.5mil double @ 7.5 IPS" <|
             let
@@ -53,6 +59,12 @@ all =
                         fullDuration reel
                 in
                 \_ -> Expect.equal duration 120
+            , test "should be 4050 MB in size" <|
+                let
+                    size =
+                        filesize reel
+                in
+                \_ -> Expect.equal size 4050
             ]
         , describe "half-track mono, 7\" 1.5mil @ 1.875 IPS" <|
             let
@@ -74,6 +86,12 @@ all =
                         fullDuration reel
                 in
                 \_ -> Expect.equal duration 240
+            , test "should be 4050 MB in size" <|
+                let
+                    size =
+                        filesize reel
+                in
+                \_ -> Expect.equal size 4050
             ]
         , describe "quarter-track stereo, 10.5\" 0.5mil triple @ 30 IPS" <|
             let
@@ -95,6 +113,12 @@ all =
                         fullDuration reel
                 in
                 \_ -> Expect.equal duration 90
+            , test "should be 3037.5 MB in size" <|
+                let
+                    size =
+                        filesize reel
+                in
+                \_ -> Expect.equal size 3037.5
             ]
         , describe "quarter-track mono, 7\" 1.0mil @ 15 IPS" <|
             let
@@ -116,6 +140,12 @@ all =
                         fullDuration reel
                 in
                 \_ -> Expect.equal duration 90
+            , test "should be 1518.75 MB in size" <|
+                let
+                    size =
+                        filesize reel
+                in
+                \_ -> Expect.equal size 1518.75
             ]
         ]
 
