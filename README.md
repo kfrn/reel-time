@@ -26,7 +26,7 @@ To run locally:
 ```
 git clone git@github.com:kfrn/reel-time.git
 cd reel-time/
-npm install
+elm-package install
 npm install -g create-elm-app
 elm-app start
 ```
