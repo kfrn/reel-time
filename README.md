@@ -9,8 +9,8 @@ The duration of open-reel audio depends on several variables, and as such, is no
 Input the characteristics of your audio tapes—audio config, tape thickness, recording speed, and quantity—to determine their duration.
 
 **reel time** is multilingual:  
-🇫🇷 Disponible en français et italien aussi!  
-🇮🇹 Disponibile in italiano e francese anche!
+🇫🇷 Disponible aussi en français et italien!  
+🇮🇹 Disponibile anche in italiano e francese!
 
 **reel time** is inspired by open-source preservation tools like [ffmprovisr](https://amiaopensource.github.io/ffmprovisr/), [Cable Bible](https://amiaopensource.github.io/cable-bible/), and [SourceCaster](https://datapraxis.github.io/sourcecaster/), and of course also the [Open Reel Audio Duration Calculator](https://www.avpreserve.com/open-reel-audio-duration-calculator/) spreadsheet by Joshua Ranger of [AVPreserve](https://www.avpreserve.com/).
 
