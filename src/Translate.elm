@@ -87,7 +87,7 @@ translate language appString =
                 CalculateStr ->
                     { en = "calculate the duration of your open-reel audio"
                     , fr = "calculer la durée de vos bobines"
-                    , it = "calcolare la durata delle vostre bobine aperte"
+                    , it = "calcola la durata delle tue bobine aperte"
                     }
 
                 ContributeStr ->
@@ -99,7 +99,7 @@ translate language appString =
                 DevelopedByStr ->
                     { en = "Web app by Katherine Nagels"
                     , fr = "Application web par Katherine Nagels"
-                    , it = "Applicazione Web di Katherine Nagels"
+                    , it = "Applicazione web di Katherine Nagels"
                     }
 
                 DiameterStr ->
@@ -194,8 +194,8 @@ translate language appString =
 
                 ReelDurationAStr ->
                     { en = "This tool assumes that the full duration of the reel is used."
-                    , fr = "En ce moment, cette calculatrice suppose l'utilisation complète de bobine."
-                    , it = "Questo calcolatore presuma un pieno utilizzo di bobina."
+                    , fr = "Cette calculatrice suppose l'utilisation complète de la bobine."
+                    , it = "Questo calcolatore presume l'uso completo della bobina."
                     }
 
                 ReelDurationQStr ->
@@ -248,13 +248,13 @@ translate language appString =
 
                 UnknownVariablesAStr ->
                     { en = "If the original packaging is not present, it is possible to determine the tape thickness with a micrometre. A magnetic viewer will show you how many audio tracks are on the tape, though keep in mind the recording could be mono or stereo. As for the recording speed, this may have to be ascertained via playback, but it is possible to make an educated guess based on whether the recording is professional, amateur, etc. See the links below."
-                    , fr = "Si la boîte originale n'est pas présent, on peut utiliser un micromètre pour mesurer l'épaisseur de la bande. Une «visionneuse magnétique» montre combien de pistes sur la bande. Quant à la vitesse d'enregistrement, il faut peut-être passer la bobine, mais c'est possible faire une déduction logique suivant le genre d'enregistrement: professionel ou non, etc."
-                    , it = "Se la scatola originale è perduta, è possibile utilizzare un micrometro per misurare lo spessore del nastro. Un «visualizzatore magnetico» mostra quante tracce sul nastro. Per quanto riguarda la velocità di registrazione, potrebbe essere necessario suonare la bobina, ma è possibile fare una stima ragionata seconda del tipo di registrazione: professionale o meno, ecc."
+                    , fr = "Si la boîte originale n'est pas présente, on peut utiliser un micromètre pour mesurer l'épaisseur de la bande. Une «visionneuse magnétique» montre combien de pistes il y a sur la bande. Quant à la vitesse d'enregistrement, il faut peut-être passer la bobine, mais c'est possible d'effectuer une déduction logique suivant le genre d'enregistrement: professionel ou non, etc."
+                    , it = "Se la scatola originale è perduta, è possibile utilizzare un micrometro per misurare lo spessore del nastro. Un «visualizzatore magnetico» mostra quante tracce ci sono sul nastro. Per quanto riguarda la velocità di registrazione, potrebbe essere necessario ascoltare la bobina, ma è possibile fare una buona stima secondo il tipo di registrazione: professionale o meno, ecc."
                     }
 
                 UnknownVariablesQStr ->
                     { en = "Help! I don't know the thickness (or recording speed, etc) of my reel."
-                    , fr = "Au secours! Je ne sais pas l'épaisseur, ou la vitesse d'enregistrement (ou quelque chose d'autre) de ma bobine."
+                    , fr = "Au secours! Je ne sais pas l'épaisseur (ou la vitesse d'enregistrement, etc.) de ma bobine."
                     , it = "Aiuto! Non conosco lo spessore (o la velocità di registrazione, ecc.) della mia bobina."
                     }
 
@@ -266,8 +266,8 @@ translate language appString =
 
                 WavAStr ->
                     { en = "When digitising analogue audio, the commonly accepted preservation format is linear pulse code modulation (LPCM) encoding inside a WAVE (.WAV) wrapper. A bit-depth of 24 and sample rate of 96kHz is recommended."
-                    , fr = "Quand on numérise l'audio analogique, le format de conservation bien accepté est l'encodage LPCM (Linear Pulse Code Modulation) à l'intérieur du format conteneur WAVE (.WAV). On recommande un profondeur de bits de 24 et un cadence d'échantillonnage de 96kHz."
-                    , it = "Durante la digitalizzazione dell'audio analogico, il formato di conservazione accettato è la codifica LPCM (linear code modulation) all'interno dalle formato contenitore WAVE (.WAV). Si consiglia una profondità di 24 bit e una frequenza di campionamento di 96kHz."
+                    , fr = "Quand on numérise l'audio analogique, le format de conservation bien accepté est l'encodage LPCM (Linear Pulse Code Modulation) à l'intérieur du format conteneur WAVE (.WAV). On recommande un profondeur de bits de 24 et un cadence d'échantillonnage de 96 kHz."
+                    , it = "Durante la digitalizzazione dell'audio analogico, il formato di conservazione accettato è la codifica LPCM (linear pulse code modulation) all'interno dal formato contenitore WAVE (.WAV). Si consiglia una profondità di 24 bit e una frequenza di campionamento di 96 kHz."
                     }
 
                 WavQStr ->
@@ -309,9 +309,9 @@ infoPara language =
                 , link CableBible
                 , text ", "
                 , link SourceCaster
-                , text ", et et bien sûr le "
+                , text " et, bien sûr, l'"
                 , link ORADCalc
-                , text " tableur par Joshua Ranger de AVPreserve."
+                , text " tableur par Joshua Ranger d'AVPreserve."
                 ]
             , it =
                 [ text "Reel Time è ispirato a progetti open-source come "
@@ -320,9 +320,9 @@ infoPara language =
                 , link CableBible
                 , text ", "
                 , link SourceCaster
-                , text ", e naturalmente il "
+                , text " e naturalmente l'"
                 , link ORADCalc
-                , text " foglio da Joshua Ranger di AVPreserve."
+                , text " foglio elettronico di Joshua Ranger di AVPreserve."
                 ]
             }
     in
