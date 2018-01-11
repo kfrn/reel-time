@@ -27,8 +27,14 @@ To run locally:
 git clone git@github.com:kfrn/reel-time.git
 cd reel-time/
 elm-package install -y
-npm install -g create-elm-app
+npm install -g create-elm-app node-sass
+/* npm install */
 elm-app start
+```
+
+To compile SCSS:
+```
+npm run sass
 ```
 
 To run tests:

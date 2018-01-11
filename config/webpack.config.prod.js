@@ -157,7 +157,28 @@ module.exports = {
           }
         ]
       },
-
+      {
+        test: /\.scss$/,
+        include: [paths.appSrc, paths.appNodeModules],
+        use: [
+          {
+            loader: require.resolve("style-loader"),
+            options: {
+              sourceMap: shouldUseSourceMap
+            }
+          },
+          {
+            loader: require.resolve("css-loader")
+          },
+          require.resolve("resolve-url-loader"),
+          {
+            loader: require.resolve("sass-loader"),
+            options: {
+              sourceMap: shouldUseSourceMap
+            }
+          }
+        ]
+      },
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract(

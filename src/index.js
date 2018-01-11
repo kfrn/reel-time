@@ -1,4 +1,4 @@
-import "../styles/main.css";
+import "../styles/output.css";
 import { Main } from "./Main.elm";
 import registerServiceWorker from "./registerServiceWorker";
 
