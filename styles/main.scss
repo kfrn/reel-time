@@ -1,3 +1,9 @@
+/*------- VARIABLES -------*/
+
+$border: 1px solid black;
+$offset: 5px;
+$pale-grey: rgb(245, 245, 245);
+
 /*------- MAIN -------*/
 
 body {
@@ -13,18 +19,18 @@ body {
 }
 
 #content {
-  border: 1px solid black;
+  border: $border;
   border-radius: 20px;
   margin: 1em 2em;
   padding: 1em;
 }
 
 .left-offset {
-  padding-left: 5px;
+  padding-left: $offset;
 }
 
 .right-offset {
-  padding-right: 5px;
+  padding-right: $offset;
 }
 
 .invisible {
@@ -59,7 +65,7 @@ body {
 /*------- NAVBAR -------*/
 
 nav.navbar {
-  border-bottom: 1px solid black;
+  border-bottom: $border;
   margin-bottom: 1em;
   padding-bottom: 1em;
 }
@@ -94,7 +100,7 @@ nav.navbar {
 /*------- FOOTER -------*/
 
 div.app-footer {
-  border-top: 1px solid black;
+  border-top: $border;
   margin-top: 1em;
   padding-top: 1em;
 }
@@ -131,11 +137,11 @@ table {
 }
 
 .main-row {
-  background-color: rgb(245, 245, 245);
+  background-color: $pale-grey;
 }
 
 tr.main-row:hover {
-  background-color: rgb(245, 245, 245); /* removing auto-hover colour */
+  background-color: $pale-grey; /* removing auto-hover colour */
 }
 
 .select-heading {
