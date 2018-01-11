@@ -2,7 +2,6 @@
 
 body {
   font-family: "Comfortaa", "Helvetica Neue", sans-serif;
-  font-size: 0.9em;
 }
 
 @media only screen and (min-width: 1500px) {
@@ -118,6 +117,15 @@ ul {
 
 li {
   list-style: circle;
+}
+
+#info .level a {
+  color: #19a590;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-weight: bold;
 }
 
 /*------- TABLE -------*/
