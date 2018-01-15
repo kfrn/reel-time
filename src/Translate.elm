@@ -93,7 +93,7 @@ translate language appString =
                 ContributeStr ->
                     { en = "Suggestions and contributions are welcome! You can open a pull request or submit an issue on github, or email me; links in page footer."
                     , fr = "J'accueille les suggestions et les contributions! Vous pouvez ouvrir un «pull request» ou soumettre un «issue» sur github, ou m'envoyer un e-mail; liens au bas de page."
-                    , it = "Accolgo suggerimenti e contributi! Potete aprire un «pull request» o inviare un «issue» su github, o mi mandare una e-mail; link a piè di pagina."
+                    , it = "Accolgo suggerimenti e contributi! Potete aprire un «pull request» o inviare un «issue» su github, o mandarmi un e-mail; link a piè di pagina."
                     }
 
                 DevelopedByStr ->
@@ -206,8 +206,8 @@ translate language appString =
 
                 ResponsiveStr ->
                     { en = "It looks like you're viewing this on a mobile device or small screen. Sorry, but this app isn't yet mobile-friendly. Please try it on a desktop!"
-                    , fr = "Il paraît que vous utilisez un appareil disposant d'un écran de petite taille. Je suis desolée, mais ce site n'est pas encore mobile conviviale. Veuillez le essayer sur un ordinateur de bureau!"
-                    , it = "Sembra che tu stia utilizzando un dispositivo con uno schermo piccolo. Mi dispiace, questo sito non è ancora mobile-friendly. Per favore lo provare su un desktop!"
+                    , fr = "Il paraît que vous utilisez un appareil disposant d'un écran de petite taille. Je suis desolée, mais ce site n'est pas encore mobile conviviale. Veuillez l'essayer sur un ordinateur de bureau!"
+                    , it = "Sembra che tu stia utilizzando un dispositivo con uno schermo piccolo. Mi dispiace, questo sito non è ancora mobile-friendly. Prova per favore su un desktop!"
                     }
 
                 SinglePassStr ->
@@ -266,8 +266,8 @@ translate language appString =
 
                 WavAStr ->
                     { en = "When digitising analogue audio, the commonly accepted preservation format is linear pulse code modulation (LPCM) encoding inside a WAVE (.WAV) wrapper. A bit-depth of 24 and sample rate of 96kHz is recommended."
-                    , fr = "Quand on numérise l'audio analogique, le format de conservation bien accepté est l'encodage LPCM (Linear Pulse Code Modulation) à l'intérieur du format conteneur WAVE (.WAV). On recommande un profondeur de bits de 24 et un cadence d'échantillonnage de 96 kHz."
-                    , it = "Durante la digitalizzazione dell'audio analogico, il formato di conservazione accettato è la codifica LPCM (linear pulse code modulation) all'interno dal formato contenitore WAVE (.WAV). Si consiglia una profondità di 24 bit e una frequenza di campionamento di 96 kHz."
+                    , fr = "Quand on numérise l'audio analogique, le format de conservation bien accepté est l'encodage LPCM (Linear Pulse Code Modulation) à l'intérieur du format conteneur WAVE (.WAV). On recommande une profondeur de 24 bit et une cadence d'échantillonnage de 96 kHz."
+                    , it = "Durante la digitalizzazione dell'audio analogico, il formato di conservazione abitualmente accettato è la codifica LPCM (linear pulse code modulation) all'interno dal formato contenitore WAVE (.WAV). Si consiglia una profondità di 24 bit e una frequenza di campionamento di 96 kHz."
                     }
 
                 WavQStr ->
