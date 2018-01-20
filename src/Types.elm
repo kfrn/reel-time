@@ -96,7 +96,8 @@ allThicknesses =
 
 
 type RecordingSpeed
-    = IPS_1p875
+    = IPS_0p9375
+    | IPS_1p875
     | IPS_3p75
     | IPS_7p5
     | IPS_15
@@ -105,7 +106,7 @@ type RecordingSpeed
 
 allRecordingSpeeds : List RecordingSpeed
 allRecordingSpeeds =
-    [ IPS_1p875, IPS_3p75, IPS_7p5, IPS_15, IPS_30 ]
+    [ IPS_0p9375, IPS_1p875, IPS_3p75, IPS_7p5, IPS_15, IPS_30 ]
 
 
 type Footage

@@ -85,6 +85,9 @@ durationInMinutes reel =
             baseDuration reel
     in
     case reel.recordingSpeed of
+        IPS_0p9375 ->
+            baseDur * 32
+
         IPS_1p875 ->
             baseDur * 16
 

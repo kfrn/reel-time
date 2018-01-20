@@ -120,6 +120,9 @@ tapeThicknessFromString name =
 recordingSpeedFromString : String -> Maybe RecordingSpeed
 recordingSpeedFromString name =
     case name of
+        "IPS_0p9375" ->
+            Just IPS_0p9375
+
         "IPS_1p875" ->
             Just IPS_1p875
 
@@ -204,6 +207,9 @@ speedDisplayName system =
 speedImperialName : RecordingSpeed -> String
 speedImperialName speed =
     case speed of
+        IPS_0p9375 ->
+            "15/16ips"
+
         IPS_1p875 ->
             "1.875ips"
 
@@ -223,6 +229,9 @@ speedImperialName speed =
 speedMetricName : RecordingSpeed -> String
 speedMetricName speed =
     case speed of
+        IPS_0p9375 ->
+            "2.38cm/s"
+
         IPS_1p875 ->
             "4.75cm/s"
 
