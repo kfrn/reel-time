@@ -46,4 +46,4 @@ gh-pages -d build
 
 This web app was scaffolded using [`create-elm-app`](https://www.npmjs.com/package/create-elm-app) and styled with assistance from [Bulma](https://bulma.io/).
 
-Thanks to [Ashley Blewer](https://github.com/ablwr), [Kieran O'Leary](https://github.com/kieranjol), [Reto Kromer](https://github.com/retokromer), [Andrew Weaver](https://github.com/privatezero), and [Dave Rice](https://github.com/dericed) for providing feedback and encouragement!
+Cheers to [Ashley Blewer](https://github.com/ablwr), [Kieran O'Leary](https://github.com/kieranjol), [Reto Kromer](https://github.com/retokromer), [Andrew Weaver](https://github.com/privatezero), and [Dave Rice](https://github.com/dericed) for providing feedback and encouragement! Especial thanks to Reto for his translation help.

@@ -10,7 +10,6 @@ type alias Model =
     { currentSeed : Seed
     , reels : List Reel
     , selectorValues : SelectorValues
-    , quantity : Maybe Quantity
     , fileType : FileType
     , system : SystemOfMeasurement
     , language : Language
@@ -34,12 +33,12 @@ initialModel =
             , diameter = Seven
             , tapeThickness = Mil1p5
             , recordingSpeed = IPS_7p5
+            , quantity = Nothing
             }
     in
     { currentSeed = seed
     , reels = []
     , selectorValues = initialSelectorValues
-    , quantity = Nothing
     , fileType = WAV_24_96
     , system = Imperial
     , language = EN

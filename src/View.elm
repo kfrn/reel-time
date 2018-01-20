@@ -268,7 +268,7 @@ selectorRow model =
             model.selectorValues
 
         invalidQuantity =
-            isNothing model.quantity || model.quantity == Just 0
+            isNothing model.selectorValues.quantity || model.selectorValues.quantity == Just 0
     in
     tr [ class "table-header main-row" ]
         [ th [ class "pc10" ]

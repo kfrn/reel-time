@@ -56,6 +56,7 @@ type alias SelectorValues =
     , diameter : DiameterInInches
     , tapeThickness : TapeThickness
     , recordingSpeed : RecordingSpeed
+    , quantity : Maybe Quantity
     }
 
 

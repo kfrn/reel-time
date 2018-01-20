@@ -27,7 +27,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         AddReel ->
-            case model.quantity of
+            case model.selectorValues.quantity of
                 Just q ->
                     let
                         ( uuid, newSeed ) =
@@ -135,12 +135,30 @@ update msg model =
                     ( model, Cmd.none )
 
         UpdateQuantity quantity ->
+            let
+                updateSValues sValues newSpeed =
+                    { sValues | quantity = newSpeed }
+            in
             case String.toInt quantity of
                 Ok q ->
-                    ( { model | quantity = Just q }, Cmd.none )
+                    let
+                        newSelectorValues =
+                            updateSValues model.selectorValues <| Just q
+
+                        newModel =
+                            { model | selectorValues = newSelectorValues }
+                    in
+                    ( newModel, Cmd.none )
 
                 Err e ->
-                    ( { model | quantity = Nothing }, Cmd.none )
+                    let
+                        newSelectorValues =
+                            updateSValues model.selectorValues Nothing
+
+                        newModel =
+                            { model | selectorValues = newSelectorValues }
+                    in
+                    ( newModel, Cmd.none )
 
         ChangeSystemOfMeasurement system ->
             case system of
