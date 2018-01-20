@@ -118,3 +118,14 @@ type Footage
     | Ft3600
     | Ft4800
     | Ft7200
+
+
+type FileType
+    = WAV_24_96
+    | WAV_24_48
+    | WAV_16_48
+
+
+allFileTypes : List FileType
+allFileTypes =
+    [ WAV_24_96, WAV_24_48, WAV_16_48 ]

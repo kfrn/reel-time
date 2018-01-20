@@ -11,6 +11,7 @@ type alias Model =
     , reels : List Reel
     , selectorValues : SelectorValues
     , quantity : Maybe Quantity
+    , fileType : FileType
     , system : SystemOfMeasurement
     , language : Language
     , page : PageView
@@ -35,4 +36,12 @@ initialModel =
             , recordingSpeed = IPS_7p5
             }
     in
-    Model seed [] initialSelectorValues Nothing Imperial EN Calculator
+    { currentSeed = seed
+    , reels = []
+    , selectorValues = initialSelectorValues
+    , quantity = Nothing
+    , fileType = WAV_24_96
+    , system = Imperial
+    , language = EN
+    , page = Calculator
+    }
