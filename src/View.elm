@@ -238,7 +238,7 @@ reelTable model =
     let
         total =
             if List.length model.reels > 0 then
-                [ totalRow model.language model.reels ]
+                [ totalRow model.language model.reels model.fileType ]
             else
                 []
 
@@ -427,14 +427,17 @@ durationData language mins quantity passes =
     ]
 
 
-totalRow : Language -> List Reel -> Html Msg
-totalRow language reels =
+totalRow : Language -> List Reel -> FileType -> Html Msg
+totalRow language reels fileType =
     let
         totalMins =
             totalLength reels
 
         formattedTime =
             formatTime totalMins
+
+        totalFilesize =
+            List.sum <| List.map (filesize fileType) reels
     in
     tfoot []
         [ tr [ class "main-row" ]
@@ -443,13 +446,26 @@ totalRow language reels =
             , td [] []
             , td [] []
             , td [] []
-            , td []
+            , td [ class "duration-filesize" ]
                 [ div [ class "total-top has-text-weight-bold" ] [ text <| translate language DurationStr ]
-                , div [ class "has-text-weight-bold" ] [ text <| translate language FileSizeStr ]
+                , div []
+                    [ span [ class "has-text-weight-bold" ] [ text <| translate language FileSizeStr ]
+                    , div [ class "select is-small" ]
+                        [ select [ name "file-type", class "select is-small", onChange ChangeFileType ]
+                            (List.map
+                                (\ft ->
+                                    option
+                                        [ value (toString ft), selected (ft == fileType) ]
+                                        [ text <| fileTypeName ft ]
+                                )
+                                allFileTypes
+                            )
+                        ]
+                    ]
                 ]
             , td []
                 [ div [ class "total-top" ] [ text <| translate language (DurationSummaryStr totalMins formattedTime) ]
-                , div [] [ text <| toString (List.sum <| List.map filesize reels) ++ " MB" ]
+                , div [] [ text <| toString totalFilesize ++ " MB" ]
                 ]
             , td [] []
             ]

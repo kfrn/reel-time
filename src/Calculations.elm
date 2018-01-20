@@ -118,8 +118,8 @@ totalLength reels =
     List.sum <| List.map reelDuration reels
 
 
-filesize : Reel -> Float
-filesize reel =
+filesize : FileType -> Reel -> Float
+filesize fileType reel =
     let
         multiplier =
             case reel.audioConfig of
@@ -132,13 +132,21 @@ filesize reel =
                 _ ->
                     1
 
+        mbPerMin =
+            case fileType of
+                WAV_24_96 ->
+                    16.875
+
+                WAV_24_48 ->
+                    8.4375
+
+                WAV_16_48 ->
+                    5.625
+
         ( _, passes ) =
             reelInfo reel.audioConfig
 
         duration =
             durationInMinutes reel
-
-        mbPerMin =
-            16.875
     in
     duration * mbPerMin * toFloat passes * multiplier

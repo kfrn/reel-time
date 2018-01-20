@@ -11,6 +11,7 @@ import Uuid exposing (Uuid, uuidGenerator)
 type Msg
     = AddReel
     | DeleteRow Reel
+    | ChangeFileType String
     | ChangeAudioConfig String
     | ChangeDiameterInInches String
     | ChangeTapeThickness String
@@ -52,6 +53,14 @@ update msg model =
                     { model | reels = newReels }
             in
             ( newModel, Cmd.none )
+
+        ChangeFileType str ->
+            case fileTypeFromString str of
+                Just ft ->
+                    ( { model | fileType = ft }, Cmd.none )
+
+                Nothing ->
+                    ( model, Cmd.none )
 
         ChangeAudioConfig str ->
             case audioConfigFromString str of

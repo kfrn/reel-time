@@ -121,9 +121,9 @@ translate language appString =
                     }
 
                 FileSizeStr ->
-                    { en = "total size (24/96 WAV)"
-                    , fr = "tailleur (24/96 WAV)"
-                    , it = "dimensione (24/96 WAV)"
+                    { en = "total size: "
+                    , fr = "tailleur: "
+                    , it = "dimensione: "
                     }
 
                 FullTrackMonoStr ->

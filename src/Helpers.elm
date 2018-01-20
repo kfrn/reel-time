@@ -248,6 +248,35 @@ speedMetricName speed =
             "76cm/s"
 
 
+fileTypeName : FileType -> String
+fileTypeName ft =
+    case ft of
+        WAV_24_96 ->
+            "24/96 WAV"
+
+        WAV_24_48 ->
+            "24/48 WAV"
+
+        WAV_16_48 ->
+            "16/48 WAV"
+
+
+fileTypeFromString : String -> Maybe FileType
+fileTypeFromString ft =
+    case ft of
+        "WAV_24_96" ->
+            Just WAV_24_96
+
+        "WAV_24_48" ->
+            Just WAV_24_48
+
+        "WAV_16_48" ->
+            Just WAV_16_48
+
+        _ ->
+            Nothing
+
+
 footageToInt : Footage -> LengthInFeet
 footageToInt footage =
     case footage of
