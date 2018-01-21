@@ -47,7 +47,7 @@ navbar page system language =
         measurementControls =
             case page of
                 Calculator ->
-                    [ systemControls system ]
+                    [ systemControls language system ]
 
                 _ ->
                     []
@@ -85,9 +85,17 @@ footer language =
         ]
 
 
-systemControls : SystemOfMeasurement -> Html Msg
-systemControls system =
+systemControls : Language -> SystemOfMeasurement -> Html Msg
+systemControls lang system =
     let
+        nameStr s =
+            case s of
+                Metric ->
+                    MetricStr
+
+                Imperial ->
+                    ImperialStr
+
         makeButton sys =
             button
                 [ classList
@@ -96,7 +104,7 @@ systemControls system =
                     ]
                 , onClick (ChangeSystemOfMeasurement sys)
                 ]
-                [ text (toString sys) ]
+                [ text <| translate lang <| nameStr sys ]
     in
     div [ class "navbar-item" ] (List.map makeButton allSystemsOfMeasurement)
 

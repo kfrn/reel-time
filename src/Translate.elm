@@ -37,7 +37,9 @@ type AppString
     | FullTrackMonoStr
     | HalfTrackMonoStr
     | HalfTrackStereoStr
+    | ImperialStr
     | InfoHeaderStr
+    | MetricStr
     | MinutesStr DurationInMinutes
     | PassesStr Int
     | ResponsiveStr
@@ -122,7 +124,7 @@ translate language appString =
 
                 FileSizeStr ->
                     { en = "total size: "
-                    , fr = "tailleur: "
+                    , fr = "taille: "
                     , it = "dimensione: "
                     }
 
@@ -144,10 +146,22 @@ translate language appString =
                     , it = "due piste stereo"
                     }
 
+                ImperialStr ->
+                    { en = "imperial"
+                    , fr = "impérial"
+                    , it = "imperiale"
+                    }
+
                 InfoHeaderStr ->
                     { en = "info"
                     , fr = "info"
                     , it = "info"
+                    }
+
+                MetricStr ->
+                    { en = "metric"
+                    , fr = "métrique"
+                    , it = "metrico"
                     }
 
                 MinutesStr totalMins ->
