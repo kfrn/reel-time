@@ -279,15 +279,15 @@ translate language appString =
                     }
 
                 WavAStr ->
-                    { en = "When digitising analogue audio, the commonly accepted preservation format is linear pulse code modulation (LPCM) encoding inside a WAVE (.WAV) wrapper. A bit-depth of 24 and sample rate of 96kHz is recommended."
-                    , fr = "Quand on numérise l'audio analogique, le format de conservation bien accepté est l'encodage LPCM (Linear Pulse Code Modulation) à l'intérieur du format conteneur WAVE (.WAV). On recommande une profondeur de 24 bit et une cadence d'échantillonnage de 96 kHz."
-                    , it = "Durante la digitalizzazione dell'audio analogico, il formato di conservazione abitualmente accettato è la codifica LPCM (linear pulse code modulation) all'interno dal formato contenitore WAVE (.WAV). Si consiglia una profondità di 24 bit e una frequenza di campionamento di 96 kHz."
+                    { en = "When digitising analogue audio, the commonly accepted preservation format is linear pulse code modulation (LPCM) encoding inside a WAVE (.WAV) wrapper. The International Association of Sound and Audiovisual Archives (IASA) recommends a bit-depth of 24 and sample rate of 96kHz, but other options are also widely used, such as 24-bit/48kHz and 16-bit/48kHz."
+                    , fr = "Quand on numérise l'audio analogique, le format de conservation bien accepté est l'encodage LPCM (Linear Pulse Code Modulation) à l'intérieur du format conteneur WAVE (.WAV). L'Association Internationale des Archives Sonores et Audiovisuelles (IASA) recommande une profondeur de 24 bit et une cadence d'échantillonnage de 96 kHz, mais d'autres options sont communément utilisées, par exemple 24 bit/48 kHz ou 16 bit/48 kHz."
+                    , it = "Durante la digitalizzazione dell'audio analogico, il formato di conservazione abitualmente accettato è la codifica LPCM (linear pulse code modulation) all'interno dal formato contenitore WAVE (.WAV). L'Associazione Internazionale degli Archivi Sonori e Audiovisivi (IASA) consiglia una profondità di 24 bit e una frequenza di campionamento di 96 kHz, ma anche altre opzioni sono spesso utilizzate, come 24 bit/48 kHz oppure 16 bit/48 kHz."
                     }
 
                 WavQStr ->
-                    { en = "What's this about a '24/96 WAV'?"
-                    , fr = "Qu'est-ce qu'un '24/96 WAV'?"
-                    , it = "Cos'è un '24/96 WAV'?"
+                    { en = "24/96 WAV, 24/48 WAV, 16/48 WAV: what are these?"
+                    , fr = "Que signifient 24/96 WAV, 24/48 WAV et 16/48 WAV?"
+                    , it = "Cosa significano 24/96 WAV, 24/48 WAV e 16/48 WAV?"
                     }
     in
     case language of
