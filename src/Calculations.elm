@@ -7,6 +7,18 @@ import Types exposing (..)
 reelLengthInFeet : Reel -> Footage
 reelLengthInFeet reel =
     case ( reel.diameter, reel.tapeThickness ) of
+        ( Three, Mil1p5 ) ->
+            Ft150
+
+        ( Three, Mil1p0 ) ->
+            Ft225
+
+        ( Three, Mil0p5Double ) ->
+            Ft300
+
+        ( Three, Mil0p5Triple ) ->
+            Ft375
+
         ( Five, Mil1p5 ) ->
             Ft600
 
@@ -53,6 +65,18 @@ baseDuration reel =
             reelLengthInFeet reel
     in
     case footage of
+        Ft150 ->
+            0.9375
+
+        Ft225 ->
+            1.40625
+
+        Ft300 ->
+            1.875
+
+        Ft375 ->
+            2.34375
+
         Ft600 ->
             3.75
 

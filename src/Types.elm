@@ -74,14 +74,15 @@ allAudioConfigs =
 
 
 type DiameterInInches
-    = Five
+    = Three
+    | Five
     | Seven
     | TenPtFive
 
 
 allDiameters : List DiameterInInches
 allDiameters =
-    [ Five, Seven, TenPtFive ]
+    [ Three, Five, Seven, TenPtFive ]
 
 
 type TapeThickness
@@ -111,7 +112,11 @@ allRecordingSpeeds =
 
 
 type Footage
-    = Ft600
+    = Ft150
+    | Ft225
+    | Ft300
+    | Ft375
+    | Ft600
     | Ft900
     | Ft1200
     | Ft1800

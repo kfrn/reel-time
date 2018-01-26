@@ -85,6 +85,9 @@ audioConfigDisplayName audioConfig =
 diameterFromString : String -> Maybe DiameterInInches
 diameterFromString name =
     case name of
+        "Three" ->
+            Just Three
+
         "Five" ->
             Just Five
 
@@ -155,6 +158,9 @@ diameterDisplayName system =
 diameterImperialName : DiameterInInches -> String
 diameterImperialName diameter =
     case diameter of
+        Three ->
+            "3\""
+
         Five ->
             "5\""
 
@@ -168,6 +174,9 @@ diameterImperialName diameter =
 diameterMetricName : DiameterInInches -> String
 diameterMetricName diameter =
     case diameter of
+        Three ->
+            "7.6cm"
+
         Five ->
             "12.7cm"
 
@@ -280,6 +289,18 @@ fileTypeFromString ft =
 footageToInt : Footage -> LengthInFeet
 footageToInt footage =
     case footage of
+        Ft150 ->
+            150
+
+        Ft225 ->
+            225
+
+        Ft300 ->
+            300
+
+        Ft375 ->
+            375
+
         Ft600 ->
             600
 
