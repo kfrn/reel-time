@@ -16,11 +16,11 @@ Input the characteristics of your audio tapes—audio config, tape thickness, re
 
 Suggestions and contributions are welcome! I'm happy to receive feature requests, bug reports, code changes, translations, general comments, etc. You can submit a github issue (or pull request), or [email me](mailto:kfnagels@gmail.com) directly.
 
-### Dev notes
+### Local setup
 
-Setup:
-* [install Elm](https://guide.elm-lang.org/install.html)
-* [install Node](https://nodejs.org/en/download/)
+Dependencies:
+* [Elm](https://guide.elm-lang.org/install.html)
+* [Node](https://nodejs.org/en/download/)
 
 To run locally:
 ```

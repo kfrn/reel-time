@@ -11,11 +11,11 @@ import Uuid exposing (Uuid, uuidGenerator)
 
 all : Test
 all =
-    describe "reel duration & file size calculation"
+    describe "reel duration & file size calculation" <|
         [ describe "full-track mono, 5\" 0.5mil triple @ 3.75 IPS" <|
             let
                 reel =
-                    newReel fakeUUID (SelectorValues FullTrackMono Five Mil0p5Triple IPS_3p75) 1
+                    newReel fakeUUID (SelectorValues FullTrackMono Five Mil0p5Triple IPS_3p75 (Just 1)) 1
             in
             [ test "should be 1 pass" <|
                 \_ ->
@@ -32,17 +32,17 @@ all =
                         fullDuration reel
                 in
                 \_ -> Expect.equal duration 90
-            , test "should be 1518.75 MB in size" <|
+            , test "should be 1518.75 MB in size for a 24/96 WAV" <|
                 let
                     size =
-                        filesize reel
+                        filesize WAV_24_96 reel
                 in
                 \_ -> Expect.equal size 1518.75
             ]
         , describe "half-track stereo, 10.5\" 0.5mil double @ 7.5 IPS" <|
             let
                 reel =
-                    newReel fakeUUID (SelectorValues HalfTrackStereo TenPtFive Mil0p5Double IPS_7p5) 1
+                    newReel fakeUUID (SelectorValues HalfTrackStereo TenPtFive Mil0p5Double IPS_7p5 (Just 1)) 1
             in
             [ test "should be 1 pass" <|
                 \_ ->
@@ -59,17 +59,17 @@ all =
                         fullDuration reel
                 in
                 \_ -> Expect.equal duration 120
-            , test "should be 4050 MB in size" <|
+            , test "should be 4050 MB in size for a 24/96 WAV" <|
                 let
                     size =
-                        filesize reel
+                        filesize WAV_24_96 reel
                 in
                 \_ -> Expect.equal size 4050
             ]
         , describe "half-track mono, 7\" 1.5mil @ 1.875 IPS" <|
             let
                 reel =
-                    newReel fakeUUID (SelectorValues HalfTrackMono Seven Mil1p5 IPS_1p875) 1
+                    newReel fakeUUID (SelectorValues HalfTrackMono Seven Mil1p5 IPS_1p875 (Just 1)) 1
             in
             [ test "should be 2 passes" <|
                 \_ ->
@@ -86,17 +86,17 @@ all =
                         fullDuration reel
                 in
                 \_ -> Expect.equal duration 240
-            , test "should be 4050 MB in size" <|
+            , test "should be 4050 MB in size for a 24/96 WAV" <|
                 let
                     size =
-                        filesize reel
+                        filesize WAV_24_96 reel
                 in
                 \_ -> Expect.equal size 4050
             ]
         , describe "quarter-track stereo, 10.5\" 0.5mil triple @ 30 IPS" <|
             let
                 reel =
-                    newReel fakeUUID (SelectorValues QuarterTrackStereo TenPtFive Mil0p5Triple IPS_30) 1
+                    newReel fakeUUID (SelectorValues QuarterTrackStereo TenPtFive Mil0p5Triple IPS_30 (Just 1)) 1
             in
             [ test "should be 2 passes" <|
                 \_ ->
@@ -113,17 +113,17 @@ all =
                         fullDuration reel
                 in
                 \_ -> Expect.equal duration 90
-            , test "should be 3037.5 MB in size" <|
+            , test "should be 3037.5 MB in size for a 24/96 WAV" <|
                 let
                     size =
-                        filesize reel
+                        filesize WAV_24_96 reel
                 in
                 \_ -> Expect.equal size 3037.5
             ]
         , describe "quarter-track mono, 7\" 1.0mil @ 15 IPS" <|
             let
                 reel =
-                    newReel fakeUUID (SelectorValues QuarterTrackMono Seven Mil1p0 IPS_15) 1
+                    newReel fakeUUID (SelectorValues QuarterTrackMono Seven Mil1p0 IPS_15 (Just 1)) 1
             in
             [ test "should be 4 passes" <|
                 \_ ->
@@ -140,10 +140,10 @@ all =
                         fullDuration reel
                 in
                 \_ -> Expect.equal duration 90
-            , test "should be 1518.75 MB in size" <|
+            , test "should be 1518.75 MB in size for a 24/96 WAV" <|
                 let
                     size =
-                        filesize reel
+                        filesize WAV_24_96 reel
                 in
                 \_ -> Expect.equal size 1518.75
             ]
