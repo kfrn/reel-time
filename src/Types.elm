@@ -66,11 +66,12 @@ type AudioConfig
     | HalfTrackMono
     | QuarterTrackStereo
     | QuarterTrackMono
+    | Quadraphonic
 
 
 allAudioConfigs : List AudioConfig
 allAudioConfigs =
-    [ FullTrackMono, HalfTrackStereo, HalfTrackMono, QuarterTrackStereo, QuarterTrackMono ]
+    [ FullTrackMono, HalfTrackStereo, HalfTrackMono, QuarterTrackStereo, QuarterTrackMono, Quadraphonic ]
 
 
 type DiameterInInches

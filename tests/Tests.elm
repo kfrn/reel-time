@@ -147,6 +147,33 @@ all =
                 in
                 \_ -> Expect.equal size 1518.75
             ]
+        , describe "quadraphonic (4-track), 7\" 1.0mil @ 7.5 IPS" <|
+            let
+                reel =
+                    newReel fakeUUID (SelectorValues Quadraphonic Seven Mil1p0 IPS_7p5 (Just 1)) 1
+            in
+            [ test "should be 1 pass" <|
+                \_ ->
+                    Expect.equal reel.passes 1
+            , test "reel footage should be 1800ft" <|
+                let
+                    footage =
+                        reelLengthInFeet reel
+                in
+                \_ -> Expect.equal footage Ft1800
+            , test "duration should be 45 minutes" <|
+                let
+                    duration =
+                        fullDuration reel
+                in
+                \_ -> Expect.equal duration 45
+            , test "should be 1518.75 MB in size for a 24/96 WAV" <|
+                let
+                    size =
+                        filesize WAV_24_96 reel
+                in
+                \_ -> Expect.equal size 3037.5
+            ]
         ]
 
 

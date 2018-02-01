@@ -58,6 +58,8 @@ reelLengthInFeet reel =
 
 
 -- The baseDuration is the duration of the reel if recorded at the maximum speed of 30ips.
+
+
 baseDuration : Reel -> Float
 baseDuration reel =
     let
@@ -152,6 +154,9 @@ filesize fileType reel =
 
                 QuarterTrackStereo ->
                     2
+
+                Quadraphonic ->
+                    4
 
                 _ ->
                     1

@@ -40,9 +40,13 @@ reelInfo config =
         QuarterTrackMono ->
             ( Bidirectional, 4 )
 
+        Quadraphonic ->
+            ( Unidirectional, 1 )
+
 
 audioConfigFromString : String -> Maybe AudioConfig
 audioConfigFromString name =
+    -- TODO replace these kind of FNs with a lookup, this is a risky approach.
     case name of
         "FullTrackMono" ->
             Just FullTrackMono
@@ -58,6 +62,9 @@ audioConfigFromString name =
 
         "QuarterTrackMono" ->
             Just QuarterTrackMono
+
+        "Quadraphonic" ->
+            Just Quadraphonic
 
         _ ->
             Nothing
@@ -80,6 +87,9 @@ audioConfigDisplayName audioConfig =
 
         QuarterTrackMono ->
             QuarterTrackMonoStr
+
+        Quadraphonic ->
+            QuadraphonicStr
 
 
 diameterFromString : String -> Maybe DiameterInInches
