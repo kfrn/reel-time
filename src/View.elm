@@ -447,15 +447,11 @@ totalRow language reels fileType =
                 , div []
                     [ span [ class "has-text-weight-bold" ] [ text <| translate language FileSizeStr ]
                     , div [ class "select is-small" ]
-                        [ select [ name "file-type", class "select is-small", onChange ChangeFileType ]
-                            (List.map
-                                (\ft ->
-                                    option
-                                        [ value (toString ft), selected (ft == fileType) ]
-                                        [ text <| fileTypeName ft ]
-                                )
-                                allFileTypes
-                            )
+                        [ renderSelect
+                            (fileTypeName fileType)
+                            ChangeFileType
+                            fileTypeName
+                            allFileTypes
                         ]
                     ]
                 ]

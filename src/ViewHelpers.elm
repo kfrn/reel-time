@@ -1,7 +1,7 @@
 module ViewHelpers exposing (..)
 
-import Html exposing (Html, option, select, text)
-import Html.Attributes exposing (selected)
+import Html exposing (Html, button, option, select, text)
+import Html.Attributes exposing (classList, selected)
 import Html.Events exposing (on)
 import Json.Decode as Json
 import List.Extra as ListX
