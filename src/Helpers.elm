@@ -41,28 +41,6 @@ reelInfo config =
             ( Bidirectional, 4 )
 
 
-audioConfigFromString : String -> Maybe AudioConfig
-audioConfigFromString name =
-    case name of
-        "FullTrackMono" ->
-            Just FullTrackMono
-
-        "HalfTrackStereo" ->
-            Just HalfTrackStereo
-
-        "HalfTrackMono" ->
-            Just HalfTrackMono
-
-        "QuarterTrackStereo" ->
-            Just QuarterTrackStereo
-
-        "QuarterTrackMono" ->
-            Just QuarterTrackMono
-
-        _ ->
-            Nothing
-
-
 audioConfigDisplayName : AudioConfig -> AppString
 audioConfigDisplayName audioConfig =
     case audioConfig of
@@ -80,69 +58,6 @@ audioConfigDisplayName audioConfig =
 
         QuarterTrackMono ->
             QuarterTrackMonoStr
-
-
-diameterFromString : String -> Maybe DiameterInInches
-diameterFromString name =
-    case name of
-        "Three" ->
-            Just Three
-
-        "Five" ->
-            Just Five
-
-        "Seven" ->
-            Just Seven
-
-        "TenPtFive" ->
-            Just TenPtFive
-
-        _ ->
-            Nothing
-
-
-tapeThicknessFromString : String -> Maybe TapeThickness
-tapeThicknessFromString name =
-    case name of
-        "Mil1p5" ->
-            Just Mil1p5
-
-        "Mil1p0" ->
-            Just Mil1p0
-
-        "Mil0p5Double" ->
-            Just Mil0p5Double
-
-        "Mil0p5Triple" ->
-            Just Mil0p5Triple
-
-        _ ->
-            Nothing
-
-
-recordingSpeedFromString : String -> Maybe RecordingSpeed
-recordingSpeedFromString name =
-    case name of
-        "IPS_0p9375" ->
-            Just IPS_0p9375
-
-        "IPS_1p875" ->
-            Just IPS_1p875
-
-        "IPS_3p75" ->
-            Just IPS_3p75
-
-        "IPS_7p5" ->
-            Just IPS_7p5
-
-        "IPS_15" ->
-            Just IPS_15
-
-        "IPS_30" ->
-            Just IPS_30
-
-        _ ->
-            Nothing
 
 
 diameterDisplayName : SystemOfMeasurement -> (DiameterInInches -> String)

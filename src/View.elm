@@ -4,8 +4,7 @@ import Calculations exposing (..)
 import Helpers exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (attribute, class, classList, disabled, href, id, name, placeholder, selected, value)
-import Html.Events exposing (on, onClick, onInput)
-import Json.Decode as Json
+import Html.Events exposing (onClick, onInput)
 import Links exposing (LinkData(..), LinkName(..), link, linkData)
 import Maybe.Extra exposing (isNothing)
 import Model exposing (Model)
@@ -13,6 +12,7 @@ import Translate exposing (AppString(..), Language(..), allLanguages, infoPara, 
 import Types exposing (..)
 import Update exposing (Msg(..))
 import Uuid exposing (Uuid, uuidGenerator)
+import ViewHelpers exposing (onChange, renderSelect)
 
 
 view : Model -> Html Msg
@@ -261,20 +261,9 @@ reelTable model =
         )
 
 
-onChange : (String -> msg) -> Html.Attribute msg
-onChange makeMessage =
-    on "change" (Json.map makeMessage Html.Events.targetValue)
-
-
 selectorRow : Model -> Html Msg
 selectorRow model =
     let
-        createOption selectorMatcher displayer opt =
-            option [ value (toString opt), selected (opt == selectorMatcher) ] [ text (displayer opt) ]
-
-        sValues =
-            model.selectorValues
-
         invalidQuantity =
             isNothing model.selectorValues.quantity || model.selectorValues.quantity == Just 0
     in
@@ -282,42 +271,41 @@ selectorRow model =
         [ th [ class "pc10" ]
             [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language TypeStr ]
             , div [ class "select is-small" ]
-                [ select [ name "audio-config", class "select is-small", onChange ChangeAudioConfig ]
-                    (List.map
-                        (\config -> option [ value (toString config), selected (config == sValues.audioConfig) ] [ text <| translate model.language <| audioConfigDisplayName config ])
-                        allAudioConfigs
-                    )
+                [ renderSelect
+                    (translate model.language <| audioConfigDisplayName model.selectorValues.audioConfig)
+                    ChangeAudioConfig
+                    (\a -> translate model.language <| audioConfigDisplayName a)
+                    allAudioConfigs
                 ]
             ]
         , th [ class "pc10" ]
             [ div [ class "select-heading is-size-6" ] [ text <| translate model.language DiameterStr ]
             , div [ class "select is-small" ]
-                [ select
-                    [ name "diameter", class "select is-small", onChange ChangeDiameterInInches ]
-                    (List.map
-                        (createOption sValues.diameter <| diameterDisplayName model.system)
-                        allDiameters
-                    )
+                [ renderSelect
+                    (diameterDisplayName model.system model.selectorValues.diameter)
+                    ChangeDiameterInInches
+                    (diameterDisplayName model.system)
+                    allDiameters
                 ]
             ]
         , th [ class "pc10" ]
             [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language ThicknessStr ]
             , div [ class "select is-small" ]
-                [ select [ name "tape-thickness", class "select is-small", onChange ChangeTapeThickness ]
-                    (List.map
-                        (createOption sValues.tapeThickness tapeThicknessDisplayName)
-                        allThicknesses
-                    )
+                [ renderSelect
+                    (tapeThicknessDisplayName model.selectorValues.tapeThickness)
+                    ChangeTapeThickness
+                    tapeThicknessDisplayName
+                    allThicknesses
                 ]
             ]
         , th [ class "pc10" ]
             [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language SpeedStr ]
             , div [ class "select is-small" ]
-                [ select [ name "recording-speed", class "select is-small", onChange ChangeRecordingSpeed ]
-                    (List.map
-                        (createOption sValues.recordingSpeed <| speedDisplayName model.system)
-                        allRecordingSpeeds
-                    )
+                [ renderSelect
+                    (speedDisplayName model.system model.selectorValues.recordingSpeed)
+                    ChangeRecordingSpeed
+                    (speedDisplayName model.system)
+                    allRecordingSpeeds
                 ]
             ]
         , th [ class "pc5 has-text-centered" ]

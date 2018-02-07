@@ -12,10 +12,10 @@ type Msg
     = AddReel
     | DeleteRow Reel
     | ChangeFileType String
-    | ChangeAudioConfig String
-    | ChangeDiameterInInches String
-    | ChangeTapeThickness String
-    | ChangeRecordingSpeed String
+    | ChangeAudioConfig AudioConfig
+    | ChangeDiameterInInches DiameterInInches
+    | ChangeTapeThickness TapeThickness
+    | ChangeRecordingSpeed RecordingSpeed
     | UpdateQuantity String
     | ChangeSystemOfMeasurement SystemOfMeasurement
     | ChangeLanguage Language
@@ -62,77 +62,57 @@ update msg model =
                 Nothing ->
                     ( model, Cmd.none )
 
-        ChangeAudioConfig str ->
-            case audioConfigFromString str of
-                Just config ->
-                    let
-                        updateSValues sValues newConfig =
-                            { sValues | audioConfig = newConfig }
+        ChangeAudioConfig config ->
+            let
+                updateSValues sValues newConfig =
+                    { sValues | audioConfig = newConfig }
 
-                        newSelectorValues =
-                            updateSValues model.selectorValues config
+                newSelectorValues =
+                    updateSValues model.selectorValues config
 
-                        newModel =
-                            { model | selectorValues = newSelectorValues }
-                    in
-                    ( newModel, Cmd.none )
+                newModel =
+                    { model | selectorValues = newSelectorValues }
+            in
+            ( newModel, Cmd.none )
 
-                Nothing ->
-                    ( model, Cmd.none )
+        ChangeDiameterInInches diameter ->
+            let
+                updateSValues sValues newDiameterInInches =
+                    { sValues | diameter = newDiameterInInches }
 
-        ChangeDiameterInInches str ->
-            case diameterFromString str of
-                Just diameter ->
-                    let
-                        updateSValues sValues newDiameterInInches =
-                            { sValues | diameter = newDiameterInInches }
+                newSelectorValues =
+                    updateSValues model.selectorValues diameter
 
-                        newSelectorValues =
-                            updateSValues model.selectorValues diameter
+                newModel =
+                    { model | selectorValues = newSelectorValues }
+            in
+            ( newModel, Cmd.none )
 
-                        newModel =
-                            { model | selectorValues = newSelectorValues }
-                    in
-                    ( newModel, Cmd.none )
+        ChangeTapeThickness thickness ->
+            let
+                updateSValues sValues newThickness =
+                    { sValues | tapeThickness = newThickness }
 
-                Nothing ->
-                    ( model, Cmd.none )
+                newSelectorValues =
+                    updateSValues model.selectorValues thickness
 
-        ChangeTapeThickness str ->
-            case tapeThicknessFromString str of
-                Just thickness ->
-                    let
-                        updateSValues sValues newThickness =
-                            { sValues | tapeThickness = newThickness }
+                newModel =
+                    { model | selectorValues = newSelectorValues }
+            in
+            ( newModel, Cmd.none )
 
-                        newSelectorValues =
-                            updateSValues model.selectorValues thickness
+        ChangeRecordingSpeed speed ->
+            let
+                updateSValues sValues newSpeed =
+                    { sValues | recordingSpeed = newSpeed }
 
-                        newModel =
-                            { model | selectorValues = newSelectorValues }
-                    in
-                    ( newModel, Cmd.none )
+                newSelectorValues =
+                    updateSValues model.selectorValues speed
 
-                Nothing ->
-                    ( model, Cmd.none )
-
-        ChangeRecordingSpeed str ->
-            case recordingSpeedFromString str of
-                Just speed ->
-                    let
-                        updateSValues sValues newSpeed =
-                            { sValues | recordingSpeed = newSpeed }
-
-                        newSelectorValues =
-                            updateSValues model.selectorValues speed
-
-                        newModel =
-                            { model | selectorValues = newSelectorValues }
-                    in
-                    ( newModel, Cmd.none )
-
-                Nothing ->
-                    ( model, Cmd.none )
+                newModel =
+                    { model | selectorValues = newSelectorValues }
+            in
+            ( newModel, Cmd.none )
 
         UpdateQuantity quantity ->
             let
