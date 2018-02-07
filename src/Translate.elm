@@ -44,6 +44,7 @@ type AppString
     | PassesStr Int
     | ResponsiveStr
     | PerReelStr String
+    | QuadraphonicStr
     | QAndAStr
     | QuantityStr
     | QuarterTrackMonoStr
@@ -180,6 +181,12 @@ translate language appString =
                     { en = str ++ " per reel"
                     , fr = str ++ " par bobine"
                     , it = str ++ " per bobina"
+                    }
+
+                QuadraphonicStr ->
+                    { en = "quadraphonic (4-track)"
+                    , fr = "quadriphonique (4 pistes)"
+                    , it = "quadrifonico (4 canali)"
                     }
 
                 QAndAStr ->

@@ -40,6 +40,9 @@ reelInfo config =
         QuarterTrackMono ->
             ( Bidirectional, 4 )
 
+        Quadraphonic ->
+            ( Unidirectional, 1 )
+
 
 audioConfigDisplayName : AudioConfig -> AppString
 audioConfigDisplayName audioConfig =
@@ -58,6 +61,9 @@ audioConfigDisplayName audioConfig =
 
         QuarterTrackMono ->
             QuarterTrackMonoStr
+
+        Quadraphonic ->
+            QuadraphonicStr
 
 
 diameterDisplayName : SystemOfMeasurement -> (DiameterInInches -> String)
