@@ -2,6 +2,7 @@
     "version": "1.0.0",
     "summary": "Calculate the duration of your open-reel audio",
     "repository": "https://github.com/kfrn/reel-time.git",
+    "homepage": "https://kfrn.github.io/reel-time",
     "license": "BSD3",
     "source-directories": [
         "src"
