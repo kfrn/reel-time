@@ -90,7 +90,7 @@ translate language appString =
                 CalculateStr ->
                     { en = "calculate the duration of your open-reel audio"
                     , fr = "calculer la durée de vos bobines"
-                    , it = "calcola la durata delle tue bobine aperte"
+                    , it = "calcola la durata delle tue bobine audio"
                     }
 
                 ContributeStr ->
