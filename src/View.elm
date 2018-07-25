@@ -320,7 +320,7 @@ selectorRow model =
             ]
         , th [ class "pc25" ] [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language InfoHeaderStr ] ]
         , th [ class "pc25" ] [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language DurationStr ] ]
-        , th [ class "pc5" ]
+        , th [ class "pc5 has-text-centered" ]
             [ div [ class "select-heading invisible" ] [ text "." ]
             , button
                 [ class "button is-small", onClick AddReel, disabled invalidQuantity ]

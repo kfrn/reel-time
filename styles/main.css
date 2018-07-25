@@ -150,7 +150,7 @@ tr.main-row:hover {
   margin-bottom: 10px;
 }
 
-.table td:not(:last-child) {
+.table td {
   padding-left: 15px;
   vertical-align: middle;
 }
