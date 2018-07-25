@@ -1,6 +1,6 @@
 module Tests exposing (..)
 
-import Calculations exposing (baseDuration, filesize, fullDuration, reelLengthInFeet)
+import Calculations exposing (baseDuration, filesize, singleReelDuration, reelLengthInFeet)
 import Expect
 import Helpers exposing (newReel)
 import Random.Pcg exposing (initialSeed, step)
@@ -29,7 +29,7 @@ all =
             , test "duration should be 90 minutes" <|
                 let
                     duration =
-                        fullDuration reel
+                        singleReelDuration reel
                 in
                 \_ -> Expect.equal duration 90
             , test "should be 1518.75 MB in size for a 24/96 WAV" <|
@@ -56,7 +56,7 @@ all =
             , test "duration should be 120 minutes" <|
                 let
                     duration =
-                        fullDuration reel
+                        singleReelDuration reel
                 in
                 \_ -> Expect.equal duration 120
             , test "should be 4050 MB in size for a 24/96 WAV" <|
@@ -83,7 +83,7 @@ all =
             , test "duration should be 240 minutes" <|
                 let
                     duration =
-                        fullDuration reel
+                        singleReelDuration reel
                 in
                 \_ -> Expect.equal duration 240
             , test "should be 4050 MB in size for a 24/96 WAV" <|
@@ -110,7 +110,7 @@ all =
             , test "duration should be 90 minutes" <|
                 let
                     duration =
-                        fullDuration reel
+                        singleReelDuration reel
                 in
                 \_ -> Expect.equal duration 90
             , test "should be 3037.5 MB in size for a 24/96 WAV" <|
@@ -137,7 +137,7 @@ all =
             , test "duration should be 90 minutes" <|
                 let
                     duration =
-                        fullDuration reel
+                        singleReelDuration reel
                 in
                 \_ -> Expect.equal duration 90
             , test "should be 1518.75 MB in size for a 24/96 WAV" <|
@@ -164,7 +164,7 @@ all =
             , test "duration should be 45 minutes" <|
                 let
                     duration =
-                        fullDuration reel
+                        singleReelDuration reel
                 in
                 \_ -> Expect.equal duration 45
             , test "should be 1518.75 MB in size for a 24/96 WAV" <|

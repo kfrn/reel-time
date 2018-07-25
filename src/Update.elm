@@ -3,7 +3,7 @@ module Update exposing (Msg(..), update)
 import Helpers exposing (..)
 import Model exposing (Model)
 import Random.Pcg exposing (step)
-import Translate exposing (Language(..))
+import Translate exposing (Language)
 import Types exposing (..)
 import Uuid exposing (Uuid, uuidGenerator)
 

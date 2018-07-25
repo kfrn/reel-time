@@ -56,12 +56,9 @@ reelLengthInFeet reel =
             Ft7200
 
 
-
--- The baseDuration is the duration of the reel if recorded at the maximum speed of 30ips.
-
-
 baseDuration : Reel -> Float
 baseDuration reel =
+    -- The baseDuration is the duration of the reel if recorded at the maximum speed of 30ips, for a single pass.
     let
         footage =
             reelLengthInFeet reel
@@ -104,50 +101,52 @@ baseDuration reel =
             45
 
 
-durationInMinutes : Reel -> DurationInMinutes
-durationInMinutes reel =
+singleReelDuration : Reel -> DurationInMinutes
+singleReelDuration reel =
+    -- This is the full duration for a single reel, i.e. quantity = 1.
+    -- It takes into account the actual recording speed, and the number of passes.
     let
         baseDur =
             baseDuration reel
+
+        speedAdjustedDur =
+            case reel.recordingSpeed of
+                IPS_0p9375 ->
+                    baseDur * 32
+
+                IPS_1p875 ->
+                    baseDur * 16
+
+                IPS_3p75 ->
+                    baseDur * 8
+
+                IPS_7p5 ->
+                    baseDur * 4
+
+                IPS_15 ->
+                    baseDur * 2
+
+                IPS_30 ->
+                    baseDur
     in
-    case reel.recordingSpeed of
-        IPS_0p9375 ->
-            baseDur * 32
-
-        IPS_1p875 ->
-            baseDur * 16
-
-        IPS_3p75 ->
-            baseDur * 8
-
-        IPS_7p5 ->
-            baseDur * 4
-
-        IPS_15 ->
-            baseDur * 2
-
-        IPS_30 ->
-            baseDur
+    toFloat reel.passes * speedAdjustedDur
 
 
 fullDuration : Reel -> DurationInMinutes
 fullDuration reel =
-    toFloat reel.passes * durationInMinutes reel
+    -- This calculation takes into account the quantity.
+    singleReelDuration reel * toFloat reel.quantity
 
 
-totalLength : List Reel -> DurationInMinutes
-totalLength reels =
-    let
-        reelDuration r =
-            fullDuration r * toFloat r.quantity
-    in
-    List.sum <| List.map reelDuration reels
+overallDuration : List Reel -> DurationInMinutes
+overallDuration reels =
+    List.sum <| List.map fullDuration reels
 
 
 filesize : FileType -> Reel -> Float
 filesize fileType reel =
     let
-        multiplier =
+        channels =
             case reel.audioConfig of
                 HalfTrackStereo ->
                     2
@@ -172,10 +171,12 @@ filesize fileType reel =
                 WAV_16_48 ->
                     5.625
 
-        ( _, passes ) =
-            reelInfo reel.audioConfig
-
         duration =
-            durationInMinutes reel
+            fullDuration reel
     in
-    duration * mbPerMin * toFloat passes * multiplier
+    duration * mbPerMin * channels
+
+
+totalFilesize : FileType -> List Reel -> Float
+totalFilesize fileType reels =
+    List.sum <| List.map (filesize fileType) reels

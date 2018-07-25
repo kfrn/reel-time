@@ -344,9 +344,6 @@ reelRow system language reel =
 
         footage =
             reelLengthInFeet reel
-
-        mins =
-            durationInMinutes reel
     in
     tr [ id (Uuid.toString reel.id) ]
         [ td [] [ text <| translate language <| audioConfigDisplayName reel.audioConfig ]
@@ -358,7 +355,7 @@ reelRow system language reel =
             [ directionAndPassCount language reel.directionality reel.passes
             , lengthInfo system language footage
             ]
-        , td [] (durationData language mins reel.quantity reel.passes)
+        , td [] (durationData language reel)
         , td [] [ deleteRowButton reel ]
         ]
 
@@ -409,17 +406,18 @@ lengthInfo system language footage =
     div [] [ text perReel ]
 
 
-durationData : Language -> DurationInMinutes -> Quantity -> Passes -> List (Html Msg)
-durationData language mins quantity passes =
-    let
-        reelTime =
-            mins * toFloat passes
-
-        totalTime =
-            reelTime * toFloat quantity
-    in
-    [ div [] [ text (translate language <| PerReelStr <| toString reelTime ++ "min") ]
-    , div [] [ text (formatTime totalTime ++ " " ++ translate language TotalStr) ]
+durationData : Language -> Reel -> List (Html Msg)
+durationData language reel =
+    [ div []
+        [ text <|
+            translate language (PerReelStr <| toString (singleReelDuration reel) ++ "min")
+        ]
+    , div []
+        [ text <|
+            formatTime (fullDuration reel)
+                ++ " "
+                ++ translate language TotalStr
+        ]
     ]
 
 
@@ -427,13 +425,10 @@ totalRow : Language -> List Reel -> FileType -> Html Msg
 totalRow language reels fileType =
     let
         totalMins =
-            totalLength reels
+            overallDuration reels
 
         formattedTime =
             formatTime totalMins
-
-        totalFilesize =
-            List.sum <| List.map (filesize fileType) reels
     in
     tfoot []
         [ tr [ class "main-row" ]
@@ -457,7 +452,7 @@ totalRow language reels fileType =
                 ]
             , td []
                 [ div [ class "total-top" ] [ text <| translate language (DurationSummaryStr totalMins formattedTime) ]
-                , div [] [ text <| toString totalFilesize ++ " MB" ]
+                , div [] [ text <| toString (totalFilesize fileType reels) ++ " MB" ]
                 ]
             , td [] []
             ]
