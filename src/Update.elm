@@ -10,7 +10,7 @@ import Uuid exposing (Uuid, uuidGenerator)
 
 type Msg
     = AddReel
-    | DeleteRow Reel
+    | DeleteReel Uuid
     | ChangeFileType FileType
     | ChangeAudioConfig AudioConfig
     | ChangeDiameterInInches DiameterInInches
@@ -44,13 +44,10 @@ update msg model =
                 Nothing ->
                     ( model, Cmd.none )
 
-        DeleteRow reel ->
+        DeleteReel reelID ->
             let
-                newReels =
-                    List.filter (\r -> r.id /= reel.id) model.reels
-
                 newModel =
-                    { model | reels = newReels }
+                    { model | reels = removeReel reelID model.reels }
             in
             ( newModel, Cmd.none )
 
@@ -156,3 +153,8 @@ update msg model =
 
         NoOp ->
             ( model, Cmd.none )
+
+
+removeReel : Uuid -> List Reel -> List Reel
+removeReel reelID allReels =
+    List.filter (\r -> r.id /= reelID) allReels

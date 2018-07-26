@@ -335,8 +335,8 @@ selectorRow model =
 reelRow : SystemOfMeasurement -> Language -> Reel -> Html Msg
 reelRow system language reel =
     let
-        deleteRowButton r =
-            button [ class "button is-small", onClick (DeleteRow r) ]
+        deleteRowButton reelID =
+            button [ class "button is-small", onClick <| DeleteReel reelID ]
                 [ span [ class "icon" ]
                     [ i [ class "fa fa-trash" ] []
                     ]
@@ -356,7 +356,7 @@ reelRow system language reel =
             , lengthInfo system language footage
             ]
         , td [] (durationData language reel)
-        , td [] [ deleteRowButton reel ]
+        , td [] [ deleteRowButton reel.id ]
         ]
 
 
