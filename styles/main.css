@@ -191,6 +191,10 @@ tr.main-row:hover {
   padding-bottom: 0.4em;
 }
 
+#filetype {
+  margin-left: 10px;
+}
+
 /*------- ANIMATION -------*/
 
 @keyframes fadein {

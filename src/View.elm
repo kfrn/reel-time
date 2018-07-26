@@ -364,21 +364,10 @@ directionAndPassCount : Language -> Direction -> Passes -> Html Msg
 directionAndPassCount language direction passes =
     let
         passText =
-            if passes == 1 then
-                translate language SinglePassStr
-            else
-                translate language (PassesStr passes)
-
-        directionString =
-            case direction of
-                Unidirectional ->
-                    UnidirectionalStr
-
-                Bidirectional ->
-                    BidirectionalStr
+            translate language (NumPassesStr passes)
 
         fullDirectionString =
-            translate language directionString
+            translate language (directionString direction)
     in
     div [] [ text (fullDirectionString ++ ": " ++ passText) ]
 
@@ -441,7 +430,7 @@ totalRow language reels fileType =
                 [ div [ class "total-top has-text-weight-bold" ] [ text <| translate language DurationStr ]
                 , div []
                     [ span [ class "has-text-weight-bold" ] [ text <| translate language FileSizeStr ]
-                    , div [ class "select is-small" ]
+                    , div [ class "select is-small", id "filetype" ]
                         [ renderSelect
                             (fileTypeName fileType)
                             ChangeFileType
@@ -452,8 +441,14 @@ totalRow language reels fileType =
                 ]
             , td []
                 [ div [ class "total-top" ] [ text <| translate language (DurationSummaryStr totalMins formattedTime) ]
-                , div [] [ text <| toString (totalFilesize fileType reels) ++ " MB" ]
+                , div [] [ text <| translate language (SizeInMegaBytesStr <| totalFilesize fileType reels) ]
                 ]
-            , td [] []
+            , td []
+                [ button [ class "button is-small", onClick StartExport ]
+                    [ span [ class "icon" ]
+                        [ i [ class "fa fa-download" ] []
+                        ]
+                    ]
+                ]
             ]
         ]

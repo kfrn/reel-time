@@ -1,7 +1,9 @@
 module Update exposing (Msg(..), update)
 
+import CsvOutput exposing (dataForCSV)
 import Helpers exposing (..)
 import Model exposing (Model)
+import Ports
 import Random.Pcg exposing (step)
 import Translate exposing (Language)
 import Types exposing (..)
@@ -20,6 +22,7 @@ type Msg
     | ChangeSystemOfMeasurement SystemOfMeasurement
     | ChangeLanguage Language
     | TogglePageView PageView
+    | StartExport
     | NoOp
 
 
@@ -150,6 +153,13 @@ update msg model =
 
                 Info ->
                     ( { model | page = Calculator }, Cmd.none )
+
+        StartExport ->
+            let
+                csvString =
+                    dataForCSV model.language model.fileType model.reels
+            in
+            ( model, Ports.exportData csvString )
 
         NoOp ->
             ( model, Cmd.none )
