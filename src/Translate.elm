@@ -31,18 +31,21 @@ type AppString
     | ContributeStr
     | DevelopedByStr
     | DiameterStr
+    | DirectionStr
     | DurationStr
     | DurationSummaryStr DurationInMinutes String
     | FileSizeStr
+    | FootagePerReelStr
     | FullTrackMonoStr
     | HalfTrackMonoStr
     | HalfTrackStereoStr
     | ImperialStr
     | InfoHeaderStr
     | MetricStr
-    | MinutesStr DurationInMinutes
-    | PassesStr Int
-    | ResponsiveStr
+    | MinutesStr
+    | NumMinutesStr DurationInMinutes
+    | NumPassesStr Int
+    | PassesStr
     | PerReelStr String
     | QuadraphonicStr
     | QAndAStr
@@ -51,9 +54,11 @@ type AppString
     | QuarterTrackStereoStr
     | ReelDurationAStr
     | ReelDurationQStr
-    | SinglePassStr
+    | ResponsiveStr
+    | SizeInMegaBytesStr Float
     | SpeedStr
     | ThicknessStr
+    | TotalDurationStr
     | TotalStr
     | TypeStr
     | UnidirectionalStr
@@ -111,6 +116,12 @@ translate language appString =
                     , it = "diametro"
                     }
 
+                DirectionStr ->
+                    { en = "directionality"
+                    , fr = "direction"
+                    , it = "direzione"
+                    }
+
                 DurationStr ->
                     { en = "duration"
                     , fr = "durée"
@@ -118,15 +129,21 @@ translate language appString =
                     }
 
                 DurationSummaryStr totalMins formattedTime ->
-                    { en = (translate language <| MinutesStr totalMins) ++ ", or " ++ formattedTime
-                    , fr = (translate language <| MinutesStr totalMins) ++ ", ou " ++ formattedTime
-                    , it = (translate language <| MinutesStr totalMins) ++ ", o " ++ formattedTime
+                    { en = (translate language <| NumMinutesStr totalMins) ++ ", or " ++ formattedTime
+                    , fr = (translate language <| NumMinutesStr totalMins) ++ ", ou " ++ formattedTime
+                    , it = (translate language <| NumMinutesStr totalMins) ++ ", o " ++ formattedTime
                     }
 
                 FileSizeStr ->
-                    { en = "total size: "
-                    , fr = "taille: "
-                    , it = "dimensione: "
+                    { en = "total size"
+                    , fr = "taille"
+                    , it = "dimensione"
+                    }
+
+                FootagePerReelStr ->
+                    { en = "footage (ft) per reel"
+                    , fr = "longueur (ft) par bobine"
+                    , it = "lunghezza (ft) per bobina"
                     }
 
                 FullTrackMonoStr ->
@@ -165,16 +182,34 @@ translate language appString =
                     , it = "metrico"
                     }
 
-                MinutesStr totalMins ->
+                MinutesStr ->
+                    { en = "minutes"
+                    , fr = "minutes"
+                    , it = "minuti"
+                    }
+
+                NumMinutesStr totalMins ->
                     { en = toString totalMins ++ " minutes"
                     , fr = toString totalMins ++ " minutes"
                     , it = toString totalMins ++ " minuti"
                     }
 
-                PassesStr int ->
-                    { en = toString int ++ " passes"
-                    , fr = toString int ++ " passes" -- "aller-retour" ??
-                    , it = toString int ++ " passe"
+                NumPassesStr int ->
+                    if int == 1 then
+                        { en = "1 pass"
+                        , fr = "1 passe"
+                        , it = "1 passa"
+                        }
+                    else
+                        { en = toString int ++ " passes"
+                        , fr = toString int ++ " passes"
+                        , it = toString int ++ " passe"
+                        }
+
+                PassesStr ->
+                    { en = "passes"
+                    , fr = "passes" -- "aller-retour" ??
+                    , it = "passe"
                     }
 
                 PerReelStr str ->
@@ -231,10 +266,10 @@ translate language appString =
                     , it = "Sembra che tu stia utilizzando un dispositivo con uno schermo piccolo. Mi dispiace, questo sito non è ancora mobile-friendly. Prova per favore su un desktop!"
                     }
 
-                SinglePassStr ->
-                    { en = "1 pass"
-                    , fr = "1 passe"
-                    , it = "1 passa"
+                SizeInMegaBytesStr mb ->
+                    { en = toString mb ++ " MB"
+                    , fr = toString mb ++ " MB"
+                    , it = toString mb ++ " MB"
                     }
 
                 SpeedStr ->
@@ -247,6 +282,12 @@ translate language appString =
                     { en = "thickness"
                     , fr = "épaisseur"
                     , it = "spessore"
+                    }
+
+                TotalDurationStr ->
+                    { en = "total duration (mins)"
+                    , fr = "durée total (mins)"
+                    , it = "durata totale (min)"
                     }
 
                 TotalStr ->

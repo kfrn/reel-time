@@ -1,0 +1,26 @@
+{
+  "name": "reel-to-reel",
+  "version": "1.0.0",
+  "description": "Calculate the duration of your open-reel audio",
+  "main": "src/index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "file-saver": "^1.3.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kfrn/reel-time.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kfrn/reel-time/issues"
+  },
+  "homepage": "https://github.com/kfrn/reel-time#readme"
+}

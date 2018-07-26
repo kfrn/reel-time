@@ -253,3 +253,13 @@ formatTime mins =
             totalSeconds - (hours * 3600) - (minutes * 60)
     in
     padNumber hours ++ ":" ++ padNumber minutes ++ ":" ++ padNumber seconds
+
+
+directionString : Direction -> AppString
+directionString dir =
+    case dir of
+        Unidirectional ->
+            UnidirectionalStr
+
+        Bidirectional ->
+            BidirectionalStr
