@@ -1,29 +1,13 @@
-module Update exposing (Msg(..), update)
+module Update exposing (update)
 
 import CsvOutput exposing (dataForCSV)
 import Helpers exposing (..)
+import Messages exposing (Msg(..))
 import Model exposing (Model)
 import Ports
 import Random.Pcg exposing (step)
-import Translate exposing (Language)
 import Types exposing (..)
 import Uuid exposing (Uuid, uuidGenerator)
-
-
-type Msg
-    = AddReel
-    | DeleteReel Uuid
-    | ChangeFileType FileType
-    | ChangeAudioConfig AudioConfig
-    | ChangeDiameterInInches DiameterInInches
-    | ChangeTapeThickness TapeThickness
-    | ChangeRecordingSpeed RecordingSpeed
-    | UpdateQuantity String
-    | ChangeSystemOfMeasurement SystemOfMeasurement
-    | ChangeLanguage Language
-    | TogglePageView PageView
-    | StartExport
-    | NoOp
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -37,7 +21,8 @@ update msg model =
                             step uuidGenerator model.currentSeed
 
                         newReels =
-                            [ newReel uuid model.selectorValues q ] ++ model.reels
+                            newReel uuid model.selectorValues q
+                                :: model.reels
 
                         newModel =
                             { model | currentSeed = newSeed, reels = newReels }
@@ -125,7 +110,7 @@ update msg model =
                     in
                     ( newModel, Cmd.none )
 
-                Err e ->
+                Err _ ->
                     let
                         newSelectorValues =
                             updateSValues model.selectorValues Nothing

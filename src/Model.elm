@@ -25,7 +25,7 @@ init =
 initialModel : Model
 initialModel =
     let
-        ( uuid, seed ) =
+        ( _, seed ) =
             step uuidGenerator (initialSeed 19580607)
 
         initialSelectorValues =

@@ -18,8 +18,8 @@ dataForCSV lang fileType reels =
             "\n"
 
         csvLines =
-            [ headerRow lang ]
-                ++ List.map (reelRow lang) reels
+            headerRow lang
+                :: List.map (reelRow lang) reels
                 ++ [ lineBreak
                    , totalRow lang reels
                    , sizeRow lang fileType reels

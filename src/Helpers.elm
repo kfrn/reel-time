@@ -2,7 +2,7 @@ module Helpers exposing (..)
 
 import Translate exposing (AppString(..))
 import Types exposing (..)
-import Uuid exposing (Uuid)
+import Uuid
 
 
 newReel : Uuid.Uuid -> SelectorValues -> Quantity -> Reel

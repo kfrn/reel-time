@@ -3,16 +3,16 @@ module View exposing (view)
 import Calculations exposing (..)
 import Helpers exposing (..)
 import Html exposing (..)
-import Html.Attributes exposing (attribute, class, classList, disabled, href, id, name, placeholder, selected, value)
+import Html.Attributes exposing (attribute, class, classList, disabled, id, placeholder)
 import Html.Events exposing (onClick, onInput)
 import Links exposing (LinkData(..), LinkName(..), link, linkData)
 import Maybe.Extra exposing (isNothing)
+import Messages exposing (Msg(..))
 import Model exposing (Model)
 import Translate exposing (AppString(..), Language(..), allLanguages, infoPara, translate)
 import Types exposing (..)
-import Update exposing (Msg(..))
-import Uuid exposing (Uuid, uuidGenerator)
-import ViewHelpers exposing (onChange, renderSelect)
+import Uuid
+import ViewHelpers exposing (renderSelect)
 
 
 view : Model -> Html Msg
@@ -165,8 +165,8 @@ pageContent model =
 
         Calculator ->
             div []
-                ([ reelTable model ]
-                    ++ startNotice
+                (reelTable model
+                    :: startNotice
                 )
 
 

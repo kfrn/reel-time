@@ -1,6 +1,6 @@
 module Types exposing (..)
 
-import Uuid exposing (Uuid)
+import Uuid
 
 
 type alias Passes =

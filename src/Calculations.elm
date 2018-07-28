@@ -1,6 +1,5 @@
 module Calculations exposing (..)
 
-import Helpers exposing (reelInfo)
 import Types exposing (..)
 
 
