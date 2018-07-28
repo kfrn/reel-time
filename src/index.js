@@ -4,6 +4,7 @@ import "../styles/main.css";
 import { Main } from "./Main.elm";
 import registerServiceWorker from "./registerServiceWorker";
 import * as fileSaver from "file-saver";
+import * as stringify from "../node_modules/csv-stringify/lib/es5/index";
 
 const app = Main.embed(document.getElementById("root"));
 
@@ -12,9 +13,11 @@ registerServiceWorker();
 app.ports.exportData.subscribe(content => {
   const fileName = "reel-time_summary.csv";
 
-  const blob = new Blob([content], {
-    type: "data:text/csv;charset=utf-8"
-  });
+  stringify(content, function(err, output) {
+    const blob = new Blob([output], {
+      type: "data:text/csv;charset=utf-8"
+    });
 
-  fileSaver.saveAs(blob, fileName);
+    fileSaver.saveAs(blob, fileName);
+  });
 });
