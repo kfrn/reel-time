@@ -1,6 +1,119 @@
-module Calculations exposing (..)
+module Audio.Reel.Model exposing (..)
 
-import Types exposing (..)
+import Audio.Model exposing (AudioConfig, DiameterInInches(..), Direction, Passes, Quantity, RecordingSpeed(..), SelectorValues, TapeThickness(..), reelInfo)
+import Uuid
+
+
+type alias Reel =
+    { id : Uuid.Uuid
+    , audioConfig : AudioConfig
+    , diameter : DiameterInInches
+    , tapeThickness : TapeThickness
+    , recordingSpeed : RecordingSpeed
+    , quantity : Quantity
+    , passes : Passes
+    , directionality : Direction
+    }
+
+
+type Footage
+    = Ft150
+    | Ft225
+    | Ft300
+    | Ft375
+    | Ft600
+    | Ft900
+    | Ft1200
+    | Ft1800
+    | Ft2400
+    | Ft3600
+    | Ft4800
+    | Ft7200
+
+
+footageToInt : Footage -> Int
+footageToInt footage =
+    case footage of
+        Ft150 ->
+            150
+
+        Ft225 ->
+            225
+
+        Ft300 ->
+            300
+
+        Ft375 ->
+            375
+
+        Ft600 ->
+            600
+
+        Ft900 ->
+            900
+
+        Ft1200 ->
+            1200
+
+        Ft1800 ->
+            1800
+
+        Ft2400 ->
+            2400
+
+        Ft3600 ->
+            3600
+
+        Ft4800 ->
+            4800
+
+        Ft7200 ->
+            7200
+
+
+type alias DurationInMinutes =
+    Float
+
+
+formatTime : DurationInMinutes -> String
+formatTime mins =
+    let
+        padNumber num =
+            if num < 10 then
+                "0" ++ toString num
+            else
+                toString num
+
+        totalSeconds =
+            round <| mins * 60
+
+        hours =
+            totalSeconds // 3600
+
+        minutes =
+            (totalSeconds - (hours * 3600)) // 60
+
+        seconds =
+            totalSeconds - (hours * 3600) - (minutes * 60)
+    in
+    padNumber hours ++ ":" ++ padNumber minutes ++ ":" ++ padNumber seconds
+
+
+newReel : Uuid.Uuid -> SelectorValues -> Quantity -> Reel
+newReel uuid selectorValues quantity =
+    let
+        ( direction, passes ) =
+            reelInfo selectorValues.audioConfig
+    in
+    { id = uuid
+    , audioConfig = selectorValues.audioConfig
+    , diameter = selectorValues.diameter
+    , tapeThickness = selectorValues.tapeThickness
+    , recordingSpeed = selectorValues.recordingSpeed
+    , quantity = quantity
+    , passes = passes
+    , directionality = direction
+    }
 
 
 reelLengthInFeet : Reel -> Footage
@@ -140,42 +253,3 @@ fullDuration reel =
 overallDuration : List Reel -> DurationInMinutes
 overallDuration reels =
     List.sum <| List.map fullDuration reels
-
-
-filesize : FileType -> Reel -> Float
-filesize fileType reel =
-    let
-        channels =
-            case reel.audioConfig of
-                HalfTrackStereo ->
-                    2
-
-                QuarterTrackStereo ->
-                    2
-
-                Quadraphonic ->
-                    4
-
-                _ ->
-                    1
-
-        mbPerMin =
-            case fileType of
-                WAV_24_96 ->
-                    16.875
-
-                WAV_24_48 ->
-                    8.4375
-
-                WAV_16_48 ->
-                    5.625
-
-        duration =
-            fullDuration reel
-    in
-    duration * mbPerMin * channels
-
-
-totalFilesize : FileType -> List Reel -> Float
-totalFilesize fileType reels =
-    List.sum <| List.map (filesize fileType) reels

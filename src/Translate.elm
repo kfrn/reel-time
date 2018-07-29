@@ -1,8 +1,9 @@
 module Translate exposing (..)
 
+import Audio.Model exposing (AudioConfig(..), Direction(..))
+import Audio.Reel.Model exposing (DurationInMinutes)
 import Html exposing (Html, text)
 import Links exposing (LinkName(..), link)
-import Types exposing (DurationInMinutes)
 
 
 type Language
@@ -23,50 +24,36 @@ type alias TranslationGroup =
     }
 
 
-type AppString
-    = AboutStr
-    | BidirectionalStr
-    | CalcPromptStr
-    | CalculateStr
-    | ContributeStr
-    | DevelopedByStr
-    | DiameterStr
-    | DirectionStr
-    | DurationStr
-    | DurationSummaryStr DurationInMinutes String
-    | FileSizeStr
-    | FootagePerReelStr
-    | FullTrackMonoStr
-    | HalfTrackMonoStr
-    | HalfTrackStereoStr
-    | ImperialStr
-    | InfoHeaderStr
-    | MetricStr
-    | MinutesStr
-    | NumMinutesStr DurationInMinutes
-    | NumPassesStr Int
-    | PassesStr
-    | PerReelStr String
-    | QuadraphonicStr
-    | QAndAStr
-    | QuantityStr
-    | QuarterTrackMonoStr
-    | QuarterTrackStereoStr
-    | ReelDurationAStr
-    | ReelDurationQStr
-    | ResponsiveStr
-    | SizeInMegaBytesStr Float
-    | SpeedStr
-    | ThicknessStr
-    | TotalDurationStr
-    | TotalStr
-    | TypeStr
-    | UnidirectionalStr
-    | UnknownVariablesAStr
-    | UnknownVariablesQStr
-    | UsefulLinksStr
-    | WavAStr
-    | WavQStr
+audioConfigDisplayName : AudioConfig -> AppString
+audioConfigDisplayName audioConfig =
+    case audioConfig of
+        FullTrackMono ->
+            FullTrackMonoStr
+
+        HalfTrackStereo ->
+            HalfTrackStereoStr
+
+        HalfTrackMono ->
+            HalfTrackMonoStr
+
+        QuarterTrackStereo ->
+            QuarterTrackStereoStr
+
+        QuarterTrackMono ->
+            QuarterTrackMonoStr
+
+        Quadraphonic ->
+            QuadraphonicStr
+
+
+directionString : Direction -> AppString
+directionString dir =
+    case dir of
+        Unidirectional ->
+            UnidirectionalStr
+
+        Bidirectional ->
+            BidirectionalStr
 
 
 translate : Language -> AppString -> String
@@ -347,6 +334,52 @@ translate language appString =
 
         IT ->
             .it translationSet
+
+
+type AppString
+    = AboutStr
+    | BidirectionalStr
+    | CalcPromptStr
+    | CalculateStr
+    | ContributeStr
+    | DevelopedByStr
+    | DiameterStr
+    | DirectionStr
+    | DurationStr
+    | DurationSummaryStr DurationInMinutes String
+    | FileSizeStr
+    | FootagePerReelStr
+    | FullTrackMonoStr
+    | HalfTrackMonoStr
+    | HalfTrackStereoStr
+    | ImperialStr
+    | InfoHeaderStr
+    | MetricStr
+    | MinutesStr
+    | NumMinutesStr DurationInMinutes
+    | NumPassesStr Int
+    | PassesStr
+    | PerReelStr String
+    | QuadraphonicStr
+    | QAndAStr
+    | QuantityStr
+    | QuarterTrackMonoStr
+    | QuarterTrackStereoStr
+    | ReelDurationAStr
+    | ReelDurationQStr
+    | ResponsiveStr
+    | SizeInMegaBytesStr Float
+    | SpeedStr
+    | ThicknessStr
+    | TotalDurationStr
+    | TotalStr
+    | TypeStr
+    | UnidirectionalStr
+    | UnknownVariablesAStr
+    | UnknownVariablesQStr
+    | UsefulLinksStr
+    | WavAStr
+    | WavQStr
 
 
 infoPara : Language -> List (Html msg)

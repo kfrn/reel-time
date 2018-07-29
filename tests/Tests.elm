@@ -1,11 +1,11 @@
-module Tests exposing (..)
+module Tests exposing (all)
 
-import Calculations exposing (baseDuration, filesize, singleReelDuration, reelLengthInFeet)
+import Audio.Model exposing (AudioConfig(..), DiameterInInches(..), RecordingSpeed(..), SelectorValues, TapeThickness(..))
+import Audio.Reel.Model exposing (Footage(..), newReel, reelLengthInFeet, singleReelDuration)
+import AudioFile exposing (FileType(..), filesize)
 import Expect
-import Helpers exposing (newReel)
 import Random.Pcg exposing (initialSeed, step)
 import Test exposing (..)
-import Types exposing (..)
 import Uuid exposing (Uuid, uuidGenerator)
 
 
@@ -180,7 +180,7 @@ all =
 fakeUUID : Uuid
 fakeUUID =
     let
-        ( uuid, seed ) =
+        ( uuid, _ ) =
             step uuidGenerator (initialSeed 1234567)
     in
     uuid

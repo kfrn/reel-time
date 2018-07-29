@@ -1,8 +1,11 @@
 module Model exposing (Model, init)
 
+import AppSettings exposing (PageView(..), SystemOfMeasurement(..))
+import Audio.Model exposing (AudioConfig(..), DiameterInInches(..), RecordingSpeed(..), SelectorValues, TapeThickness(..))
+import Audio.Reel.Model exposing (Reel)
+import AudioFile exposing (FileType(..))
 import Random.Pcg exposing (Seed, initialSeed, step)
 import Translate exposing (Language(..))
-import Types exposing (..)
 import Uuid exposing (uuidGenerator)
 
 

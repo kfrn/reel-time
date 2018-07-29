@@ -1,9 +1,9 @@
 module CsvOutput exposing (dataForCSV)
 
-import Calculations
-import Helpers exposing (..)
-import Translate exposing (AppString(..), Language, translate)
-import Types exposing (..)
+import Audio.Model exposing (diameterImperialName, speedImperialName, tapeThicknessDisplayName)
+import Audio.Reel.Model exposing (Reel, footageToInt, fullDuration, overallDuration, reelLengthInFeet, singleReelDuration)
+import AudioFile exposing (FileType(..), fileTypeName, totalFilesize)
+import Translate exposing (AppString(..), Language, audioConfigDisplayName, directionString, translate)
 
 
 delimiter : String
@@ -54,9 +54,9 @@ reelRow language reel =
         , toString reel.quantity
         , translate language (directionString reel.directionality)
         , toString reel.passes
-        , toString <| footageToInt <| Calculations.reelLengthInFeet reel
-        , toString <| Calculations.singleReelDuration reel
-        , toString <| Calculations.fullDuration reel
+        , toString <| footageToInt (reelLengthInFeet reel)
+        , toString <| singleReelDuration reel
+        , toString <| fullDuration reel
         ]
 
 
@@ -65,7 +65,7 @@ totalRow lang reels =
     String.repeat 7 delimiter
         ++ translate lang TotalDurationStr
         ++ String.repeat 2 delimiter
-        ++ (toString <| Calculations.overallDuration reels)
+        ++ (toString <| overallDuration reels)
 
 
 sizeRow : Language -> FileType -> List Reel -> String
@@ -75,4 +75,4 @@ sizeRow lang fileType reels =
         ++ delimiter
         ++ fileTypeName fileType
         ++ delimiter
-        ++ translate lang (SizeInMegaBytesStr <| Calculations.totalFilesize fileType reels)
+        ++ translate lang (SizeInMegaBytesStr <| totalFilesize fileType reels)

@@ -1,7 +1,9 @@
 module Messages exposing (..)
 
+import AppSettings exposing (PageView, SystemOfMeasurement)
+import Audio.Model exposing (AudioConfig, DiameterInInches, RecordingSpeed, TapeThickness)
+import AudioFile exposing (FileType)
 import Translate exposing (Language)
-import Types exposing (..)
 import Uuid exposing (Uuid)
 
 
