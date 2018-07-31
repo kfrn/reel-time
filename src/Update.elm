@@ -141,10 +141,10 @@ update msg model =
 
         StartExport ->
             let
-                csvString =
+                csvData =
                     dataForCSV model.language model.fileType model.reels
             in
-            ( model, Ports.exportData csvString )
+            ( model, Ports.exportData csvData )
 
         NoOp ->
             ( model, Cmd.none )

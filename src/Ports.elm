@@ -1,4 +1,4 @@
 port module Ports exposing (..)
 
 
-port exportData : String -> Cmd msg
+port exportData : List (List String) -> Cmd msg
