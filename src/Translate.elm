@@ -248,7 +248,7 @@ translate language appString =
                     }
 
                 ResponsiveStr ->
-                    { en = "It looks like you're viewing this on a mobile device or small screen. Sorry, but this app isn't yet mobile-friendly. Please try it on a desktop!"
+                    { en = "It looks like you're viewing this on a mobile device or small screen. Sorry, but this app isn't yet mobile-friendly. I'm working on it, but in the meantime, please try it on a desktop!"
                     , fr = "Il paraît que vous utilisez un appareil disposant d'un écran de petite taille. Je suis desolée, mais ce site n'est pas encore mobile conviviale. Veuillez l'essayer sur un ordinateur de bureau!"
                     , it = "Sembra che tu stia utilizzando un dispositivo con uno schermo piccolo. Mi dispiace, questo sito non è ancora mobile-friendly. Prova per favore su un desktop!"
                     }
