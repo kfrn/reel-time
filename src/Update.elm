@@ -6,7 +6,7 @@ import CsvOutput exposing (dataForCSV)
 import Messages exposing (Msg(..))
 import Model exposing (Model)
 import Ports
-import Random.Pcg exposing (step)
+import Random exposing (step)
 import Uuid exposing (Uuid, uuidGenerator)
 
 
@@ -100,7 +100,7 @@ update msg model =
                     { sValues | quantity = newSpeed }
             in
             case String.toInt quantity of
-                Ok q ->
+                Just q ->
                     let
                         newSelectorValues =
                             updateSValues model.selectorValues <| Just q
@@ -110,7 +110,7 @@ update msg model =
                     in
                     ( newModel, Cmd.none )
 
-                Err _ ->
+                Nothing ->
                     let
                         newSelectorValues =
                             updateSValues model.selectorValues Nothing

@@ -1,4 +1,4 @@
-module AppSettings exposing (..)
+module AppSettings exposing (PageView(..), SystemOfMeasurement(..), allSystemsOfMeasurement)
 
 
 type PageView

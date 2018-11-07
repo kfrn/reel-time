@@ -1,4 +1,4 @@
-module Links exposing (..)
+module Links exposing (LinkData(..), LinkName(..), link, linkData)
 
 import Html exposing (Html, a, i, span, text)
 import Html.Attributes exposing (class, href)

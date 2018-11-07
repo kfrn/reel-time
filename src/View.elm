@@ -11,7 +11,7 @@ import Links exposing (LinkData(..), LinkName(..), link, linkData)
 import Maybe.Extra exposing (isNothing)
 import Messages exposing (Msg(..))
 import Model exposing (Model)
-import Translate exposing (AppString(..), Language(..), allLanguages, audioConfigDisplayName, directionString, infoPara, translate)
+import Translate exposing (AppString(..), Language(..), allLanguages, audioConfigDisplayName, directionString, infoPara, languageAbbreviation, translate)
 import Uuid
 import ViewHelpers exposing (renderSelect)
 
@@ -121,7 +121,7 @@ languageControls language =
                     ]
                 , onClick (ChangeLanguage l)
                 ]
-                [ text (toString l) ]
+                [ text <| languageAbbreviation l ]
     in
     div [ class "navbar-item" ] (List.map makeButton allLanguages)
 
@@ -156,6 +156,7 @@ pageContent model =
         startNotice =
             if List.isEmpty model.reels then
                 [ div [ class "has-text-centered" ] [ text <| translate model.language CalcPromptStr ] ]
+
             else
                 []
     in
@@ -248,6 +249,7 @@ reelTable model =
         total =
             if List.length model.reels > 0 then
                 [ totalRow model.language model.reels model.fileType ]
+
             else
                 []
 
@@ -351,7 +353,7 @@ reelRow system language reel =
         , td [] [ text <| diameterDisplayName system reel.diameter ]
         , td [] [ text <| tapeThicknessDisplayName reel.tapeThickness ]
         , td [] [ text <| speedDisplayName system reel.recordingSpeed ]
-        , td [ class "has-text-centered" ] [ text <| toString reel.quantity ]
+        , td [ class "has-text-centered" ] [ text <| String.fromInt reel.quantity ]
         , td []
             [ directionAndPassCount language reel.directionality reel.passes
             , lengthInfo system language footage
@@ -385,10 +387,10 @@ lengthInfo system language footage =
         lengthText =
             case system of
                 Imperial ->
-                    toString ft ++ "ft"
+                    String.fromInt ft ++ "ft"
 
                 Metric ->
-                    toString metricLength ++ "m"
+                    String.fromFloat metricLength ++ "m"
 
         perReel =
             translate language (PerReelStr lengthText)
@@ -400,7 +402,7 @@ durationData : Language -> Reel -> List (Html Msg)
 durationData language reel =
     [ div []
         [ text <|
-            translate language (PerReelStr <| toString (singleReelDuration reel) ++ "min")
+            translate language (PerReelStr <| String.fromFloat (singleReelDuration reel) ++ "min")
         ]
     , div []
         [ text <|

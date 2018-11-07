@@ -1,4 +1,4 @@
-module Audio.Model exposing (..)
+module Audio.Model exposing (AudioConfig(..), DiameterInInches(..), Direction(..), Passes, Quantity, RecordingSpeed(..), SelectorValues, TapeThickness(..), allAudioConfigs, allDiameters, allRecordingSpeeds, allThicknesses, diameterDisplayName, diameterImperialName, diameterMetricName, reelInfo, speedDisplayName, speedImperialName, speedMetricName, tapeThicknessDisplayName)
 
 import AppSettings exposing (SystemOfMeasurement(..))
 

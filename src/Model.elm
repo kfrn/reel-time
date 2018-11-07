@@ -4,7 +4,7 @@ import AppSettings exposing (PageView(..), SystemOfMeasurement(..))
 import Audio.Model exposing (AudioConfig(..), DiameterInInches(..), RecordingSpeed(..), SelectorValues, TapeThickness(..))
 import Audio.Reel.Model exposing (Reel)
 import AudioFile exposing (FileType(..))
-import Random.Pcg exposing (Seed, initialSeed, step)
+import Random exposing (Seed, initialSeed, step)
 import Translate exposing (Language(..))
 import Uuid exposing (uuidGenerator)
 

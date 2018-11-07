@@ -1,4 +1,4 @@
-module Audio.Reel.Model exposing (..)
+module Audio.Reel.Model exposing (DurationInMinutes, Footage(..), Reel, baseDuration, footageToInt, formatTime, fullDuration, newReel, overallDuration, reelLengthInFeet, singleReelDuration)
 
 import Audio.Model exposing (AudioConfig, DiameterInInches(..), Direction, Passes, Quantity, RecordingSpeed(..), SelectorValues, TapeThickness(..), reelInfo)
 import Uuid
@@ -80,9 +80,10 @@ formatTime mins =
     let
         padNumber num =
             if num < 10 then
-                "0" ++ toString num
+                "0" ++ String.fromInt num
+
             else
-                toString num
+                String.fromInt num
 
         totalSeconds =
             round <| mins * 60

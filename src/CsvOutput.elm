@@ -36,12 +36,12 @@ reelRow language reel =
     , diameterImperialName reel.diameter
     , tapeThicknessDisplayName reel.tapeThickness
     , speedImperialName reel.recordingSpeed
-    , toString reel.quantity
+    , String.fromInt reel.quantity
     , translate language (directionString reel.directionality)
-    , toString reel.passes
-    , toString <| footageToInt <| reelLengthInFeet reel
-    , toString <| singleReelDuration reel
-    , toString <| fullDuration reel
+    , String.fromInt reel.passes
+    , String.fromInt <| footageToInt <| reelLengthInFeet reel
+    , String.fromFloat <| singleReelDuration reel
+    , String.fromFloat <| fullDuration reel
     ]
 
 
@@ -50,7 +50,7 @@ totalRow lang reels =
     List.repeat 7 ""
         ++ [ translate lang TotalDurationStr
            , ""
-           , toString <| overallDuration reels
+           , String.fromFloat <| overallDuration reels
            ]
 
 

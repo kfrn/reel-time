@@ -1,4 +1,4 @@
-module AudioFile exposing (..)
+module AudioFile exposing (FileType(..), allFileTypes, fileTypeName, filesize, totalFilesize)
 
 import Audio.Model exposing (AudioConfig(..))
 import Audio.Reel.Model exposing (Reel, fullDuration)

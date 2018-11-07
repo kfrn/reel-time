@@ -1,4 +1,4 @@
-module Translate exposing (..)
+module Translate exposing (AppString(..), Language(..), TranslationGroup, allLanguages, audioConfigDisplayName, directionString, infoPara, languageAbbreviation, translate)
 
 import Audio.Model exposing (AudioConfig(..), Direction(..))
 import Audio.Reel.Model exposing (DurationInMinutes)
@@ -15,6 +15,19 @@ type Language
 allLanguages : List Language
 allLanguages =
     [ EN, FR, IT ]
+
+
+languageAbbreviation : Language -> String
+languageAbbreviation lang =
+    case lang of
+        EN ->
+            "EN"
+
+        FR ->
+            "FR"
+
+        IT ->
+            "IT"
 
 
 type alias TranslationGroup =
@@ -176,9 +189,9 @@ translate language appString =
                     }
 
                 NumMinutesStr totalMins ->
-                    { en = toString totalMins ++ " minutes"
-                    , fr = toString totalMins ++ " minutes"
-                    , it = toString totalMins ++ " minuti"
+                    { en = String.fromFloat totalMins ++ " minutes"
+                    , fr = String.fromFloat totalMins ++ " minutes"
+                    , it = String.fromFloat totalMins ++ " minuti"
                     }
 
                 NumPassesStr int ->
@@ -187,10 +200,11 @@ translate language appString =
                         , fr = "1 passe"
                         , it = "1 passa"
                         }
+
                     else
-                        { en = toString int ++ " passes"
-                        , fr = toString int ++ " passes"
-                        , it = toString int ++ " passe"
+                        { en = String.fromInt int ++ " passes"
+                        , fr = String.fromInt int ++ " passes"
+                        , it = String.fromInt int ++ " passe"
                         }
 
                 PassesStr ->
@@ -254,9 +268,9 @@ translate language appString =
                     }
 
                 SizeInMegaBytesStr mb ->
-                    { en = toString mb ++ " MB"
-                    , fr = toString mb ++ " MB"
-                    , it = toString mb ++ " MB"
+                    { en = String.fromFloat mb ++ " MB"
+                    , fr = String.fromFloat mb ++ " MB"
+                    , it = String.fromFloat mb ++ " MB"
                     }
 
                 SpeedStr ->

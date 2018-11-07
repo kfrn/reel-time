@@ -1,4 +1,4 @@
-module ViewHelpers exposing (..)
+module ViewHelpers exposing (onChange, renderSelect)
 
 import Html exposing (Html, option, select, text)
 import Html.Attributes exposing (selected)

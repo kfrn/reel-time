@@ -19,14 +19,13 @@ Suggestions and contributions are welcome! I'm happy to receive feature requests
 ### Local setup
 
 Dependencies:
-* [Elm](https://guide.elm-lang.org/install.html)
-* [Node](https://nodejs.org/en/download/)
+* [Elm `0.19`](https://guide.elm-lang.org/install.html)
+* [Node](https://nodejs.org/en/download/) (developed with Node `10.8.0` and npm `6.4.0`)
 
 To run locally:
 ```
 git clone git@github.com:kfrn/reel-time.git
 cd reel-time/
-elm-package install
 npm install
 npm install -g create-elm-app
 elm-app start

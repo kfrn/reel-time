@@ -1,4 +1,4 @@
-module Messages exposing (..)
+module Messages exposing (Msg(..))
 
 import AppSettings exposing (PageView, SystemOfMeasurement)
 import Audio.Model exposing (AudioConfig, DiameterInInches, RecordingSpeed, TapeThickness)

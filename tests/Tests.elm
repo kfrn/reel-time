@@ -3,8 +3,8 @@ module Tests exposing (all)
 import Audio.Model exposing (AudioConfig(..), DiameterInInches(..), RecordingSpeed(..), SelectorValues, TapeThickness(..))
 import Audio.Reel.Model exposing (Footage(..), newReel, reelLengthInFeet, singleReelDuration)
 import AudioFile exposing (FileType(..), filesize)
-import Expect
-import Random.Pcg exposing (initialSeed, step)
+import Expect exposing (FloatingPointTolerance(..))
+import Random exposing (initialSeed, step)
 import Test exposing (..)
 import Uuid exposing (Uuid, uuidGenerator)
 
@@ -37,7 +37,7 @@ all =
                     size =
                         filesize WAV_24_96 reel
                 in
-                \_ -> Expect.equal size 1518.75
+                \_ -> Expect.within (Absolute 0.01) 1518.75 size
             ]
         , describe "half-track stereo, 10.5\" 0.5mil double @ 7.5 IPS" <|
             let
@@ -118,7 +118,7 @@ all =
                     size =
                         filesize WAV_24_96 reel
                 in
-                \_ -> Expect.equal size 3037.5
+                \_ -> Expect.within (Absolute 0.01) 3037.5 size
             ]
         , describe "quarter-track mono, 7\" 1.0mil @ 15 IPS" <|
             let
@@ -145,7 +145,7 @@ all =
                     size =
                         filesize WAV_24_96 reel
                 in
-                \_ -> Expect.equal size 1518.75
+                \_ -> Expect.within (Absolute 0.01) 1518.75 size
             ]
         , describe "quadraphonic (4-track), 7\" 1.0mil @ 7.5 IPS" <|
             let
@@ -172,7 +172,7 @@ all =
                     size =
                         filesize WAV_24_96 reel
                 in
-                \_ -> Expect.equal size 3037.5
+                \_ -> Expect.within (Absolute 0.01) 3037.5 size
             ]
         ]
 
