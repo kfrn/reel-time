@@ -30,31 +30,6 @@ body {
   color: white; /* TODO: this is a hack ... */
 }
 
-/*------- RESPONSIVE WARNING -------*/
-
-.responsive-warning-container {
-  display: flex;
-  height: 180px;
-  margin: calc(50vh - 90px) auto;
-}
-
-.responsive-warning {
-  margin: auto;
-  max-width: 300px;
-}
-
-@media screen and (min-width: 950px) {
-  .responsive-warning-container {
-    display: none !important;
-  }
-}
-
-@media screen and (max-width: 951px) {
-  #content {
-    display: none !important;
-  }
-}
-
 /*------- NAVBAR -------*/
 
 nav.navbar {

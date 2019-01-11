@@ -21,21 +21,6 @@ view model =
             , pageContent model
             , footer model.language
             ]
-        , responsiveWarning model.language
-        ]
-
-
-responsiveWarning : Language -> Html Msg
-responsiveWarning language =
-    div [ class "responsive-warning-container whiteout has-text-centered" ]
-        [ div [ class "responsive-warning" ]
-            [ p [ class "is-size-2" ]
-                [ span [ class "icon has-text-danger" ]
-                    [ i [ class "fa fa-exclamation-triangle" ] []
-                    ]
-                ]
-            , p [] [ text <| translate language ResponsiveStr ]
-            ]
         ]
 
 
