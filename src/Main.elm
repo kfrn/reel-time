@@ -4,7 +4,7 @@ import Browser
 import Messages exposing (Msg(..))
 import Model exposing (Model, init)
 import Update exposing (update)
-import View exposing (view)
+import View.Main exposing (view)
 
 
 main : Program () Model Msg

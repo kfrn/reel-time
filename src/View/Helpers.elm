@@ -1,7 +1,7 @@
-module ViewHelpers exposing (onChange, renderSelect)
+module View.Helpers exposing (onChange, renderSelect, wrapSectionInLevelDiv)
 
-import Html exposing (Html, option, select, text)
-import Html.Attributes exposing (selected)
+import Html exposing (Html, div, option, select, text)
+import Html.Attributes exposing (class, selected)
 import Html.Events exposing (on)
 import Json.Decode as Json
 import List.Extra as ListX
@@ -33,3 +33,8 @@ renderSelect selectedOptionName message makeOptionName options =
                     Messages.NoOp
     in
     select [ onChange displayNameToMsg ] (List.map makeOptionTag options)
+
+
+wrapSectionInLevelDiv : Html msg -> Html msg
+wrapSectionInLevelDiv section =
+    div [ class "level" ] [ section ]
