@@ -55,11 +55,54 @@ nav.navbar {
   display: flex !important;
 }
 
+.navbar-item {
+  /* Overrding Bulma */
+  padding: 0.5rem;
+}
+
+@media screen and (max-width: 360px) {
+  .navbar > .navbar-menu > .navbar-end > .navbar-item:nth-child(1) > button {
+    overflow: hidden;
+    width: 2.5rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .navbar {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .navbar > .navbar-brand {
+    display: flex;
+    justify-content: center;
+  }
+
+  .navbar > .navbar-menu > .navbar-end {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .navbar > .navbar-menu > .navbar-start > .navbar-item {
+    display: none;
+  }
+
+  .navbar > .navbar-menu > .navbar-end > .navbar-item {
+    padding: 0;
+  }
+}
+
 @media screen and (max-width: 1023px) {
-  /* TODO: more hackery */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .calculate {
     display: none;
   }
+
   .navbar-menu {
     box-shadow: none;
   }
