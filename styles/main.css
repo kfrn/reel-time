@@ -146,7 +146,7 @@ li {
   font-weight: bold;
 }
 
-/*------- TABLE -------*/
+/*------- DESKTOP REEL TABLE -------*/
 
 table {
   margin-bottom: 0;
@@ -211,6 +211,56 @@ tr.main-row:hover {
 
 #filetype {
   margin-left: 10px;
+}
+
+/*------- MOBILE REEL TABLE -------*/
+
+.reel-label {
+  font-weight: bold;
+}
+
+.reel-option {
+  margin: 0.5em 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#add-reel {
+  background-color: #e6fffb;
+  margin-top: 1em;
+  text-align: center;
+  padding: 1em;
+}
+
+#quantity {
+  max-width: 5em;
+}
+
+#reel-data {
+  text-align: center;
+}
+
+.added-reel {
+  border-bottom: 1px solid gray;
+  margin: 1em;
+  padding-bottom: 1em;
+
+  -webkit-animation: fadein 0.8s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 0.8s; /* Firefox < 16 */
+  -ms-animation: fadein 0.8s; /* Internet Explorer */
+  -o-animation: fadein 0.8s; /* Opera < 12.1 */
+  animation: fadein 0.8s;
+}
+
+.summary {
+  font-weight: bold;
+}
+
+#totals {
+  background-color: #e6fffb;
+  padding: 1.5em 1em;
 }
 
 /*------- ANIMATION -------*/

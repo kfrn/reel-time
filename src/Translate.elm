@@ -80,16 +80,28 @@ translate language appString =
                     , it = "Informazioni"
                     }
 
+                AddReelStr ->
+                    { en = "Add reel"
+                    , fr = "Ajouter une bobine"
+                    , it = "Aggiungere una bobina"
+                    }
+
                 BidirectionalStr ->
                     { en = "bidirectional"
                     , fr = "bidirectionnel"
                     , it = "bidirezionale"
                     }
 
-                CalcPromptStr ->
+                CalcPromptAboveStr ->
                     { en = "Set the options above to calculate!"
                     , fr = "Définir les options ci-dessus!"
                     , it = "Impostare le opzioni sopra!"
+                    }
+
+                CalcPromptBelowStr ->
+                    { en = "Set the options below to calculate!"
+                    , fr = "Définir les options ci-dessous!"
+                    , it = "Impostare le opzioni sotto!"
                     }
 
                 CalculateStr ->
@@ -120,6 +132,12 @@ translate language appString =
                     { en = "directionality"
                     , fr = "direction"
                     , it = "direzione"
+                    }
+
+                DownloadStr ->
+                    { en = "Download"
+                    , fr = "Télécharger"
+                    , it = "Scaricare"
                     }
 
                 DurationStr ->
@@ -261,6 +279,12 @@ translate language appString =
                     , it = "E se la registrazione non riempie l'intero rullo?"
                     }
 
+                RemoveReelStr ->
+                    { en = "Remove reel"
+                    , fr = "Enlever la bobine"
+                    , it = "Togliere il rullo"
+                    }
+
                 SizeInMegaBytesStr mb ->
                     { en = String.fromFloat mb ++ " MB"
                     , fr = String.fromFloat mb ++ " MB"
@@ -346,13 +370,16 @@ translate language appString =
 
 type AppString
     = AboutStr
+    | AddReelStr
     | BidirectionalStr
-    | CalcPromptStr
+    | CalcPromptAboveStr
+    | CalcPromptBelowStr
     | CalculateStr
     | ContributeStr
     | DevelopedByStr
     | DiameterStr
     | DirectionStr
+    | DownloadStr
     | DurationStr
     | DurationSummaryStr DurationInMinutes String
     | FileSizeStr
@@ -375,6 +402,7 @@ type AppString
     | QuarterTrackStereoStr
     | ReelDurationAStr
     | ReelDurationQStr
+    | RemoveReelStr
     | SizeInMegaBytesStr Float
     | SpeedStr
     | ThicknessStr
