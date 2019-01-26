@@ -1,4 +1,4 @@
-module View.ReelTable exposing (reelTable)
+module View.ReelTable.Desktop exposing (desktopReelTable)
 
 import AppSettings exposing (SystemOfMeasurement(..))
 import Audio.Model exposing (Direction, Passes, allAudioConfigs, allDiameters, allRecordingSpeeds, allThicknesses, diameterDisplayName, speedDisplayName, tapeThicknessDisplayName)
@@ -15,8 +15,8 @@ import Uuid
 import View.Helpers exposing (renderSelect)
 
 
-reelTable : Model -> Html Msg
-reelTable model =
+desktopReelTable : Model -> Html Msg
+desktopReelTable model =
     let
         total =
             if List.length model.reels > 0 then
@@ -27,13 +27,25 @@ reelTable model =
 
         reelRows =
             List.map (reelRow model.system model.language) model.reels
+
+        reelTable =
+            table [ class "table is-fullwidth" ]
+                ([ thead [] [ selectorRow model ]
+                 , tbody [] reelRows
+                 ]
+                    ++ total
+                )
     in
-    table [ class "table is-fullwidth" ]
-        ([ thead [] [ selectorRow model ]
-         , tbody [] reelRows
-         ]
-            ++ total
-        )
+    div [ class "is-hidden-touch", id "desktop-reel-table" ] ([ reelTable ] ++ startNotice model.reels model.language)
+
+
+startNotice : List Reel -> Language -> List (Html Msg)
+startNotice reels language =
+    if List.isEmpty reels then
+        [ div [ class "has-text-centered" ] [ text <| translate language CalcPromptAboveStr ] ]
+
+    else
+        []
 
 
 selectorRow : Model -> Html Msg

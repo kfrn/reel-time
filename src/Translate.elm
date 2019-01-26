@@ -80,16 +80,28 @@ translate language appString =
                     , it = "Informazioni"
                     }
 
+                AddReelStr ->
+                    { en = "Add reel"
+                    , fr = "Ajouter une bobine"
+                    , it = "Aggiungere una bobina"
+                    }
+
                 BidirectionalStr ->
                     { en = "bidirectional"
                     , fr = "bidirectionnel"
                     , it = "bidirezionale"
                     }
 
-                CalcPromptStr ->
+                CalcPromptAboveStr ->
                     { en = "Set the options above to calculate!"
                     , fr = "Définir les options ci-dessus!"
                     , it = "Impostare le opzioni sopra!"
+                    }
+
+                CalcPromptBelowStr ->
+                    { en = "Set the options below to calculate!"
+                    , fr = "Définir les options ci-dessous!"
+                    , it = "Impostare le opzioni sotto!"
                     }
 
                 CalculateStr ->
@@ -120,6 +132,12 @@ translate language appString =
                     { en = "directionality"
                     , fr = "direction"
                     , it = "direzione"
+                    }
+
+                DownloadStr ->
+                    { en = "Download"
+                    , fr = "Télécharger"
+                    , it = "Scaricare"
                     }
 
                 DurationStr ->
@@ -261,10 +279,10 @@ translate language appString =
                     , it = "E se la registrazione non riempie l'intero rullo?"
                     }
 
-                ResponsiveStr ->
-                    { en = "It looks like you're viewing this on a mobile device or small screen. Sorry, but this app isn't yet mobile-friendly. I'm working on it, but in the meantime, please try it on a desktop!"
-                    , fr = "Il paraît que vous utilisez un appareil disposant d'un écran de petite taille. Je suis desolée, mais ce site n'est pas encore mobile conviviale. Veuillez l'essayer sur un ordinateur de bureau!"
-                    , it = "Sembra che tu stia utilizzando un dispositivo con uno schermo piccolo. Mi dispiace, questo sito non è ancora mobile-friendly. Prova per favore su un desktop!"
+                RemoveReelStr ->
+                    { en = "Remove reel"
+                    , fr = "Enlever la bobine"
+                    , it = "Togliere il rullo"
                     }
 
                 SizeInMegaBytesStr mb ->
@@ -352,13 +370,16 @@ translate language appString =
 
 type AppString
     = AboutStr
+    | AddReelStr
     | BidirectionalStr
-    | CalcPromptStr
+    | CalcPromptAboveStr
+    | CalcPromptBelowStr
     | CalculateStr
     | ContributeStr
     | DevelopedByStr
     | DiameterStr
     | DirectionStr
+    | DownloadStr
     | DurationStr
     | DurationSummaryStr DurationInMinutes String
     | FileSizeStr
@@ -381,7 +402,7 @@ type AppString
     | QuarterTrackStereoStr
     | ReelDurationAStr
     | ReelDurationQStr
-    | ResponsiveStr
+    | RemoveReelStr
     | SizeInMegaBytesStr Float
     | SpeedStr
     | ThicknessStr

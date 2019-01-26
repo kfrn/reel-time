@@ -30,31 +30,6 @@ body {
   color: white; /* TODO: this is a hack ... */
 }
 
-/*------- RESPONSIVE WARNING -------*/
-
-.responsive-warning-container {
-  display: flex;
-  height: 180px;
-  margin: calc(50vh - 90px) auto;
-}
-
-.responsive-warning {
-  margin: auto;
-  max-width: 300px;
-}
-
-@media screen and (min-width: 950px) {
-  .responsive-warning-container {
-    display: none !important;
-  }
-}
-
-@media screen and (max-width: 951px) {
-  #content {
-    display: none !important;
-  }
-}
-
 /*------- NAVBAR -------*/
 
 nav.navbar {
@@ -80,11 +55,54 @@ nav.navbar {
   display: flex !important;
 }
 
+.navbar-item {
+  /* Overrding Bulma */
+  padding: 0.5rem;
+}
+
+@media screen and (max-width: 360px) {
+  .navbar > .navbar-menu > .navbar-end > .navbar-item:nth-child(1) > button {
+    overflow: hidden;
+    width: 2.5rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .navbar {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .navbar > .navbar-brand {
+    display: flex;
+    justify-content: center;
+  }
+
+  .navbar > .navbar-menu > .navbar-end {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .navbar > .navbar-menu > .navbar-start > .navbar-item {
+    display: none;
+  }
+
+  .navbar > .navbar-menu > .navbar-end > .navbar-item {
+    padding: 0;
+  }
+}
+
 @media screen and (max-width: 1023px) {
-  /* TODO: more hackery */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .calculate {
     display: none;
   }
+
   .navbar-menu {
     box-shadow: none;
   }
@@ -92,10 +110,30 @@ nav.navbar {
 
 /*------- FOOTER -------*/
 
-div.app-footer {
+footer {
   border-top: 1px solid black;
-  margin-top: 1em;
-  padding-top: 1em;
+  margin-top: 0.75em;
+  padding-top: 0.75em;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer .attribution {
+  font-size: 0.8rem;
+}
+
+@media screen and (min-width: 768px) {
+  footer {
+    margin-top: 1em;
+    padding-top: 1em;
+  }
+
+  footer .attribution {
+    font-size: 1rem;
+  }
 }
 
 /*------- INFO PAGE -------*/
@@ -128,7 +166,7 @@ li {
   font-weight: bold;
 }
 
-/*------- TABLE -------*/
+/*------- DESKTOP REEL TABLE -------*/
 
 table {
   margin-bottom: 0;
@@ -193,6 +231,77 @@ tr.main-row:hover {
 
 #filetype {
   margin-left: 10px;
+}
+
+/*------- MOBILE REEL TABLE -------*/
+
+#mobile-reel-table .prompt {
+  margin: 1rem 0;
+}
+
+@media screen and (min-width: 768px) {
+  #mobile-reel-table {
+    max-width: 70%;
+    margin: 0 auto;
+  }
+}
+
+.reel-label {
+  font-weight: bold;
+}
+
+.reel-option {
+  margin: 0.5em 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#add-reel {
+  background-color: #e6fffb;
+  margin-top: 1em;
+  text-align: center;
+  padding: 1em;
+}
+
+#quantity {
+  max-width: 5em;
+}
+
+#reel-data {
+  text-align: center;
+}
+
+.added-reel {
+  padding: 1.5rem 1rem 1rem;
+
+  -webkit-animation: fadein 0.8s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 0.8s; /* Firefox < 16 */
+  -ms-animation: fadein 0.8s; /* Internet Explorer */
+  -o-animation: fadein 0.8s; /* Opera < 12.1 */
+  animation: fadein 0.8s;
+}
+
+.added-reel:not(:last-child) {
+  border-bottom: 1px solid gray;
+}
+
+.added-reel button {
+  margin: 0.5rem 0;
+}
+
+.summary {
+  font-weight: bold;
+}
+
+#totals {
+  background-color: #e6fffb;
+  padding: 1.5em 1em;
+}
+
+#totals button {
+  margin-top: 1rem;
 }
 
 /*------- ANIMATION -------*/
