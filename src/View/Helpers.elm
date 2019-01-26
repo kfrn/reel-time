@@ -1,8 +1,8 @@
-module View.Helpers exposing (onChange, renderSelect, wrapSectionInLevelDiv)
+module View.Helpers exposing (onChange, onKeyDown, renderSelect, wrapSectionInLevelDiv)
 
 import Html exposing (Html, div, option, select, span, text)
 import Html.Attributes exposing (class, selected)
-import Html.Events exposing (on)
+import Html.Events exposing (keyCode, on)
 import Json.Decode as Json
 import List.Extra as ListX
 import Messages
@@ -11,6 +11,11 @@ import Messages
 onChange : (String -> msg) -> Html.Attribute msg
 onChange makeMessage =
     on "change" (Json.map makeMessage Html.Events.targetValue)
+
+
+onKeyDown : (Int -> msg) -> Html.Attribute msg
+onKeyDown tagger =
+    on "keydown" (Json.map tagger keyCode)
 
 
 renderSelect : String -> (a -> Messages.Msg) -> (a -> String) -> List a -> Html Messages.Msg

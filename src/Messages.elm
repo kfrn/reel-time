@@ -8,7 +8,8 @@ import Uuid exposing (Uuid)
 
 
 type Msg
-    = AddReel
+    = KeyDown Int
+    | AddReel
     | DeleteReel Uuid
     | ChangeFileType FileType
     | ChangeAudioConfig AudioConfig

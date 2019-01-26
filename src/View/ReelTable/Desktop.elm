@@ -12,7 +12,7 @@ import Messages exposing (Msg(..))
 import Model exposing (Model)
 import Translate exposing (AppString(..), Language(..), audioConfigDisplayName, directionString, translate)
 import Uuid
-import View.Helpers exposing (renderSelect)
+import View.Helpers exposing (onKeyDown, renderSelect)
 
 
 desktopReelTable : Model -> Html Msg
@@ -102,6 +102,7 @@ selectorRow model =
                 , id "quantity"
                 , placeholder "#"
                 , onInput UpdateQuantity
+                , onKeyDown KeyDown
                 ]
                 []
             ]

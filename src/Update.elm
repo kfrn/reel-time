@@ -13,6 +13,15 @@ import Uuid exposing (Uuid, uuidGenerator)
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        KeyDown int ->
+            case int of
+                13 ->
+                    -- Enter key
+                    update AddReel model
+
+                _ ->
+                    ( model, Cmd.none )
+
         AddReel ->
             case model.selectorValues.quantity of
                 Just q ->
