@@ -24,10 +24,18 @@ mobileReelTable model =
             else
                 [ div
                     [ id "reel-data" ]
-                    (List.map (addedReel model.language model.system) model.reels
+                    (reelList
                         ++ [ totals model.language model.reels model.fileType ]
                     )
                 ]
+
+        reelList =
+            [ div [ id "reel-list" ]
+                (List.map
+                    (addedReel model.language model.system)
+                    model.reels
+                )
+            ]
 
         reelTable =
             div [] ([ addReel model ] ++ reelData)
@@ -39,7 +47,7 @@ mobileReelTable model =
 startNotice : List Reel -> Language -> List (Html Msg)
 startNotice reels language =
     if List.isEmpty reels then
-        [ div [ class "has-text-centered" ] [ text <| translate language CalcPromptAboveStr ] ]
+        [ div [ class "prompt has-text-centered" ] [ text <| translate language CalcPromptAboveStr ] ]
 
     else
         []

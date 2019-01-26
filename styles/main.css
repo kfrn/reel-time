@@ -215,6 +215,17 @@ tr.main-row:hover {
 
 /*------- MOBILE REEL TABLE -------*/
 
+#mobile-reel-table .prompt {
+  margin: 1rem 0;
+}
+
+@media screen and (min-width: 768px) {
+  #mobile-reel-table {
+    max-width: 70%;
+    margin: 0 auto;
+  }
+}
+
 .reel-label {
   font-weight: bold;
 }
@@ -243,15 +254,21 @@ tr.main-row:hover {
 }
 
 .added-reel {
-  border-bottom: 1px solid gray;
-  margin: 1em;
-  padding-bottom: 1em;
+  padding: 1.5rem 1rem 1rem;
 
   -webkit-animation: fadein 0.8s; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: fadein 0.8s; /* Firefox < 16 */
   -ms-animation: fadein 0.8s; /* Internet Explorer */
   -o-animation: fadein 0.8s; /* Opera < 12.1 */
   animation: fadein 0.8s;
+}
+
+.added-reel:not(:last-child) {
+  border-bottom: 1px solid gray;
+}
+
+.added-reel button {
+  margin: 0.5rem 0;
 }
 
 .summary {
@@ -261,6 +278,10 @@ tr.main-row:hover {
 #totals {
   background-color: #e6fffb;
   padding: 1.5em 1em;
+}
+
+#totals button {
+  margin-top: 1rem;
 }
 
 /*------- ANIMATION -------*/
