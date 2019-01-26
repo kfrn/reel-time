@@ -110,10 +110,30 @@ nav.navbar {
 
 /*------- FOOTER -------*/
 
-div.app-footer {
+footer {
   border-top: 1px solid black;
-  margin-top: 1em;
-  padding-top: 1em;
+  margin-top: 0.75em;
+  padding-top: 0.75em;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer .attribution {
+  font-size: 0.8rem;
+}
+
+@media screen and (min-width: 768px) {
+  footer {
+    margin-top: 1em;
+    padding-top: 1em;
+  }
+
+  footer .attribution {
+    font-size: 1rem;
+  }
 }
 
 /*------- INFO PAGE -------*/

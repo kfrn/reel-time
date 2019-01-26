@@ -1,7 +1,7 @@
 module View.Main exposing (view)
 
 import AppSettings exposing (PageView(..), SystemOfMeasurement(..))
-import Html exposing (Html, div, text)
+import Html exposing (Html, div, span, text)
 import Html.Attributes exposing (class, id)
 import Links exposing (LinkData(..), LinkName(..), link)
 import Messages exposing (Msg(..))
@@ -27,9 +27,9 @@ view model =
 
 footer : Language -> Html Msg
 footer language =
-    div [ class "level app-footer" ]
-        [ div [ class "level-left left-offset" ] [ text <| translate language DevelopedByStr ]
-        , div [ class "is-size-6 level-right right-offset" ] [ link Email, link SourceCode ]
+    Html.footer []
+        [ span [ class "attribution" ] [ text <| translate language DevelopedByStr ]
+        , span [] [ link Email, link SourceCode ]
         ]
 
 
