@@ -2,6 +2,7 @@
   "name": "reel-to-reel",
   "version": "1.0.0",
   "description": "Calculate the duration of your open-reel audio",
+  "homepage": "https://kfrn.github.io/reel-time/",
   "main": "src/index.js",
   "directories": {
     "test": "tests"
