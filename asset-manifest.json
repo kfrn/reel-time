@@ -1,12 +1,12 @@
 {
-  "main.css": "/static/css/main.e7820c92.chunk.css",
-  "main.js": "/static/js/main.cd999103.chunk.js",
-  "main.css.map": "/static/css/main.e7820c92.chunk.css.map",
-  "main.js.map": "/static/js/main.cd999103.chunk.js.map",
-  "runtime~main.js": "/static/js/runtime~main.d53d57e4.js",
-  "runtime~main.js.map": "/static/js/runtime~main.d53d57e4.js.map",
-  "vendors~main.js": "/static/js/vendors~main.677d7514.chunk.js",
-  "vendors~main.js.map": "/static/js/vendors~main.677d7514.chunk.js.map",
-  "index.html": "/index.html",
-  "static/media/font-awesome.min.css": "/static/media/fontawesome-webfont.fee66e71.woff"
+  "main.css": "/reel-time/static/css/main.c27c06ce.chunk.css",
+  "main.js": "/reel-time/static/js/main.f938b831.chunk.js",
+  "main.css.map": "/reel-time/static/css/main.c27c06ce.chunk.css.map",
+  "main.js.map": "/reel-time/static/js/main.f938b831.chunk.js.map",
+  "runtime~main.js": "/reel-time/static/js/runtime~main.693789a3.js",
+  "runtime~main.js.map": "/reel-time/static/js/runtime~main.693789a3.js.map",
+  "vendors~main.js": "/reel-time/static/js/vendors~main.424691d9.chunk.js",
+  "vendors~main.js.map": "/reel-time/static/js/vendors~main.424691d9.chunk.js.map",
+  "index.html": "/reel-time/index.html",
+  "static/media/font-awesome.min.css": "/reel-time/static/media/fontawesome-webfont.fee66e71.woff"
 }
