@@ -1,6 +1,7 @@
-module Audio.Reel.Model exposing (DurationInMinutes, Footage(..), Reel, baseDuration, footageToInt, formatTime, fullDuration, newReel, overallDuration, reelLengthInFeet, singleReelDuration)
+module Audio.Reel.Model exposing (DurationInMinutes, Footage(..), Reel, baseDuration, existingReel, footageToInt, formatTime, fullDuration, newReel, overallDuration, reelLengthInFeet, singleReelDuration)
 
 import Audio.Model exposing (AudioConfig, DiameterInInches(..), Direction, Passes, Quantity, RecordingSpeed(..), SelectorValues, TapeThickness(..), reelInfo)
+import List.Extra as ListX
 import Uuid
 
 
@@ -254,3 +255,21 @@ fullDuration reel =
 overallDuration : List Reel -> DurationInMinutes
 overallDuration reels =
     List.sum <| List.map fullDuration reels
+
+
+existingReel : SelectorValues -> List Reel -> Maybe Reel
+existingReel selectorValues reels =
+    ListX.find
+        (\reel ->
+            { config = reel.audioConfig
+            , diameter = reel.diameter
+            , thickness = reel.tapeThickness
+            , speed = reel.recordingSpeed
+            }
+                == { config = selectorValues.audioConfig
+                   , diameter = selectorValues.diameter
+                   , thickness = selectorValues.tapeThickness
+                   , speed = selectorValues.recordingSpeed
+                   }
+        )
+        reels

@@ -11,7 +11,7 @@ import Maybe.Extra exposing (isNothing)
 import Messages exposing (Msg(..))
 import Model exposing (Model)
 import Translate exposing (AppString(..), Language, audioConfigDisplayName, directionString, translate)
-import View.Helpers exposing (renderSelect)
+import View.Helpers exposing (onKeyDown, renderSelect)
 
 
 mobileReelTable : Model -> Html Msg
@@ -107,6 +107,7 @@ addReel model =
                 , id "quantity"
                 , placeholder "#"
                 , onInput UpdateQuantity
+                , onKeyDown KeyDown
                 ]
                 []
             ]

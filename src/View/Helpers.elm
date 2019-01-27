@@ -1,6 +1,6 @@
 module View.Helpers exposing (onChange, onKeyDown, renderSelect, wrapSectionInLevelDiv)
 
-import Html exposing (Html, div, option, select, span, text)
+import Html exposing (Html, div, option, select, text)
 import Html.Attributes exposing (class, selected)
 import Html.Events exposing (keyCode, on)
 import Json.Decode as Json
