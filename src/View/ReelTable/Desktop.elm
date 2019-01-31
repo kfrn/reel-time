@@ -172,10 +172,10 @@ lengthInfo system language footage =
         lengthText =
             case system of
                 Imperial ->
-                    String.fromInt ft ++ "ft"
+                    String.fromInt ft ++ " ft"
 
                 Metric ->
-                    String.fromFloat metricLength ++ "m"
+                    String.fromFloat metricLength ++ " m"
 
         perReel =
             translate language (PerReelStr lengthText)
@@ -187,7 +187,7 @@ durationData : Language -> Reel -> List (Html Msg)
 durationData language reel =
     [ div []
         [ text <|
-            translate language (PerReelStr <| String.fromFloat (singleReelDuration reel) ++ "min")
+            translate language (PerReelStr <| String.fromFloat (singleReelDuration reel) ++ " min")
         ]
     , div []
         [ text <|
