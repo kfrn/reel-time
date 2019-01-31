@@ -25,6 +25,9 @@ linkData data =
         RangerData ->
             ", Joshua Ranger, AVPreserve, 12/2014"
 
+        RichardHessData ->
+            ", Richard Hess, 03/2006"
+
         CaseyData ->
             " (PDF), Mike Casey, Indiana University, 2007"
 
@@ -36,6 +39,7 @@ type LinkData
     | IASAMagLinkENData
     | IASAMagLinkITData
     | RangerData
+    | RichardHessData
     | CaseyData
 
 
@@ -79,6 +83,9 @@ link name =
         ORADCalc ->
             a [ href "https://www.avpreserve.com/open-reel-audio-duration-calculator/" ] [ text "Open Reel Audio Duration Calculator" ]
 
+        RichardHess ->
+            a [ href "http://richardhess.com/notes/formats/magnetic-media/magnetic-tapes/analog-audio/025-reel-tape" ] [ text "0.25\" reel tape" ]
+
         SourceCaster ->
             a [ href "https://datapraxis.github.io/sourcecaster/" ] [ text "SourceCaster" ]
 
@@ -102,5 +109,6 @@ type LinkName
     | IASAMagLinkEN
     | IASAMagLinkIT
     | ORADCalc
+    | RichardHess
     | SourceCaster
     | SourceCode

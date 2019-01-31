@@ -71,7 +71,8 @@ linksSection language =
     div []
         [ h2 [ class "subtitle" ] [ text <| translate language UsefulLinksStr ]
         , ul []
-            (iasaTC05Link
+            ([ li [] [ link RichardHess, text <| linkData RichardHessData ] ]
+                ++ iasaTC05Link
                 ++ iasaTC04Link
                 ++ [ li [] [ link Estimating, text <| linkData RangerData ]
                    , li [] [ link Facet, text <| linkData CaseyData ]
