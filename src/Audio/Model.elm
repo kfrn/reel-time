@@ -127,20 +127,32 @@ allThicknesses =
     [ Mil1p5, Mil1p0, Mil0p5Double, Mil0p5Triple ]
 
 
-tapeThicknessDisplayName : TapeThickness -> String
-tapeThicknessDisplayName thickness =
-    case thickness of
-        Mil1p5 ->
+tapeThicknessDisplayName : SystemOfMeasurement -> TapeThickness -> String
+tapeThicknessDisplayName system thickness =
+    case ( thickness, system ) of
+        ( Mil1p5, Imperial ) ->
             "1.5 mil"
 
-        Mil1p0 ->
+        ( Mil1p0, Imperial ) ->
             "1.0 mil"
 
-        Mil0p5Double ->
+        ( Mil0p5Double, Imperial ) ->
             "0.5 mil double"
 
-        Mil0p5Triple ->
+        ( Mil0p5Triple, Imperial ) ->
             "0.5 mil triple"
+
+        ( Mil1p5, Metric ) ->
+            "50μm (single)"
+
+        ( Mil1p0, Metric ) ->
+            "35μm (long)"
+
+        ( Mil0p5Double, Metric ) ->
+            "25μm (double)"
+
+        ( Mil0p5Triple, Metric ) ->
+            "18μm (triple)"
 
 
 type RecordingSpeed

@@ -84,9 +84,9 @@ addReel model =
             [ reelLabel <| translate model.language ThicknessStr
             , div [ class "select" ]
                 [ renderSelect
-                    (tapeThicknessDisplayName model.selectorValues.tapeThickness)
+                    (tapeThicknessDisplayName model.system model.selectorValues.tapeThickness)
                     ChangeTapeThickness
-                    tapeThicknessDisplayName
+                    (tapeThicknessDisplayName model.system)
                     allThicknesses
                 ]
             ]
@@ -130,7 +130,7 @@ addedReel language system reel =
                     :: List.intersperse ", "
                         [ translate language <| audioConfigDisplayName reel.audioConfig
                         , diameterDisplayName system reel.diameter
-                        , tapeThicknessDisplayName reel.tapeThickness
+                        , tapeThicknessDisplayName system reel.tapeThickness
                         , speedDisplayName system reel.recordingSpeed
                         ]
 

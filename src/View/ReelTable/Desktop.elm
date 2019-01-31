@@ -79,9 +79,9 @@ selectorRow model =
             [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language ThicknessStr ]
             , div [ class "select is-small" ]
                 [ renderSelect
-                    (tapeThicknessDisplayName model.selectorValues.tapeThickness)
+                    (tapeThicknessDisplayName model.system model.selectorValues.tapeThickness)
                     ChangeTapeThickness
-                    tapeThicknessDisplayName
+                    (tapeThicknessDisplayName model.system)
                     allThicknesses
                 ]
             ]
@@ -136,7 +136,7 @@ reelRow system language reel =
     tr [ id (Uuid.toString reel.id) ]
         [ td [] [ text <| translate language <| audioConfigDisplayName reel.audioConfig ]
         , td [] [ text <| diameterDisplayName system reel.diameter ]
-        , td [] [ text <| tapeThicknessDisplayName reel.tapeThickness ]
+        , td [] [ text <| tapeThicknessDisplayName system reel.tapeThickness ]
         , td [] [ text <| speedDisplayName system reel.recordingSpeed ]
         , td [ class "has-text-centered" ] [ text <| String.fromInt reel.quantity ]
         , td []

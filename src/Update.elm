@@ -148,7 +148,7 @@ update msg model =
         StartExport ->
             let
                 csvData =
-                    dataForCSV model.language model.fileType model.reels
+                    dataForCSV model
             in
             ( model, Ports.exportData csvData )
 
