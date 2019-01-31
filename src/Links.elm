@@ -28,8 +28,11 @@ attributedLink linkName =
         IASAMagLinkIT ->
             [ link IASAMagLinkIT, text ", IASA Comitato Technico, 2014, tr. 2016" ]
 
-        RichardHess ->
-            [ link RichardHess, text ", Richard Hess, 03/2006" ]
+        HessReel ->
+            [ link HessReel, text ", Richard Hess, 03/2006" ]
+
+        HessTimingChart ->
+            [ link HessTimingChart, text ", Richard Hess, 03/2006" ]
 
         _ ->
             []
@@ -75,8 +78,11 @@ link name =
         ORADCalc ->
             a [ href "https://www.avpreserve.com/open-reel-audio-duration-calculator/" ] [ text "Open Reel Audio Duration Calculator" ]
 
-        RichardHess ->
+        HessReel ->
             a [ href "http://richardhess.com/notes/formats/magnetic-media/magnetic-tapes/analog-audio/025-reel-tape" ] [ text "0.25\" reel tape" ]
+
+        HessTimingChart ->
+            a [ href "http://richardhess.com/notes/formats/magnetic-media/magnetic-tapes/analog-audio/tape-timing-chart/" ] [ text "Tape Timing Chart" ]
 
         SourceCaster ->
             a [ href "https://datapraxis.github.io/sourcecaster/" ] [ text "SourceCaster" ]
@@ -101,6 +107,7 @@ type LinkName
     | IASAMagLinkEN
     | IASAMagLinkIT
     | ORADCalc
-    | RichardHess
+    | HessReel
+    | HessTimingChart
     | SourceCaster
     | SourceCode

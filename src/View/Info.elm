@@ -64,7 +64,8 @@ linksSection language =
         [ h2 [ class "subtitle" ] [ text <| translate language UsefulLinksStr ]
         , ul []
             (iasaLinks
-                ++ [ listItem <| attributedLink RichardHess
+                ++ [ listItem <| attributedLink HessReel
+                   , listItem <| attributedLink HessTimingChart
                    , listItem <| attributedLink Estimating
                    , listItem <| attributedLink Facet
                    ]
