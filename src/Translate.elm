@@ -303,6 +303,18 @@ translate language appString =
                     , it = "spessore"
                     }
 
+                ThicknessAStr ->
+                    { en = "The metric tape thicknesses each represent the total thickness of the tape: the base film plus its coating. Conversely, the imperial tape thicknesses refer to just the thickness of the base film, which is why you have double and triple with the same base thickness."
+                    , fr = "Chaque mesure métrique de l'épaisseur des bandes répresente l'épaisseur totale de la bande: le film de base et son revêtement. D'autre part, les épaisseurs impériales décrivent seulement l'épaisseur du film de base; c'est pourquoi, pour le même épaisseur, existent double et triple."
+                    , it = "Ogni misura metrico dello spessore dei nastri rappresenta lo spessore totale del nastro: il film di base e il suo rivestimento. Però, gli spessori imperiali descrivono solo lo spessore del film di base: ecco perché ci sono doppio e triplo per lo stesso spessore."
+                    }
+
+                ThicknessQStr ->
+                    { en = "Why do the metric and imperial tape thicknesses not exactly correspond?"
+                    , fr = "Pourquoi ne correspondent pas les épaisseurs métriques et impériales des bandes?"
+                    , it = "Perché gli spessori metrici e imperiali dei nastri non corrispondono?"
+                    }
+
                 TotalDurationStr ->
                     { en = "total duration (mins)"
                     , fr = "durée total (mins)"
@@ -406,6 +418,8 @@ type AppString
     | SizeInMegaBytesStr Float
     | SpeedStr
     | ThicknessStr
+    | ThicknessAStr
+    | ThicknessQStr
     | TotalDurationStr
     | TotalStr
     | TypeStr
