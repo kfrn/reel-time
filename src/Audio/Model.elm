@@ -101,18 +101,22 @@ diameterImperialName diameter =
 
 diameterMetricName : DiameterInInches -> String
 diameterMetricName diameter =
+    let
+        cmString float =
+            String.fromFloat float ++ " cm"
+    in
     case diameter of
         Three ->
-            "7.6cm"
+            cmString 7.6
 
         Five ->
-            "12.7cm"
+            cmString 12.7
 
         Seven ->
-            "17.8cm"
+            cmString 17.8
 
         TenPtFive ->
-            "26.7cm"
+            cmString 26.7
 
 
 type TapeThickness
@@ -127,20 +131,32 @@ allThicknesses =
     [ Mil1p5, Mil1p0, Mil0p5Double, Mil0p5Triple ]
 
 
-tapeThicknessDisplayName : TapeThickness -> String
-tapeThicknessDisplayName thickness =
-    case thickness of
-        Mil1p5 ->
+tapeThicknessDisplayName : SystemOfMeasurement -> TapeThickness -> String
+tapeThicknessDisplayName system thickness =
+    case ( thickness, system ) of
+        ( Mil1p5, Imperial ) ->
             "1.5 mil"
 
-        Mil1p0 ->
+        ( Mil1p0, Imperial ) ->
             "1.0 mil"
 
-        Mil0p5Double ->
+        ( Mil0p5Double, Imperial ) ->
             "0.5 mil double"
 
-        Mil0p5Triple ->
+        ( Mil0p5Triple, Imperial ) ->
             "0.5 mil triple"
+
+        ( Mil1p5, Metric ) ->
+            "50 μm (single)"
+
+        ( Mil1p0, Metric ) ->
+            "35 μm (long)"
+
+        ( Mil0p5Double, Metric ) ->
+            "25 μm (double)"
+
+        ( Mil0p5Triple, Metric ) ->
+            "18 μm (triple)"
 
 
 type RecordingSpeed
@@ -169,43 +185,51 @@ speedDisplayName system =
 
 speedImperialName : RecordingSpeed -> String
 speedImperialName speed =
+    let
+        ipsString num =
+            num ++ " ips"
+    in
     case speed of
         IPS_0p9375 ->
-            "15/16ips"
+            ipsString "15/16"
 
         IPS_1p875 ->
-            "1.875ips"
+            ipsString "1.875"
 
         IPS_3p75 ->
-            "3.75ips"
+            ipsString "3.75"
 
         IPS_7p5 ->
-            "7.5ips"
+            ipsString "7.5"
 
         IPS_15 ->
-            "15ips"
+            ipsString "15"
 
         IPS_30 ->
-            "30ips"
+            ipsString "30"
 
 
 speedMetricName : RecordingSpeed -> String
 speedMetricName speed =
+    let
+        cmsString float =
+            String.fromFloat float ++ " cm/s"
+    in
     case speed of
         IPS_0p9375 ->
-            "2.38cm/s"
+            cmsString 2.38
 
         IPS_1p875 ->
-            "4.75cm/s"
+            cmsString 4.75
 
         IPS_3p75 ->
-            "9.5cm/s"
+            cmsString 9.5
 
         IPS_7p5 ->
-            "19cm/s"
+            cmsString 19
 
         IPS_15 ->
-            "38cm/s"
+            cmsString 38
 
         IPS_30 ->
-            "76cm/s"
+            cmsString 76

@@ -1,17 +1,19 @@
 module CsvOutput exposing (dataForCSV)
 
+import AppSettings exposing (SystemOfMeasurement(..))
 import Audio.Model exposing (diameterImperialName, speedImperialName, tapeThicknessDisplayName)
 import Audio.Reel.Model exposing (Reel, footageToInt, fullDuration, overallDuration, reelLengthInFeet, singleReelDuration)
 import AudioFile exposing (FileType(..), fileTypeName, totalFilesize)
+import Model exposing (Model)
 import Translate exposing (AppString(..), Language, audioConfigDisplayName, directionString, translate)
 
 
-dataForCSV : Language -> FileType -> List Reel -> List (List String)
-dataForCSV lang fileType reels =
-    [ headerRow lang ]
-        ++ List.map (reelRow lang) reels
-        ++ [ totalRow lang reels
-           , sizeRow lang fileType reels
+dataForCSV : Model -> List (List String)
+dataForCSV model =
+    [ headerRow model.language ]
+        ++ List.map (reelRow model.language model.system) model.reels
+        ++ [ totalRow model.language model.reels
+           , sizeRow model.language model.fileType model.reels
            ]
 
 
@@ -30,11 +32,11 @@ headerRow lang =
     ]
 
 
-reelRow : Language -> Reel -> List String
-reelRow language reel =
+reelRow : Language -> SystemOfMeasurement -> Reel -> List String
+reelRow language system reel =
     [ translate language <| audioConfigDisplayName reel.audioConfig
     , diameterImperialName reel.diameter
-    , tapeThicknessDisplayName reel.tapeThickness
+    , tapeThicknessDisplayName system reel.tapeThickness
     , speedImperialName reel.recordingSpeed
     , String.fromInt reel.quantity
     , translate language (directionString reel.directionality)
