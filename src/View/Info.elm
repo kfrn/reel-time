@@ -40,6 +40,12 @@ questionSection language =
                 , p [] [ text <| translate language WavAStr ]
                 ]
             )
+        , wrapSectionInLevelDiv
+            (div []
+                [ p [] [ strong [] [ text <| translate language ThicknessQStr ] ]
+                , p [] [ text <| translate language ThicknessAStr ]
+                ]
+            )
         ]
 
 
