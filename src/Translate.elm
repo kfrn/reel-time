@@ -305,14 +305,14 @@ translate language appString =
 
                 ThicknessAStr ->
                     { en = "The metric tape thicknesses each represent the total thickness of the tape: the base film plus its coating. Conversely, the imperial tape thicknesses refer to just the thickness of the base film, which is why you have double and triple with the same base thickness."
-                    , fr = "Chaque mesure métrique de l'épaisseur des bandes répresente l'épaisseur totale de la bande: le film de base et son revêtement. D'autre part, les épaisseurs impériales décrivent seulement l'épaisseur du film de base; c'est pourquoi, pour le même épaisseur, existent double et triple."
-                    , it = "Ogni misura metrico dello spessore dei nastri rappresenta lo spessore totale del nastro: il film di base e il suo rivestimento. Però, gli spessori imperiali descrivono solo lo spessore del film di base: ecco perché ci sono doppio e triplo per lo stesso spessore."
+                    , fr = "Chaque mesure en système métrique de l'épaisseur des bandes représente l'épaisseur totale de la bande: le support de base et son revêtement magnétique. Par contre, les épaisseurs en système impérial décrivent seulement l'épaisseur du support; ainsi il existe double et triple pour la même épaisseur."
+                    , it = "Ogni misura dello spessore dei nastri nel sistema metrico rappresenta lo spessore totale del nastro: il supporto di base e il suo rivestimento magnetico. Gli spessori nel sistema imperiale indicano invece solo lo spessore del supporto: ecco perché ci sono doppio e triplo per lo stesso spessore."
                     }
 
                 ThicknessQStr ->
                     { en = "Why do the metric and imperial tape thicknesses not exactly correspond?"
-                    , fr = "Pourquoi ne correspondent pas les épaisseurs métriques et impériales des bandes?"
-                    , it = "Perché gli spessori metrici e imperiali dei nastri non corrispondono?"
+                    , fr = "Pourquoi les épaisseurs des bandes en système métrique ne correspondent pas à celles en système impérial?"
+                    , it = "Perché gli spessori dei nastri in sistema metrico non corrispondono a quelli in sistema imperiale?"
                     }
 
                 TotalDurationStr ->
