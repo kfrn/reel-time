@@ -45,10 +45,10 @@ update msg model =
             in
             ( newModel, Cmd.none )
 
-        ChangeFileType ft ->
+        SetFileType ft ->
             ( { model | fileType = ft }, Cmd.none )
 
-        ChangeAudioConfig config ->
+        SetAudioConfig config ->
             let
                 updateSValues sValues newConfig =
                     { sValues | audioConfig = newConfig }
@@ -61,7 +61,7 @@ update msg model =
             in
             ( newModel, Cmd.none )
 
-        ChangeDiameterInInches diameter ->
+        SetDiameterInInches diameter ->
             let
                 updateSValues sValues newDiameterInInches =
                     { sValues | diameter = newDiameterInInches }
@@ -74,7 +74,7 @@ update msg model =
             in
             ( newModel, Cmd.none )
 
-        ChangeTapeThickness thickness ->
+        SetTapeThickness thickness ->
             let
                 updateSValues sValues newThickness =
                     { sValues | tapeThickness = newThickness }
@@ -87,7 +87,7 @@ update msg model =
             in
             ( newModel, Cmd.none )
 
-        ChangeRecordingSpeed speed ->
+        SetRecordingSpeed speed ->
             let
                 updateSValues sValues newSpeed =
                     { sValues | recordingSpeed = newSpeed }
@@ -100,7 +100,7 @@ update msg model =
             in
             ( newModel, Cmd.none )
 
-        UpdateQuantity quantity ->
+        SetQuantity quantity ->
             let
                 updateSValues sValues newSpeed =
                     { sValues | quantity = newSpeed }

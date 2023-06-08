@@ -65,7 +65,7 @@ addReel model =
             , div [ class "select" ]
                 [ renderSelect
                     (translate model.language <| audioConfigDisplayName model.selectorValues.audioConfig)
-                    ChangeAudioConfig
+                    SetAudioConfig
                     (\a -> translate model.language <| audioConfigDisplayName a)
                     allAudioConfigs
                 ]
@@ -75,7 +75,7 @@ addReel model =
             , div [ class "select" ]
                 [ renderSelect
                     (diameterDisplayName model.system model.selectorValues.diameter)
-                    ChangeDiameterInInches
+                    SetDiameterInInches
                     (diameterDisplayName model.system)
                     allDiameters
                 ]
@@ -85,7 +85,7 @@ addReel model =
             , div [ class "select" ]
                 [ renderSelect
                     (tapeThicknessDisplayName model.system model.selectorValues.tapeThickness)
-                    ChangeTapeThickness
+                    SetTapeThickness
                     (tapeThicknessDisplayName model.system)
                     allThicknesses
                 ]
@@ -95,7 +95,7 @@ addReel model =
             , div [ class "select" ]
                 [ renderSelect
                     (speedDisplayName model.system model.selectorValues.recordingSpeed)
-                    ChangeRecordingSpeed
+                    SetRecordingSpeed
                     (speedDisplayName model.system)
                     allRecordingSpeeds
                 ]
@@ -106,7 +106,7 @@ addReel model =
                 [ classList [ ( "input", True ), ( "is-danger", invalidQuantity ) ]
                 , id "quantity"
                 , placeholder "#"
-                , onInput UpdateQuantity
+                , onInput SetQuantity
                 , onKeyDown KeyDown
                 ]
                 []
@@ -196,7 +196,7 @@ totals language reels fileType =
             , div [ class "select is-small", id "filetype" ]
                 [ renderSelect
                     (fileTypeName fileType)
-                    ChangeFileType
+                    SetFileType
                     fileTypeName
                     allFileTypes
                 ]

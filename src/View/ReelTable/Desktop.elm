@@ -60,7 +60,7 @@ selectorRow model =
             , div [ class "select is-small" ]
                 [ renderSelect
                     (translate model.language <| audioConfigDisplayName model.selectorValues.audioConfig)
-                    ChangeAudioConfig
+                    SetAudioConfig
                     (\a -> translate model.language <| audioConfigDisplayName a)
                     allAudioConfigs
                 ]
@@ -70,7 +70,7 @@ selectorRow model =
             , div [ class "select is-small" ]
                 [ renderSelect
                     (diameterDisplayName model.system model.selectorValues.diameter)
-                    ChangeDiameterInInches
+                    SetDiameterInInches
                     (diameterDisplayName model.system)
                     allDiameters
                 ]
@@ -80,7 +80,7 @@ selectorRow model =
             , div [ class "select is-small" ]
                 [ renderSelect
                     (tapeThicknessDisplayName model.system model.selectorValues.tapeThickness)
-                    ChangeTapeThickness
+                    SetTapeThickness
                     (tapeThicknessDisplayName model.system)
                     allThicknesses
                 ]
@@ -90,7 +90,7 @@ selectorRow model =
             , div [ class "select is-small" ]
                 [ renderSelect
                     (speedDisplayName model.system model.selectorValues.recordingSpeed)
-                    ChangeRecordingSpeed
+                    SetRecordingSpeed
                     (speedDisplayName model.system)
                     allRecordingSpeeds
                 ]
@@ -101,7 +101,7 @@ selectorRow model =
                 [ classList [ ( "input is-small", True ), ( "is-danger", invalidQuantity ) ]
                 , id "quantity"
                 , placeholder "#"
-                , onInput UpdateQuantity
+                , onInput SetQuantity
                 , onKeyDown KeyDown
                 ]
                 []
@@ -221,7 +221,7 @@ totalRow language reels fileType =
                     , div [ class "select is-small", id "filetype" ]
                         [ renderSelect
                             (fileTypeName fileType)
-                            ChangeFileType
+                            SetFileType
                             fileTypeName
                             allFileTypes
                         ]

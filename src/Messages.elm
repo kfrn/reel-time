@@ -11,12 +11,12 @@ type Msg
     = KeyDown Int
     | AddReel
     | DeleteReel Uuid
-    | ChangeFileType FileType
-    | ChangeAudioConfig AudioConfig
-    | ChangeDiameterInInches DiameterInInches
-    | ChangeTapeThickness TapeThickness
-    | ChangeRecordingSpeed RecordingSpeed
-    | UpdateQuantity String
+    | SetFileType FileType
+    | SetAudioConfig AudioConfig
+    | SetDiameterInInches DiameterInInches
+    | SetTapeThickness TapeThickness
+    | SetRecordingSpeed RecordingSpeed
+    | SetQuantity String
     | ChangeSystemOfMeasurement SystemOfMeasurement
     | ChangeLanguage Language
     | TogglePageView PageView
