@@ -65,6 +65,9 @@ linksSection language =
 
                 IT ->
                     [ listItem <| attributedLink IASAMagLinkIT, listItem <| attributedLink IASAGuidelinesIT ]
+
+                DE ->
+                    [ listItem <| attributedLink IASAMagLinkEN, listItem <| attributedLink IASAGuidelinesEN ]
     in
     div []
         [ h2 [ class "subtitle" ] [ text <| translate language UsefulLinksStr ]
