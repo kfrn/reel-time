@@ -8,17 +8,17 @@ import Uuid exposing (Uuid)
 
 
 type Msg
-    = KeyDown Int
-    | AddReel
+    = AddReel
+    | ChangeLanguage Language
+    | ChangeSystemOfMeasurement SystemOfMeasurement
     | DeleteReel Uuid
-    | SetFileType FileType
+    | KeyDown Int
+    | NoOp
     | SetAudioConfig AudioConfig
     | SetDiameterInInches DiameterInInches
-    | SetTapeThickness TapeThickness
-    | SetRecordingSpeed RecordingSpeed
+    | SetFileType FileType
     | SetQuantity String
-    | ChangeSystemOfMeasurement SystemOfMeasurement
-    | ChangeLanguage Language
-    | TogglePageView PageView
+    | SetRecordingSpeed RecordingSpeed
+    | SetTapeThickness TapeThickness
     | StartExport
-    | NoOp
+    | TogglePageView PageView
