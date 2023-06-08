@@ -1,0 +1,42 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  ELM_VERSION: 0.19.1
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install elm
+      run: |
+        curl -L -o elm.gz https://github.com/elm/compiler/releases/download/$ELM_VERSION/binary-for-linux-64-bit.gz
+        gunzip elm.gz
+        chmod +x elm
+        sudo mv elm /usr/local/bin/
+    
+    - name: Install Node via nvm (node version manager)
+      shell: bash -l {0} # nvm requires a login shell
+      run: nvm install
+
+    - name: Install dependencies
+      shell: bash -l {0} # nvm requires a login shell
+      run: |
+        nvm use
+        npm install
+        sudo npm install create-elm-app -g
+
+    - name: Build project
+      shell: bash -l {0} # nvm requires a login shell
+      run: |
+        nvm use
+        elm-app build
