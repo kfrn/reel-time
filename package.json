@@ -1,5 +1,5 @@
 {
-  "name": "reel-to-reel",
+  "name": "reel-time",
   "version": "1.0.0",
   "description": "Calculate the duration of your open-reel audio",
   "homepage": "https://kfrn.github.io/reel-time/",
@@ -23,6 +23,5 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kfrn/reel-time/issues"
-  },
-  "homepage": "https://github.com/kfrn/reel-time#readme"
+  }
 }
