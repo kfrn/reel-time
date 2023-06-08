@@ -1,12 +1,14 @@
 {
-  "main.css": "/reel-time/static/css/main.c27c06ce.chunk.css",
-  "main.js": "/reel-time/static/js/main.f7b67ce5.chunk.js",
-  "main.css.map": "/reel-time/static/css/main.c27c06ce.chunk.css.map",
-  "main.js.map": "/reel-time/static/js/main.f7b67ce5.chunk.js.map",
-  "runtime~main.js": "/reel-time/static/js/runtime~main.693789a3.js",
-  "runtime~main.js.map": "/reel-time/static/js/runtime~main.693789a3.js.map",
-  "vendors~main.js": "/reel-time/static/js/vendors~main.424691d9.chunk.js",
-  "vendors~main.js.map": "/reel-time/static/js/vendors~main.424691d9.chunk.js.map",
+  "main.css": "/reel-time/static/css/main.7746a8b1.chunk.css",
+  "main.js": "/reel-time/static/js/main.c39c50dd.chunk.js",
+  "main.js.map": "/reel-time/static/js/main.c39c50dd.chunk.js.map",
+  "runtime~main.js": "/reel-time/static/js/runtime~main.2d054c79.js",
+  "runtime~main.js.map": "/reel-time/static/js/runtime~main.2d054c79.js.map",
+  "vendors~main.js": "/reel-time/static/js/vendors~main.3b800b8a.chunk.js",
+  "vendors~main.js.map": "/reel-time/static/js/vendors~main.3b800b8a.chunk.js.map",
+  "./service-worker.js": "/reel-time/./service-worker.js",
+  "favicon.ico": "/reel-time/favicon.ico",
   "index.html": "/reel-time/index.html",
-  "static/media/font-awesome.min.css": "/reel-time/static/media/fontawesome-webfont.fee66e71.woff"
+  "precache-manifest.77fd02cbe9479b5a4c5c5ea891e7e9ac.js": "/reel-time/precache-manifest.77fd02cbe9479b5a4c5c5ea891e7e9ac.js",
+  "static/media/font-awesome.min.css": "/reel-time/static/media/fontawesome-webfont.f691f37e.woff"
 }
