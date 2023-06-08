@@ -21,24 +21,30 @@ Suggestions and contributions are welcome! I'm happy to receive feature requests
 
 Dependencies:
 * [Elm `0.19`](https://guide.elm-lang.org/install.html)
-* [Node](https://nodejs.org/en/download/) (developed with Node `10.8.0` and npm `6.4.0`)
+* [`nvm` (Node version manager)](https://github.com/nvm-sh/nvm#installing-and-updating)
 
 To run locally:
-```
+```bash
 git clone git@github.com:kfrn/reel-time.git
 cd reel-time/
-npm install
+
+# Install dependencies
+nvm install  # Will also install npm
 npm install -g create-elm-app
+npm install
+
 elm-app start
 ```
 
 To run tests:
-```
+```bash
 elm-app test
 ```
 
 <!-- To deploy to github pages:
-```
+```bash
+npm install -g gh-pages  # If not already installed
+
 elm-app build
 gh-pages -d build
 ``` -->
@@ -47,4 +53,14 @@ gh-pages -d build
 
 This web app was scaffolded using [`create-elm-app`](https://www.npmjs.com/package/create-elm-app) and styled with assistance from [Bulma](https://bulma.io/).
 
-Cheers to [Ashley Blewer](https://github.com/ablwr), [Kieran O'Leary](https://github.com/kieranjol), [Reto Kromer](https://github.com/retokromer), [Andrew Weaver](https://github.com/privatezero), and [Dave Rice](https://github.com/dericed) for providing feedback and encouragement! Especial thanks to Reto for his translation help. Also, shoutout to [Corey Bailey](http://www.baileyzone.net/) for providing info on 3" audio reels and quadraphonic audio.
+Thank you for encouragement and feedback:
+- [Ashley Blewer](https://github.com/ablwr)
+- [Kieran O'Leary](https://github.com/kieranjol)
+- [Reto Kromer](https://github.com/retokromer)
+- [Andrew Weaver](https://github.com/privatezero)
+- [Dave Rice](https://github.com/dericed)
+
+And thank you for contributions from:
+- Reto: translation help
+- [Corey Bailey](http://www.baileyzone.net/): info on 3" audio reels and quadraphonic audio
+- [Christian Hieke](https://github.com/ingk): German translation.
