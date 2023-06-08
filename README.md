@@ -47,4 +47,14 @@ gh-pages -d build
 
 This web app was scaffolded using [`create-elm-app`](https://www.npmjs.com/package/create-elm-app) and styled with assistance from [Bulma](https://bulma.io/).
 
-Cheers to [Ashley Blewer](https://github.com/ablwr), [Kieran O'Leary](https://github.com/kieranjol), [Reto Kromer](https://github.com/retokromer), [Andrew Weaver](https://github.com/privatezero), and [Dave Rice](https://github.com/dericed) for providing feedback and encouragement! Especial thanks to Reto for his translation help. Also, shoutout to [Corey Bailey](http://www.baileyzone.net/) for providing info on 3" audio reels and quadraphonic audio.
+Thank you for encouragement and feedback:
+- [Ashley Blewer](https://github.com/ablwr)
+- [Kieran O'Leary](https://github.com/kieranjol)
+- [Reto Kromer](https://github.com/retokromer)
+- [Andrew Weaver](https://github.com/privatezero)
+- [Dave Rice](https://github.com/dericed)
+
+And thank you for contributions from:
+- Reto: translation help
+- [Corey Bailey](http://www.baileyzone.net/): info on 3" audio reels and quadraphonic audio
+- [Christian Hieke](https://github.com/ingk): German translation.
