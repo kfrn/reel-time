@@ -43,6 +43,8 @@ elm-app test
 
 <!-- To deploy to github pages:
 ```bash
+npm install -g gh-pages  # If not already installed
+
 elm-app build
 gh-pages -d build
 ``` -->
