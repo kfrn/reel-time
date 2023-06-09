@@ -90,8 +90,8 @@ update msg model =
 
         SetQuantity quantity ->
             let
-                updateSValues sValues newSpeed =
-                    { sValues | quantity = newSpeed }
+                updateSValues sValues newQuantity =
+                    { sValues | quantity = newQuantity }
             in
             case String.toInt quantity of
                 Just q ->
