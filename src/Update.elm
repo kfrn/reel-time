@@ -14,15 +14,6 @@ import Uuid exposing (Uuid, uuidGenerator)
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        KeyDown int ->
-            case int of
-                13 ->
-                    -- Enter key
-                    update AddReel model
-
-                _ ->
-                    ( model, Cmd.none )
-
         AddReel ->
             case model.selectorValues.quantity of
                 Just q ->
@@ -38,6 +29,17 @@ update msg model =
                 Nothing ->
                     ( model, Cmd.none )
 
+        ChangeLanguage l ->
+            ( { model | language = l }, Cmd.none )
+
+        ChangeSystemOfMeasurement system ->
+            case system of
+                Metric ->
+                    ( { model | system = Metric }, Cmd.none )
+
+                Imperial ->
+                    ( { model | system = Imperial }, Cmd.none )
+
         DeleteReel reelID ->
             let
                 newModel =
@@ -45,10 +47,19 @@ update msg model =
             in
             ( newModel, Cmd.none )
 
-        ChangeFileType ft ->
-            ( { model | fileType = ft }, Cmd.none )
+        KeyDown int ->
+            case int of
+                13 ->
+                    -- Enter key
+                    update AddReel model
 
-        ChangeAudioConfig config ->
+                _ ->
+                    ( model, Cmd.none )
+
+        NoOp ->
+            ( model, Cmd.none )
+
+        SetAudioConfig config ->
             let
                 updateSValues sValues newConfig =
                     { sValues | audioConfig = newConfig }
@@ -61,7 +72,7 @@ update msg model =
             in
             ( newModel, Cmd.none )
 
-        ChangeDiameterInInches diameter ->
+        SetDiameterInInches diameter ->
             let
                 updateSValues sValues newDiameterInInches =
                     { sValues | diameter = newDiameterInInches }
@@ -74,36 +85,13 @@ update msg model =
             in
             ( newModel, Cmd.none )
 
-        ChangeTapeThickness thickness ->
+        SetFileType ft ->
+            ( { model | fileType = ft }, Cmd.none )
+
+        SetQuantity quantity ->
             let
-                updateSValues sValues newThickness =
-                    { sValues | tapeThickness = newThickness }
-
-                newSelectorValues =
-                    updateSValues model.selectorValues thickness
-
-                newModel =
-                    { model | selectorValues = newSelectorValues }
-            in
-            ( newModel, Cmd.none )
-
-        ChangeRecordingSpeed speed ->
-            let
-                updateSValues sValues newSpeed =
-                    { sValues | recordingSpeed = newSpeed }
-
-                newSelectorValues =
-                    updateSValues model.selectorValues speed
-
-                newModel =
-                    { model | selectorValues = newSelectorValues }
-            in
-            ( newModel, Cmd.none )
-
-        UpdateQuantity quantity ->
-            let
-                updateSValues sValues newSpeed =
-                    { sValues | quantity = newSpeed }
+                updateSValues sValues newQuantity =
+                    { sValues | quantity = newQuantity }
             in
             case String.toInt quantity of
                 Just q ->
@@ -126,24 +114,31 @@ update msg model =
                     in
                     ( newModel, Cmd.none )
 
-        ChangeSystemOfMeasurement system ->
-            case system of
-                Metric ->
-                    ( { model | system = Metric }, Cmd.none )
+        SetRecordingSpeed speed ->
+            let
+                updateSValues sValues newSpeed =
+                    { sValues | recordingSpeed = newSpeed }
 
-                Imperial ->
-                    ( { model | system = Imperial }, Cmd.none )
+                newSelectorValues =
+                    updateSValues model.selectorValues speed
 
-        ChangeLanguage l ->
-            ( { model | language = l }, Cmd.none )
+                newModel =
+                    { model | selectorValues = newSelectorValues }
+            in
+            ( newModel, Cmd.none )
 
-        TogglePageView page ->
-            case page of
-                Calculator ->
-                    ( { model | page = Info }, Cmd.none )
+        SetTapeThickness thickness ->
+            let
+                updateSValues sValues newThickness =
+                    { sValues | tapeThickness = newThickness }
 
-                Info ->
-                    ( { model | page = Calculator }, Cmd.none )
+                newSelectorValues =
+                    updateSValues model.selectorValues thickness
+
+                newModel =
+                    { model | selectorValues = newSelectorValues }
+            in
+            ( newModel, Cmd.none )
 
         StartExport ->
             let
@@ -152,8 +147,13 @@ update msg model =
             in
             ( model, Ports.exportData csvData )
 
-        NoOp ->
-            ( model, Cmd.none )
+        TogglePageView page ->
+            case page of
+                Calculator ->
+                    ( { model | page = Info }, Cmd.none )
+
+                Info ->
+                    ( { model | page = Calculator }, Cmd.none )
 
 
 removeReel : Uuid -> List Reel -> List Reel

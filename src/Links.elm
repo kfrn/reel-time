@@ -13,6 +13,12 @@ attributedLink linkName =
         Facet ->
             [ link Facet, text " (PDF), Mike Casey, Indiana University, 2007" ]
 
+        HessReel ->
+            [ link HessReel, text ", Richard Hess, 03/2006" ]
+
+        HessTimingChart ->
+            [ link HessTimingChart, text ", Richard Hess, 03/2006" ]
+
         IASAGuidelinesEN ->
             [ link IASAGuidelinesEN, text " (2nd ed.), IASA Technical Committee, 2009" ]
 
@@ -22,17 +28,14 @@ attributedLink linkName =
         IASAGuidelinesIT ->
             [ link IASAGuidelinesIT, text ", IASA Comitato Technico, 2004, tr. 2007" ]
 
+        IASAMagLinkDE ->
+            [ link IASAMagLinkDE, text ", IASA Technical Committee, 2014, tr. 2019" ]
+
         IASAMagLinkEN ->
             [ link IASAMagLinkEN, text ", IASA Technical Committee, 2014" ]
 
         IASAMagLinkIT ->
             [ link IASAMagLinkIT, text ", IASA Comitato Technico, 2014, tr. 2016" ]
-
-        HessReel ->
-            [ link HessReel, text ", Richard Hess, 03/2006" ]
-
-        HessTimingChart ->
-            [ link HessTimingChart, text ", Richard Hess, 03/2006" ]
 
         _ ->
             []
@@ -55,10 +58,16 @@ link name =
             a [ href "https://www.avpreserve.com/estimating-duration-of-open-reel-audio/" ] [ text "Estimating the duration of open-reel audio" ]
 
         Facet ->
-            a [ href "http://www.dlib.indiana.edu/projects/sounddirections/facet/facet_formats.pdf" ] [ text "FACET: The Field Audio Collection Evaluation Tool. Format Characteristics and Preservation Problems" ]
+            a [ href "https://dlib.indiana.edu/projects/sounddirections/facet/facet_formats.pdf" ] [ text "FACET: The Field Audio Collection Evaluation Tool. Format Characteristics and Preservation Problems" ]
 
         Ffmprovisr ->
             a [ href "https://amiaopensource.github.io/ffmprovisr/" ] [ text "ffmprovisr" ]
+
+        HessReel ->
+            a [ href "https://richardhess.com/notes/formats/magnetic-media/magnetic-tapes/analog-audio/025-reel-tape" ] [ text "0.25\" reel tape" ]
+
+        HessTimingChart ->
+            a [ href "https://richardhess.com/notes/formats/magnetic-media/magnetic-tapes/analog-audio/tape-timing-chart/" ] [ text "Tape Timing Chart" ]
 
         IASAGuidelinesEN ->
             a [ href "https://www.iasa-web.org/tc04/audio-preservation" ] [ text "IASA TC-04: Guidelines on the Production and Preservation of Digital Audio Objects" ]
@@ -67,7 +76,10 @@ link name =
             a [ href "https://www.iasa-web.org/tc04-fr/la-production-et-la-conservation-des-objets-audionumeriques" ] [ text "IASA TC-04: Recommandations pour la production et la conservation des objets audionumériques" ]
 
         IASAGuidelinesIT ->
-            a [ href "http://www.aib.it/aib/editoria/2007/pub172.htm" ] [ text "IASA TC-04: Linee guida per la produzione e la preservazione di oggetti audio digitali" ]
+            a [ href "https://www.aib.it/aib/editoria/2007/pub172.htm" ] [ text "IASA TC-04: Linee guida per la produzione e la preservazione di oggetti audio digitali" ]
+
+        IASAMagLinkDE ->
+            a [ href "https://www.iasa-web.org/tc05-de/behandlung-und-lagerung-von-audio-und-videotragern" ] [ text "IASA TC-05: Behandlung und Lagerung von Audio- und Videoträgern" ]
 
         IASAMagLinkEN ->
             a [ href "https://www.iasa-web.org/tc05/2211-magnetic-tapes" ] [ text "IASA TC-05: Handling and Storage of Audio and Video Carriers - Magnetic tapes" ]
@@ -77,12 +89,6 @@ link name =
 
         ORADCalc ->
             a [ href "https://www.avpreserve.com/open-reel-audio-duration-calculator/" ] [ text "Open Reel Audio Duration Calculator" ]
-
-        HessReel ->
-            a [ href "http://richardhess.com/notes/formats/magnetic-media/magnetic-tapes/analog-audio/025-reel-tape" ] [ text "0.25\" reel tape" ]
-
-        HessTimingChart ->
-            a [ href "http://richardhess.com/notes/formats/magnetic-media/magnetic-tapes/analog-audio/tape-timing-chart/" ] [ text "Tape Timing Chart" ]
 
         SourceCaster ->
             a [ href "https://datapraxis.github.io/sourcecaster/" ] [ text "SourceCaster" ]
@@ -99,15 +105,16 @@ type LinkName
     = CableBible
     | Email
     | Estimating
+    | HessReel
+    | HessTimingChart
     | Facet
     | Ffmprovisr
     | IASAGuidelinesEN
     | IASAGuidelinesFR
     | IASAGuidelinesIT
+    | IASAMagLinkDE
     | IASAMagLinkEN
     | IASAMagLinkIT
     | ORADCalc
-    | HessReel
-    | HessTimingChart
     | SourceCaster
     | SourceCode
