@@ -28,6 +28,9 @@ attributedLink linkName =
         IASAGuidelinesIT ->
             [ link IASAGuidelinesIT, text ", IASA Comitato Technico, 2004, tr. 2007" ]
 
+        IASAMagLinkDE ->
+            [ link IASAMagLinkDE, text ", IASA Technical Committee, 2014, tr. 2019" ]
+
         IASAMagLinkEN ->
             [ link IASAMagLinkEN, text ", IASA Technical Committee, 2014" ]
 
@@ -75,6 +78,9 @@ link name =
         IASAGuidelinesIT ->
             a [ href "https://www.aib.it/aib/editoria/2007/pub172.htm" ] [ text "IASA TC-04: Linee guida per la produzione e la preservazione di oggetti audio digitali" ]
 
+        IASAMagLinkDE ->
+            a [ href "https://www.iasa-web.org/tc05-de/behandlung-und-lagerung-von-audio-und-videotragern" ] [ text "IASA TC-05: Behandlung und Lagerung von Audio- und Videoträgern" ]
+
         IASAMagLinkEN ->
             a [ href "https://www.iasa-web.org/tc05/2211-magnetic-tapes" ] [ text "IASA TC-05: Handling and Storage of Audio and Video Carriers - Magnetic tapes" ]
 
@@ -106,6 +112,7 @@ type LinkName
     | IASAGuidelinesEN
     | IASAGuidelinesFR
     | IASAGuidelinesIT
+    | IASAMagLinkDE
     | IASAMagLinkEN
     | IASAMagLinkIT
     | ORADCalc
