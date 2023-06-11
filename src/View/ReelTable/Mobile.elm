@@ -126,13 +126,12 @@ addedReel language system reel =
     let
         summary =
             String.concat <|
-                (String.fromInt reel.quantity ++ "x ")
-                    :: List.intersperse ", "
-                        [ translate language <| audioConfigDisplayName reel.audioConfig
-                        , diameterDisplayName system reel.diameter
-                        , tapeThicknessDisplayName system reel.tapeThickness
-                        , speedDisplayName system reel.recordingSpeed
-                        ]
+                List.intersperse ", "
+                    [ translate language <| audioConfigDisplayName reel.audioConfig
+                    , diameterDisplayName system reel.diameter
+                    , tapeThicknessDisplayName system reel.tapeThickness
+                    , speedDisplayName system reel.recordingSpeed
+                    ]
 
         footage =
             footageToInt <| reelLengthInFeet reel
@@ -164,6 +163,10 @@ addedReel language system reel =
                 , div [ class "reel-option" ]
                     [ span [] [ text <| translate language (PerReelStr <| String.fromFloat (singleReelDuration reel) ++ "min") ]
                     , span [] [ text <| formatTime (fullDuration reel) ++ " " ++ translate language TotalStr ]
+                    ]
+                , div [ class "reel-option" ]
+                    [ span [] [ text <| translate language QuantityStr ]
+                    , span [] [ text <| String.fromInt reel.quantity ]
                     ]
                 ]
             , button [ class "button is-dark", onClick <| DeleteReel reel.id ]
