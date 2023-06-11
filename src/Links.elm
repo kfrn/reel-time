@@ -55,16 +55,16 @@ link name =
             a [ href "https://www.avpreserve.com/estimating-duration-of-open-reel-audio/" ] [ text "Estimating the duration of open-reel audio" ]
 
         Facet ->
-            a [ href "http://www.dlib.indiana.edu/projects/sounddirections/facet/facet_formats.pdf" ] [ text "FACET: The Field Audio Collection Evaluation Tool. Format Characteristics and Preservation Problems" ]
+            a [ href "https://dlib.indiana.edu/projects/sounddirections/facet/facet_formats.pdf" ] [ text "FACET: The Field Audio Collection Evaluation Tool. Format Characteristics and Preservation Problems" ]
 
         Ffmprovisr ->
             a [ href "https://amiaopensource.github.io/ffmprovisr/" ] [ text "ffmprovisr" ]
 
         HessReel ->
-            a [ href "http://richardhess.com/notes/formats/magnetic-media/magnetic-tapes/analog-audio/025-reel-tape" ] [ text "0.25\" reel tape" ]
+            a [ href "https://richardhess.com/notes/formats/magnetic-media/magnetic-tapes/analog-audio/025-reel-tape" ] [ text "0.25\" reel tape" ]
 
         HessTimingChart ->
-            a [ href "http://richardhess.com/notes/formats/magnetic-media/magnetic-tapes/analog-audio/tape-timing-chart/" ] [ text "Tape Timing Chart" ]
+            a [ href "https://richardhess.com/notes/formats/magnetic-media/magnetic-tapes/analog-audio/tape-timing-chart/" ] [ text "Tape Timing Chart" ]
 
         IASAGuidelinesEN ->
             a [ href "https://www.iasa-web.org/tc04/audio-preservation" ] [ text "IASA TC-04: Guidelines on the Production and Preservation of Digital Audio Objects" ]
@@ -73,7 +73,7 @@ link name =
             a [ href "https://www.iasa-web.org/tc04-fr/la-production-et-la-conservation-des-objets-audionumeriques" ] [ text "IASA TC-04: Recommandations pour la production et la conservation des objets audionumériques" ]
 
         IASAGuidelinesIT ->
-            a [ href "http://www.aib.it/aib/editoria/2007/pub172.htm" ] [ text "IASA TC-04: Linee guida per la produzione e la preservazione di oggetti audio digitali" ]
+            a [ href "https://www.aib.it/aib/editoria/2007/pub172.htm" ] [ text "IASA TC-04: Linee guida per la produzione e la preservazione di oggetti audio digitali" ]
 
         IASAMagLinkEN ->
             a [ href "https://www.iasa-web.org/tc05/2211-magnetic-tapes" ] [ text "IASA TC-05: Handling and Storage of Audio and Video Carriers - Magnetic tapes" ]
