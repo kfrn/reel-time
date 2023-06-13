@@ -166,7 +166,21 @@ addedReel language system reel =
                     ]
                 , div [ class "reel-option" ]
                     [ span [] [ text <| translate language QuantityStr ]
-                    , span [] [ text <| String.fromInt reel.quantity ]
+                    , span []
+                        [ button
+                            [ class "button is-small margin-right-small", onClick (DecrementReelQuantity reel.id) ]
+                            [ span [ class "icon" ]
+                                [ i [ class "fa fa-minus" ] []
+                                ]
+                            ]
+                        , text <| String.fromInt reel.quantity
+                        , button
+                            [ class "button is-small margin-left-small", onClick (IncrementReelQuantity reel.id) ]
+                            [ span [ class "icon" ]
+                                [ i [ class "fa fa-plus" ] []
+                                ]
+                            ]
+                        ]
                     ]
                 ]
             , button [ class "button is-dark", onClick <| DeleteReel reel.id ]

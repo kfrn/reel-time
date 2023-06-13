@@ -304,10 +304,6 @@ tr.main-row:hover {
   border-bottom: 1px solid gray;
 }
 
-.added-reel button {
-  margin: 0.5rem 0;
-}
-
 .summary {
   font-weight: bold;
 }
