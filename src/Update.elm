@@ -1,7 +1,7 @@
 module Update exposing (update)
 
 import AppSettings exposing (PageView(..), SystemOfMeasurement(..))
-import Audio.Reel.Model exposing (Reel, existingReel, newReel)
+import Audio.Reel.Model exposing (Reel, findReelByValues, newReel)
 import CsvOutput exposing (dataForCSV)
 import List.Extra as ListX
 import Messages exposing (Msg(..))
@@ -22,7 +22,7 @@ update msg model =
                             step uuidGenerator model.currentSeed
 
                         newModel =
-                            { model | currentSeed = newSeed, reels = updateReels uuid model q }
+                            { model | currentSeed = newSeed, reels = addReel uuid model q }
                     in
                     ( newModel, Cmd.none )
 
@@ -161,9 +161,10 @@ removeReel reelID allReels =
     List.filter (\r -> r.id /= reelID) allReels
 
 
-updateReels : Uuid -> Model -> Int -> List Reel
-updateReels uuid model quantity =
-    case existingReel model.selectorValues model.reels of
+addReel : Uuid -> Model -> Int -> List Reel
+addReel uuid model quantity =
+    case findReelByValues model.selectorValues model.reels of
+        -- If we already have a reel with these specs, increment the quantity
         Just reel ->
             let
                 updatedReel =
@@ -171,5 +172,6 @@ updateReels uuid model quantity =
             in
             ListX.setIf (\r -> r == reel) updatedReel model.reels
 
+        -- Otherwise, add a new reel to the list.
         Nothing ->
             newReel uuid model.selectorValues quantity :: model.reels
