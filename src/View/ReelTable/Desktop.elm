@@ -85,7 +85,7 @@ selectorRow model =
                     allThicknesses
                 ]
             ]
-        , th [ class "pc10" ]
+        , th [ class "pc5" ]
             [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language SpeedStr ]
             , div [ class "select is-small" ]
                 [ renderSelect
@@ -95,7 +95,7 @@ selectorRow model =
                     allRecordingSpeeds
                 ]
             ]
-        , th [ class "pc5 has-text-centered" ]
+        , th [ class "pc125 has-text-centered" ]
             [ div [ class "select-heading is-size-6" ] [ text <| translate model.language QuantityStr ]
             , input
                 [ classList [ ( "input is-small", True ), ( "is-danger", invalidQuantity ) ]
@@ -106,7 +106,7 @@ selectorRow model =
                 ]
                 []
             ]
-        , th [ class "pc25" ] [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language InfoHeaderStr ] ]
+        , th [ class "pc225" ] [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language InfoHeaderStr ] ]
         , th [ class "pc25" ] [ div [ class "select-heading left-offset is-size-6" ] [ text <| translate model.language DurationStr ] ]
         , th [ class "pc5 has-text-centered" ]
             [ div [ class "select-heading invisible" ] [ text "." ]
@@ -138,7 +138,21 @@ reelRow system language reel =
         , td [] [ text <| diameterDisplayName system reel.diameter ]
         , td [] [ text <| tapeThicknessDisplayName system reel.tapeThickness ]
         , td [] [ text <| speedDisplayName system reel.recordingSpeed ]
-        , td [ class "has-text-centered" ] [ text <| String.fromInt reel.quantity ]
+        , td [ class "has-text-centered" ]
+            [ button
+                [ class "button is-small margin-right-small", onClick (DecrementReelQuantity reel.id) ]
+                [ span [ class "icon" ]
+                    [ i [ class "fa fa-minus" ] []
+                    ]
+                ]
+            , text <| String.fromInt reel.quantity
+            , button
+                [ class "button is-small margin-left-small", onClick (IncrementReelQuantity reel.id) ]
+                [ span [ class "icon" ]
+                    [ i [ class "fa fa-plus" ] []
+                    ]
+                ]
+            ]
         , td []
             [ directionAndPassCount language reel.directionality reel.passes
             , lengthInfo system language footage

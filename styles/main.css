@@ -30,6 +30,15 @@ body {
   color: white; /* TODO: this is a hack ... */
 }
 
+.margin-left-small {
+  /* TODO: use the helper classes that are available in newer versions of Bulma */
+  margin-left: 0.5rem;
+}
+
+.margin-right-small {
+  margin-right: 0.5rem;
+}
+
 /*------- NAVBAR -------*/
 
 nav.navbar {
@@ -215,6 +224,14 @@ tr.main-row:hover {
 
 .pc10 {
   width: 10%;
+}
+
+.pc125 {
+  width: 12.5%;
+}
+
+.pc225 {
+  width: 22.5%;
 }
 
 .pc25 {
