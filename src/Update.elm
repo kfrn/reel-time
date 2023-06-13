@@ -40,12 +40,50 @@ update msg model =
                 Imperial ->
                     ( { model | system = Imperial }, Cmd.none )
 
+        DecrementReelQuantity reelID ->
+            case ListX.find (\reel -> reel.id == reelID) model.reels of
+                Just reel ->
+                    if reel.quantity == 1 then
+                        let
+                            newModel =
+                                { model | reels = removeReel reelID model.reels }
+                        in
+                        ( newModel, Cmd.none )
+
+                    else
+                        let
+                            updatedReel =
+                                { reel | quantity = reel.quantity - 1 }
+
+                            newModel =
+                                { model | reels = updateReelInList updatedReel model.reels }
+                        in
+                        ( newModel, Cmd.none )
+
+                Nothing ->
+                    ( model, Cmd.none )
+
         DeleteReel reelID ->
             let
                 newModel =
                     { model | reels = removeReel reelID model.reels }
             in
             ( newModel, Cmd.none )
+
+        IncrementReelQuantity reelID ->
+            case ListX.find (\reel -> reel.id == reelID) model.reels of
+                Just reel ->
+                    let
+                        updatedReel =
+                            { reel | quantity = reel.quantity + 1 }
+
+                        newModel =
+                            { model | reels = updateReelInList updatedReel model.reels }
+                    in
+                    ( newModel, Cmd.none )
+
+                Nothing ->
+                    ( model, Cmd.none )
 
         KeyDown int ->
             case int of
@@ -175,3 +213,8 @@ addReel uuid model quantity =
         -- Otherwise, add a new reel to the list.
         Nothing ->
             newReel uuid model.selectorValues quantity :: model.reels
+
+
+updateReelInList : Reel -> List Reel -> List Reel
+updateReelInList reel reels =
+    ListX.setIf (\r -> r.id == reel.id) reel reels

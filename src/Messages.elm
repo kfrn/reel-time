@@ -11,7 +11,9 @@ type Msg
     = AddReel
     | ChangeLanguage Language
     | ChangeSystemOfMeasurement SystemOfMeasurement
+    | DecrementReelQuantity Uuid
     | DeleteReel Uuid
+    | IncrementReelQuantity Uuid
     | KeyDown Int
     | NoOp
     | SetAudioConfig AudioConfig
