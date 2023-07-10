@@ -1,7 +1,7 @@
 module Update exposing (update)
 
 import AppSettings exposing (PageView(..), SystemOfMeasurement(..))
-import Audio.Reel.Model exposing (Reel, existingReel, newReel)
+import Audio.Reel.Model exposing (Reel, findReelByValues, newReel)
 import CsvOutput exposing (dataForCSV)
 import List.Extra as ListX
 import Messages exposing (Msg(..))
@@ -22,7 +22,7 @@ update msg model =
                             step uuidGenerator model.currentSeed
 
                         newModel =
-                            { model | currentSeed = newSeed, reels = updateReels uuid model q }
+                            { model | currentSeed = newSeed, reels = addReel uuid model q }
                     in
                     ( newModel, Cmd.none )
 
@@ -40,12 +40,50 @@ update msg model =
                 Imperial ->
                     ( { model | system = Imperial }, Cmd.none )
 
+        DecrementReelQuantity reelID ->
+            case ListX.find (\reel -> reel.id == reelID) model.reels of
+                Just reel ->
+                    if reel.quantity == 1 then
+                        let
+                            newModel =
+                                { model | reels = removeReel reelID model.reels }
+                        in
+                        ( newModel, Cmd.none )
+
+                    else
+                        let
+                            updatedReel =
+                                { reel | quantity = reel.quantity - 1 }
+
+                            newModel =
+                                { model | reels = updateReelInList updatedReel model.reels }
+                        in
+                        ( newModel, Cmd.none )
+
+                Nothing ->
+                    ( model, Cmd.none )
+
         DeleteReel reelID ->
             let
                 newModel =
                     { model | reels = removeReel reelID model.reels }
             in
             ( newModel, Cmd.none )
+
+        IncrementReelQuantity reelID ->
+            case ListX.find (\reel -> reel.id == reelID) model.reels of
+                Just reel ->
+                    let
+                        updatedReel =
+                            { reel | quantity = reel.quantity + 1 }
+
+                        newModel =
+                            { model | reels = updateReelInList updatedReel model.reels }
+                    in
+                    ( newModel, Cmd.none )
+
+                Nothing ->
+                    ( model, Cmd.none )
 
         KeyDown int ->
             case int of
@@ -161,9 +199,10 @@ removeReel reelID allReels =
     List.filter (\r -> r.id /= reelID) allReels
 
 
-updateReels : Uuid -> Model -> Int -> List Reel
-updateReels uuid model quantity =
-    case existingReel model.selectorValues model.reels of
+addReel : Uuid -> Model -> Int -> List Reel
+addReel uuid model quantity =
+    case findReelByValues model.selectorValues model.reels of
+        -- If we already have a reel with these specs, increment the quantity
         Just reel ->
             let
                 updatedReel =
@@ -171,5 +210,11 @@ updateReels uuid model quantity =
             in
             ListX.setIf (\r -> r == reel) updatedReel model.reels
 
+        -- Otherwise, add a new reel to the list.
         Nothing ->
             newReel uuid model.selectorValues quantity :: model.reels
+
+
+updateReelInList : Reel -> List Reel -> List Reel
+updateReelInList reel reels =
+    ListX.setIf (\r -> r.id == reel.id) reel reels
