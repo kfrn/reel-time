@@ -39,6 +39,10 @@ body {
   margin-right: 0.5rem;
 }
 
+.valign-bottom {
+  vertical-align: bottom;
+}
+
 /*------- NAVBAR -------*/
 
 nav.navbar {

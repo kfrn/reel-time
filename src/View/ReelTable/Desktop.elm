@@ -145,7 +145,7 @@ reelRow system language reel =
                     [ i [ class "fa fa-minus" ] []
                     ]
                 ]
-            , text <| String.fromInt reel.quantity
+            , span [ class "valign-bottom" ] [ text <| String.fromInt reel.quantity ]
             , button
                 [ class "button is-small margin-left-small", onClick (IncrementReelQuantity reel.id) ]
                 [ span [ class "icon" ]
