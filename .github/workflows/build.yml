@@ -39,4 +39,5 @@ jobs:
       shell: bash -l {0} # nvm requires a login shell
       run: |
         nvm use
+        NODE_OPTIONS=--openssl-legacy-provider  # https://github.com/halfzebra/create-elm-app/issues/604
         elm-app build
