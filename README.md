@@ -33,6 +33,7 @@ nvm install  # Will also install npm
 npm install -g create-elm-app
 npm install
 
+export NODE_OPTIONS=--openssl-legacy-provider  # https://github.com/halfzebra/create-elm-app/issues/604
 elm-app start
 ```
 
